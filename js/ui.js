@@ -64,6 +64,19 @@ const ICONS = {
   copy: 'M8 8h12v12H8zM4 16V4h12',
   link: 'M10 14a4 4 0 006 0l3-3a4 4 0 00-6-6l-1 1M14 10a4 4 0 00-6 0l-3 3a4 4 0 006 6l1-1',
   tests: 'M9 4h6M9 4a2 2 0 00-2 2H5v15h14V6h-2a2 2 0 00-2-2M8 11l2 2 4-4M8 17h8',
+  // Предметы (имена — в data/subjects.json, поле icon).
+  text: 'M4 7V5h16v2M12 5v14M9 19h6',
+  calc: 'M6 3h12v18H6zM9 7h6M9 11h0M12 11h0M15 11h0M9 15h0M12 15h0M15 15h0M9 18h0M12 18h6',
+  globe: 'M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18',
+  'book-open': 'M3 5h6a3 3 0 013 3v12a2 2 0 00-2-2H3zM21 5h-6a3 3 0 00-3 3v12a2 2 0 012-2h7z',
+  // Пустые экраны и блоки.
+  inbox: 'M3 13h5l1 3h6l1-3h5M5 5h14l2 8v6H3v-6z',
+  compass: 'M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5z',
+  target: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 17a5 5 0 100-10 5 5 0 000 10zM12 12h0',
+  medal: 'M8 3l3 7M16 3l-3 7M12 21a5 5 0 100-10 5 5 0 000 10zM12 14v4',
+  trophy: 'M8 4h8v5a4 4 0 01-8 0zM8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4M12 13v4M8 21h8M10 17h4',
+  chart: 'M4 20V4M4 20h16M8 15l4-5 3 3 5-6',
+  alert: 'M12 3l10 18H2zM12 10v4M12 17h0',
 };
 
 export function icon(name, { size = 20, label } = {}) {
@@ -86,6 +99,10 @@ export function icon(name, { size = 20, label } = {}) {
   path.setAttribute('d', ICONS[name] || '');
   svg.appendChild(path);
   return svg;
+}
+
+export function hasIcon(name) {
+  return Object.hasOwn(ICONS, name);
 }
 
 let toastTimer = null;
@@ -199,8 +216,8 @@ export async function copyText(text) {
 }
 
 /** Пустое состояние с действием. */
-export function emptyState({ emoji = '✨', title, text, action }) {
-  return h('div', { class: 'empty' }, h('div', { class: 'empty__emoji', 'aria-hidden': 'true' }, emoji), h('h3', {}, title), text ? h('p', {}, text) : null, action || null);
+export function emptyState({ iconName = 'star', title, text, action }) {
+  return h('div', { class: 'empty' }, h('div', { class: 'empty__icon' }, icon(iconName, { size: 40 })), h('h3', {}, title), text ? h('p', {}, text) : null, action || null);
 }
 
 export function linkButton(href, label, { variant = 'primary', iconName, size } = {}) {

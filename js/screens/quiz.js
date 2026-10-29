@@ -16,7 +16,7 @@ export function quizScreen() {
     return h(
       'div',
       { class: 'card' },
-      emptyState({ emoji: '🎯', title: 'Сейчас нет начатой тренировки', text: 'Выбери тему и начни новую.', action: linkButton(href('subjects'), 'К темам') }),
+      emptyState({ iconName: 'target', title: 'Сейчас нет начатой тренировки', text: 'Выбери тему и начни новую.', action: linkButton(href('subjects'), 'К темам') }),
     );
   }
 
@@ -140,7 +140,7 @@ export function quizScreen() {
     if (showFeedback) form.appendChild(feedbackPanel(q, answer, session.settings.showExplanation, correctStreak(session)));
 
     if (!answered && learning && q.hint) {
-      const hintBox = h('p', { class: 'hint', id: 'hint-text', hidden: !hintShown }, `💡 ${q.hint}`);
+      const hintBox = h('p', { class: 'hint', id: 'hint-text', hidden: !hintShown }, icon('bulb', { size: 18 }), h('span', {}, q.hint));
       form.appendChild(hintBox);
     }
 
@@ -259,7 +259,7 @@ function answerControl(q, given, locked, answerInfo) {
           'label',
           { class: `option${state}` },
           h('input', { type: 'radio', name: 'answer', value: o.value, checked: o.value === givenValue, disabled: locked }),
-          h('span', { class: 'option__key', 'aria-hidden': 'true' }, q.type === 'true-false' ? (o.value === 'true' ? '✓' : '✗') : String.fromCharCode(1040 + i)),
+          h('span', { class: 'option__key', 'aria-hidden': 'true' }, q.type === 'true-false' ? icon(o.value === 'true' ? 'check' : 'cross', { size: 18 }) : String.fromCharCode(1040 + i)),
           h('span', { class: 'option__text' }, o.text),
           mark,
         );
