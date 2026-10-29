@@ -6,7 +6,7 @@ import { topicCard, subjectCard, setupForm, favoriteButton, difficultyBadge } fr
 import { selectQuestions } from '../quiz.js';
 import { overallStats, weakTopics } from '../results.js';
 import { startTraining } from '../session.js';
-import { searchTopics } from '../catalog.js';
+import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES } from '../catalog.js';
 import { formatDate, plural } from '../utils.js';
 
 function logo() {
@@ -156,34 +156,37 @@ export function homeScreen() {
 
 export function gradeScreen() {
   const current = settings().grade;
-  const available = new Set(content.topics.map((t) => t.grade));
+  const available = availableGrades(content.topics);
+  const soon = ALL_GRADES.filter((g) => !available.includes(g));
   return h(
     'div',
     { class: 'stack' },
-    pageHeader('Выбери класс', { back: href('home'), subtitle: 'Сейчас задания подготовлены для 4 класса. Остальные классы будут добавляться.' }),
-    h(
-      'div',
-      { class: 'grade-grid', role: 'list' },
-      Array.from({ length: 11 }, (_, i) => i + 1).map((g) =>
-        h(
-          'button',
-          {
-            type: 'button',
-            role: 'listitem',
-            class: `grade-card${g === current ? ' is-selected' : ''}${available.has(g) ? '' : ' is-empty'}`,
-            'aria-pressed': String(g === current),
-            onclick: () => {
-              update((d) => ((d.settings.grade = g), d));
-              toast(`Выбран ${g} класс`);
-              navigate('subjects');
-            },
-          },
-          h('span', { class: 'grade-card__num' }, String(g)),
-          h('span', { class: 'grade-card__label' }, 'класс'),
-          h('span', { class: 'grade-card__status small' }, available.has(g) ? 'есть задания' : 'пока пусто'),
-        ),
-      ),
-    ),
+    pageHeader('Выбери класс', { back: href('home') }),
+    available.length
+      ? h(
+          'div',
+          { class: 'grade-grid', role: 'list' },
+          available.map((g) =>
+            h(
+              'button',
+              {
+                type: 'button',
+                role: 'listitem',
+                class: `grade-card${g === current ? ' is-selected' : ''}`,
+                'aria-pressed': String(g === current),
+                onclick: () => {
+                  update((d) => ((d.settings.grade = g), d));
+                  toast(`Выбран ${g} класс`);
+                  navigate('subjects');
+                },
+              },
+              h('span', { class: 'grade-card__num' }, String(g)),
+              h('span', { class: 'grade-card__label' }, 'класс'),
+            ),
+          ),
+        )
+      : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Задания не загрузились', text: 'Обнови страницу. Если не помогло — попробуй позже.' })),
+    soon.length && available.length ? h('p', { class: 'muted' }, `Скоро: ${gradeRangesText(soon)} класс`) : null,
   );
 }
 

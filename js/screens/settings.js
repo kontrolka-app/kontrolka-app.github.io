@@ -3,8 +3,17 @@ import { h, pageHeader, button, confirmDialog, toast, downloadJson, readFileText
 import { href, navigate } from '../router.js';
 import { getData, settings, update, replaceAll, resetAll, applyAppearance, content } from '../state.js';
 import { exportData, importData } from '../storage.js';
+import { availableGrades } from '../catalog.js';
 
 export const APP_VERSION = '1.0.0';
+
+/** В списке только классы с заданиями; «Не выбран» — когда есть из чего выбирать. */
+function gradeOptions(current) {
+  const grades = availableGrades(content.topics);
+  if (current && !grades.includes(current)) grades.push(current);
+  const options = grades.map((g) => [g, `${g} класс`]);
+  return grades.length > 1 || !current ? [['', 'Не выбран'], ...options] : options;
+}
 
 function select(id, label, value, options, onChange, hint) {
   return h(
@@ -74,7 +83,7 @@ export function settingsScreen() {
       'section',
       { class: 'card stack' },
       h('h2', { class: 'card__title' }, 'Учёба'),
-      select('grade', 'Класс', s.grade ?? '', [['', 'Не выбран'], ...Array.from({ length: 11 }, (_, i) => [i + 1, `${i + 1} класс`])], (v) => set('grade', v ? Number(v) : null)),
+      select('grade', 'Класс', s.grade ?? '', gradeOptions(s.grade), (v) => set('grade', v ? Number(v) : null)),
       h(
         'div',
         { class: 'field' },
