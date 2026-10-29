@@ -1,6 +1,7 @@
 // Логика тренировочной сессии и проверка ответов. Без DOM.
 import { normalizeText, parseNumber, shuffle, uid } from './utils.js';
 import { computeResult } from './results.js';
+import { COMPARE_SIGNS } from './validate.js';
 
 /**
  * Проверяет ответ по данным вопроса.
@@ -31,6 +32,10 @@ export function checkAnswer(question, given) {
       if (Number.isNaN(n)) return { status: 'invalid', message: 'Это не похоже на число. Пиши только цифры, например 1250 или 3,5.' };
       const tolerance = question.tolerance || 0;
       return { status: Math.abs(n - question.correctAnswer) <= tolerance + 1e-9 ? 'correct' : 'wrong' };
+    }
+    case 'compare': {
+      if (!COMPARE_SIGNS.includes(given)) return { status: 'invalid', message: 'Выбери знак: <, = или >.' };
+      return { status: given === question.correctAnswer ? 'correct' : 'wrong' };
     }
     default:
       return { status: 'invalid', message: 'Неизвестный тип задания.' };

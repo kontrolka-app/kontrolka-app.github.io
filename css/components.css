@@ -237,6 +237,12 @@ select.input { cursor: pointer; }
 .options { display: flex; flex-direction: column; gap: 10px; border: none; margin: 0; padding: 0; min-width: 0; }
 .options--tf { flex-direction: row; }
 .options--tf .option { flex: 1; }
+.options--compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.option--sign { justify-content: center; min-height: 72px; padding: 8px; }
+.option__sign { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+.option--sign:has(input:checked) .option__sign { color: var(--primary); }
+.option--sign.is-correct .option__sign, .option--sign.is-correct:has(input:checked) .option__sign { color: var(--ok); }
+.option--sign.is-wrong .option__sign, .option--sign.is-wrong:has(input:checked) .option__sign { color: var(--bad); }
 .option {
   position: relative;
   display: flex; align-items: center; flex-wrap: wrap; gap: 12px;

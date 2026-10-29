@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { checkAnswer, selectQuestions, countAvailable, createSession, submitAnswer, skipQuestion, goNext, finishSession, correctStreak } from '../js/quiz.js';
 import { normalizeText, parseNumber } from '../js/utils.js';
+import { validateQuestion } from '../js/validate.js';
 import { Q, ALL, seededRng } from './helpers.js';
 
 test('выбор ответа: верный, неверный, пустой, несуществующий вариант', () => {
@@ -170,4 +171,14 @@ test('серия верных ответов подряд', () => {
   s = goNext(s);
   s = skipQuestion(s).session; // пропуск обрывает серию
   assert.equal(correctStreak(s), 0);
+});
+
+test('сравнение: знак <, = или >, остальное — не засчитывается как ответ', () => {
+  const q = { id: 'q-cmp', type: 'compare', difficulty: 'easy', question: '456 … 465', correctAnswer: '<' };
+  assert.equal(checkAnswer(q, '<').status, 'correct');
+  assert.equal(checkAnswer(q, '>').status, 'wrong');
+  assert.equal(checkAnswer(q, '=').status, 'wrong');
+  for (const bad of ['', null, undefined, 'меньше', '≤']) assert.equal(checkAnswer(q, bad).status, 'invalid');
+  assert.deepEqual(validateQuestion(q, { custom: true }), []);
+  assert.equal(validateQuestion({ ...q, correctAnswer: '≤' }, { custom: true }).length, 1);
 });

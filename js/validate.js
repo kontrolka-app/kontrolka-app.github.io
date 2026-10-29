@@ -2,7 +2,9 @@
 // Модуль без обращений к DOM — используется и в браузере, и в тестах Node.
 
 export const DIFFICULTIES = ['easy', 'medium', 'hard'];
-export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false'];
+export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare'];
+/** Знаки для заданий «поставь знак сравнения». */
+export const COMPARE_SIGNS = ['<', '=', '>'];
 export const MIN_GRADE = 1;
 export const MAX_GRADE = 11;
 
@@ -70,6 +72,9 @@ export function validateQuestion(q, ctx = {}) {
       if (typeof q.correctAnswer !== 'number' || !Number.isFinite(q.correctAnswer)) errors.push(`${where}: правильный ответ должен быть числом`);
       if (q.tolerance !== undefined && (typeof q.tolerance !== 'number' || q.tolerance < 0)) errors.push(`${where}: tolerance — неотрицательное число`);
       if (q.unit !== undefined && !isStr(q.unit)) errors.push(`${where}: unit должен быть строкой`);
+      break;
+    case 'compare':
+      if (!COMPARE_SIGNS.includes(q.correctAnswer)) errors.push(`${where}: для сравнения правильный ответ — «<», «=» или «>»`);
       break;
     default:
       break;

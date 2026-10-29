@@ -24,7 +24,18 @@ export function quizScreen() {
 
   // Enter = «Ответить», потом Enter = «Дальше» — откуда бы ни нажали (кроме кнопок, ссылок и полей ввода — у них своё поведение).
   root.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter' || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || !currentForm) return;
+    if (!currentForm) return;
+    // В заданиях на сравнение знак можно нажать прямо на клавиатуре.
+    if (Object.hasOwn(SIGN_NAMES, e.key) && !(e.target.tagName === 'INPUT' && e.target.type === 'text')) {
+      const radio = currentForm.querySelector(`input[name=answer][value="${e.key}"]`);
+      if (radio && !radio.disabled) {
+        e.preventDefault();
+        radio.checked = true;
+        radio.focus();
+      }
+      return;
+    }
+    if (e.key !== 'Enter' || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
     const t = e.target;
     if (t.closest('dialog, button, a, textarea, select') || (t.tagName === 'INPUT' && t.type !== 'radio')) return;
     e.preventDefault();
@@ -185,8 +196,35 @@ export function quizScreen() {
   return root;
 }
 
+const SIGN_NAMES = { '<': 'меньше', '=': 'равно', '>': 'больше' };
+
 /** Поле ответа под тип задания. read() возвращает ответ в формате для checkAnswer. */
 function answerControl(q, given, locked, answerInfo) {
+  if (q.type === 'compare') {
+    // Три крупные кнопки вместо поля ввода: знак не нужно искать на клавиатуре.
+    const givenValue = given ?? null;
+    const group = h(
+      'fieldset',
+      { class: 'options options--compare', 'aria-describedby': 'answer-error' },
+      h('legend', { class: 'sr-only' }, 'Выбери знак'),
+      Object.entries(SIGN_NAMES).map(([sign, name]) => {
+        let state = '';
+        let mark = '';
+        if (answerInfo) {
+          if (sign === q.correctAnswer) [state, mark] = [' is-correct', ', правильный ответ'];
+          else if (sign === givenValue) [state, mark] = [' is-wrong', ', твой ответ'];
+        } else if (locked && sign === givenValue) state = ' is-chosen';
+        return h(
+          'label',
+          { class: `option option--sign${state}` },
+          h('input', { type: 'radio', name: 'answer', value: sign, checked: sign === givenValue, disabled: locked }),
+          h('span', { class: 'option__sign', 'aria-hidden': 'true' }, sign),
+          h('span', { class: 'sr-only' }, `${name}${mark}`),
+        );
+      }),
+    );
+    return { control: group, read: () => group.querySelector('input:checked')?.value ?? '' };
+  }
   if (q.type === 'single-choice' || q.type === 'true-false') {
     const options = q.type === 'single-choice' ? q.options.map((o) => ({ value: o.id, text: o.text })) : [
       { value: 'true', text: 'Верно' },
