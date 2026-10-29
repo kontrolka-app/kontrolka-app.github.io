@@ -2,6 +2,7 @@
 import { createSession, finishSession } from './quiz.js';
 import { buildHistoryEntry } from './results.js';
 import { addEntry } from './stats.js';
+import { catalogInfo, badgesForEntry, badgesForTotals, award } from './achievements.js';
 import { getData, update, content } from './state.js';
 import { confirmDialog, toast } from './ui.js';
 import { navigate } from './router.js';
@@ -53,12 +54,24 @@ export function completeActive(session) {
   update((d) => {
     d.activeSession = null;
     if (!d.history.some((h) => h.id === entry.id)) {
+      const prevTopicLast = d.stats.topicLast;
       d.history.unshift(entry);
       d.stats = addEntry(d.stats, entry);
+      // Значки: за эту тренировку и по накопленным счётчикам. Дата — время окончания тренировки,
+      // по ней экран результата узнаёт, какие значки получены именно сейчас.
+      const cat = catalogInfo(gradeTopics(d));
+      const ids = [...badgesForEntry(entry, prevTopicLast, cat), ...badgesForTotals(d.stats, d.customTests, cat)];
+      d.badges = award(d.badges, ids, entry.finishedAt).badges;
     }
     return d;
   });
   return entry.id;
+}
+
+/** Темы класса ребёнка — для значков «Знаток раздела» и «Путешественник». */
+export function gradeTopics(d) {
+  const grade = d.settings.grade;
+  return grade ? content.topics.filter((t) => t.grade === grade) : content.topics;
 }
 
 export function abandonActive() {

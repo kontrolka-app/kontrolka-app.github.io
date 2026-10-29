@@ -4,6 +4,8 @@ import { startRouter, href, setLeaveGuard, parseHash } from './router.js';
 import { initStorage, applyAppearance, content, settings, update, getData } from './state.js';
 import { loadContent } from './data.js';
 import { availableGrades, resolveGrade, needsWelcome } from './catalog.js';
+import { catalogInfo, badgesFromHistory, badgesForTotals, award } from './achievements.js';
+import { gradeTopics } from './session.js';
 import { homeScreen, gradeScreen, subjectsScreen, topicsScreen, topicScreen, examScreen, favoritesScreen, notFound } from './screens/browse.js';
 import { quizScreen } from './screens/quiz.js';
 import { resultScreen, historyScreen } from './screens/results.js';
@@ -83,6 +85,24 @@ function render(route) {
   document.title = route.name === 'home' ? 'Контролька' : route.name === 'quiz' ? 'Тренировка — Контролька' : `${main.querySelector('h1')?.textContent || ''} — Контролька`;
 }
 
+/**
+ * Значки, заработанные раньше (до появления значков или за тренировки, которые уже в истории).
+ * Без поздравлений — просто появятся в «Моих достижениях» с датой той тренировки.
+ */
+function backfillBadges() {
+  const d = getData();
+  const cat = catalogInfo(gradeTopics(d));
+  const found = badgesFromHistory(d.history, cat);
+  const latest = d.history[0]?.finishedAt || Date.now();
+  for (const id of badgesForTotals(d.stats, d.customTests, cat)) if (!found.has(id)) found.set(id, latest);
+  const missing = [...found].filter(([id]) => !d.badges[id]);
+  if (!missing.length) return;
+  update((x) => {
+    for (const [id, at] of missing) x.badges = award(x.badges, [id], at).badges;
+    return x;
+  });
+}
+
 async function boot() {
   const warning = initStorage();
   applyAppearance();
@@ -93,6 +113,7 @@ async function boot() {
   const grade = settings().grade;
   const resolved = resolveGrade(grade, availableGrades(content.topics));
   if (resolved !== grade) update((d) => ((d.settings.grade = resolved), d));
+  backfillBadges();
   startRouter(render);
   // На экране знакомства класс и так написан — сообщение там лишнее.
   const welcome = parseHash(location.hash).name === 'home' && needsWelcome(getData());

@@ -4,6 +4,7 @@ import { sanitizeReports } from './reports.js';
 import { defaultPoems, sanitizePoems } from './poem.js';
 import { sanitizeSpeed } from './speed.js';
 import { emptyStats, sanitizeStats } from './stats.js';
+import { sanitizeBadges } from './achievements.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -48,6 +49,7 @@ export function defaultData() {
     poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
     speed: [], // тренажёр скорости чтения: результаты, новые сначала
     stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
+    badges: {}, // значки: id → дата получения
   };
 }
 
@@ -128,6 +130,7 @@ export function sanitizeData(raw) {
   data.speed = sanitizeSpeed(raw.speed);
   // Нет счётчиков (данные до этапа F) — считаем из истории, чтобы ничего не пропало.
   data.stats = sanitizeStats(raw.stats, data.history);
+  data.badges = sanitizeBadges(raw.badges);
   return { data, dropped };
 }
 
