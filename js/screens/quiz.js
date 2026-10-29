@@ -108,7 +108,15 @@ export function quizScreen() {
     const card = h('section', { class: 'card quiz__card', 'aria-labelledby': 'q-text' });
     // Длинные вопросы (например, с текстом для чтения) показываем обычным шрифтом — так легче читать.
     const long = q.question.length > 220;
-    card.appendChild(h('h1', { class: `quiz__question${long ? ' quiz__question--long' : ''}`, id: 'q-text', tabindex: '-1' }, q.question));
+    // Первая строка — сам вопрос крупно; пункты под ним («1) …», «А) …») — обычным шрифтом.
+    const [firstLine, ...restLines] = q.question.split('\n');
+    card.appendChild(
+      h(
+        'h1',
+        { class: `quiz__question${long ? ' quiz__question--long' : ''}`, id: 'q-text', tabindex: '-1' },
+        long || !restLines.length ? q.question : [firstLine, h('span', { class: 'quiz__question-rest' }, restLines.join('\n'))],
+      ),
+    );
     const passage = q.passageId ? content.passageById.get(q.passageId) : null;
     if (passage) card.appendChild(passageBlock(passage, passageOpen));
 

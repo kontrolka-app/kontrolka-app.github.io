@@ -565,3 +565,4 @@ details.card > .review-list { margin-top: 12px; }
 .passage__body p.small { text-indent: 0; }
 .passage--poem .passage__body { gap: 0; }
 .passage--poem .passage__body p { text-indent: 0; }
+.quiz__question-rest { display: block; margin-top: 8px; font-size: 1.05rem; font-weight: 500; line-height: 1.6; }
