@@ -43,3 +43,16 @@ test('записи: сводка и проверка сохранённого', 
   assert.deepEqual(sanitizeData({ schemaVersion: 1 }).data.speed, []);
   assert.deepEqual(sanitizeData({ schemaVersion: 1, speed: [a] }).data.speed, [a]);
 });
+
+test('норма 4 класса: полугодие по дате и сравнение', async () => {
+  const { speedNorm, compareToNorm, SPEED_NORM_4 } = await import('../js/speed.js');
+  assert.equal(speedNorm(new Date(2026, 9, 30).getTime()), SPEED_NORM_4.first, 'октябрь — I полугодие');
+  assert.equal(speedNorm(new Date(2026, 11, 31).getTime()), SPEED_NORM_4.first);
+  assert.equal(speedNorm(new Date(2027, 0, 10).getTime()), SPEED_NORM_4.second, 'январь — II полугодие');
+  assert.equal(speedNorm(new Date(2027, 4, 20).getTime()), SPEED_NORM_4.second);
+  const n = SPEED_NORM_4.first; // 75–80
+  assert.equal(compareToNorm(60, n), 'below');
+  assert.equal(compareToNorm(75, n), 'ok');
+  assert.equal(compareToNorm(80, n), 'ok');
+  assert.equal(compareToNorm(81, n), 'above');
+});

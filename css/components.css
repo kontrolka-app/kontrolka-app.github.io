@@ -602,3 +602,6 @@ details.card > .review-list { margin-top: 12px; }
 .speed-understood { font-weight: 800; font-size: 1.15rem; }
 .speed-q { margin: 0; display: flex; flex-direction: column; gap: 10px; }
 .speed-q__text { font-weight: 700; float: left; width: 100%; margin-bottom: 8px; }
+.speed-norm { padding: 8px 12px; border-radius: var(--radius-sm); }
+.speed-norm--below { background: var(--skip-bg); color: var(--text); }
+.speed-norm--ok, .speed-norm--above { background: var(--ok-bg); color: var(--text); }

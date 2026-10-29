@@ -3,7 +3,7 @@ import { h, button, linkButton, pageHeader, emptyState, toast } from '../ui.js';
 import { href, setLeaveGuard } from '../router.js';
 import { content, getData, update } from '../state.js';
 import { checkAnswer } from '../quiz.js';
-import { wordCount, wordsPerMinute, speedQuestions, speedPassages, speedRecord, speedSummary, SPEED_RECORDS_LIMIT } from '../speed.js';
+import { wordCount, wordsPerMinute, speedQuestions, speedPassages, speedRecord, speedSummary, speedNorm, compareToNorm, SPEED_RECORDS_LIMIT } from '../speed.js';
 import { formatClock, plural } from '../utils.js';
 
 const allPassages = () => speedPassages([...content.passageById.values()], content.questions);
@@ -20,6 +20,7 @@ export function speedListScreen() {
       { class: 'card card--soft' },
       h('p', {}, 'Нажми «Начать» и читай текст вслух, как на проверке техники чтения. Дочитал — нажми «Стоп». Потом ответь на вопросы: текст уже будет закрыт.'),
       h('p', { class: 'small muted' }, 'Это тренажёр для себя: важно не только быстро, но и понятно прочитать.'),
+      normLine(),
     ),
     list.length
       ? h(
@@ -139,9 +140,10 @@ export function speedScreen(passageId) {
         'div',
         { class: 'card speed-score' },
         scoreLine(ms, wpm),
+        normVerdict(wpm),
         h('p', { class: 'speed-understood' }, `Понял ${understood} из ${qs.length}`),
         best && best.wpm > wpm ? h('p', { class: 'small muted' }, `Лучший результат на этом тексте — ${best.wpm} слов в минуту.`) : null,
-        understood < qs.length ? h('p', { class: 'small' }, 'Быстро — хорошо, но важнее понять. Перечитай текст и посмотри разбор ниже.') : null,
+        understood < qs.length ? h('p', { class: 'small' }, 'Важно не только прочитать, но и понять. Перечитай текст и посмотри разбор ниже.') : null,
       ),
       h(
         'ol',
@@ -164,6 +166,24 @@ export function speedScreen(passageId) {
 
   ready();
   return root;
+}
+
+/** Норма для 4 класса на текущее полугодие (чтение вслух). */
+function normLine() {
+  const n = speedNorm();
+  return h('p', { class: 'small' }, h('strong', {}, 'Норма для 4 класса: '), `${n.label} — не меньше ${n.min}–${n.max} слов в минуту при чтении вслух.`);
+}
+
+/** Мягкое сравнение с нормой: без оценок, с подсказкой, что делать дальше. */
+function normVerdict(wpm) {
+  const n = speedNorm();
+  const v = compareToNorm(wpm, n);
+  const text = {
+    below: `Норма сейчас — ${n.min}–${n.max} слов в минуту. Читай вслух понемногу каждый день — скорость растёт от тренировки.`,
+    ok: `Это норма 4 класса (${n.min}–${n.max} слов в минуту). Так держать!`,
+    above: `Это выше нормы 4 класса (${n.min}–${n.max} слов в минуту). Отлично — главное, чтобы и понимание не отставало.`,
+  }[v];
+  return h('p', { class: `speed-norm speed-norm--${v}` }, text);
 }
 
 function scoreLine(ms, wpm) {

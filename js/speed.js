@@ -53,3 +53,22 @@ export function sanitizeSpeed(raw) {
     Number.isInteger(r.total) && r.total >= 0 && Number.isInteger(r.understood) && r.understood >= 0 && r.understood <= r.total;
   return raw.filter(ok).slice(0, SPEED_RECORDS_LIMIT);
 }
+
+/**
+ * Норма скорости чтения вслух для 4 класса — из пособия «Тексты для проверки техники чтения»
+ * (uchebniki/texty_dlya_proverki.pdf, таблица норм), согласовано 2026-10-30:
+ * I полугодие — не менее 75–80 слов в минуту, II полугодие — не менее 85–95.
+ */
+export const SPEED_NORM_4 = { first: { min: 75, max: 80, label: 'I полугодие' }, second: { min: 85, max: 95, label: 'II полугодие' } };
+
+/** Полугодие по дате: сентябрь–декабрь — первое, январь–август — второе (летом ориентир — конец года). */
+export function speedNorm(now = Date.now()) {
+  const month = new Date(now).getMonth(); // 0 — январь
+  return month >= 8 ? SPEED_NORM_4.first : SPEED_NORM_4.second;
+}
+
+/** Сравнение с нормой: 'below' — пока ниже, 'ok' — в норме, 'above' — выше нормы. */
+export function compareToNorm(wpm, norm) {
+  if (wpm < norm.min) return 'below';
+  return wpm > norm.max ? 'above' : 'ok';
+}
