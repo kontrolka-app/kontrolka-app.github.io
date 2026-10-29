@@ -2,6 +2,7 @@
 import { validateCustomTest, validateQuestion } from './validate.js';
 import { sanitizeReports } from './reports.js';
 import { defaultPoems, sanitizePoems } from './poem.js';
+import { sanitizeSpeed } from './speed.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -44,6 +45,7 @@ export function defaultData() {
     activeSession: null,
     reports: [], // «Нашёл ошибку?»: какие задания ученик уже отметил
     poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
+    speed: [], // тренажёр скорости чтения: результаты, новые сначала
   };
 }
 
@@ -121,6 +123,7 @@ export function sanitizeData(raw) {
   }
   data.reports = sanitizeReports(raw.reports);
   data.poems = sanitizePoems(raw.poems);
+  data.speed = sanitizeSpeed(raw.speed);
   return { data, dropped };
 }
 
