@@ -8,6 +8,7 @@ import { startTraining, questionsForEntry } from '../session.js';
 import { formatDate, formatDuration, plural } from '../utils.js';
 import { theoryBlock, notFound } from './browse.js';
 import { nextTopic } from '../catalog.js';
+import { reportControl } from './report.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -37,7 +38,7 @@ function ring(percent, level) {
   return h('div', { class: 'ring-wrap' }, svg, h('span', { class: 'ring__value' }, `${percent}%`));
 }
 
-function reviewItem(r, index) {
+function reviewItem(r, index, canReport) {
   return h(
     'li',
     { class: `review-item review-item--${r.status}` },
@@ -53,6 +54,7 @@ function reviewItem(r, index) {
     r.feedback ? h('p', { class: 'review-item__fb' }, `⚠️ ${r.feedback}`) : null,
     r.explanation ? h('p', { class: 'review-item__expl' }, h('strong', {}, 'Объяснение: '), r.explanation) : null,
     content.topicById.get(r.topicId)?.theory?.length ? h('a', { class: 'small', href: href('topic', r.topicId, 'rule') }, 'Открыть правило') : null,
+    canReport ? reportControl({ questionId: r.questionId, topicId: r.topicId, question: r.question, given: r.given, correct: r.correct }) : null,
   );
 }
 
@@ -66,6 +68,7 @@ export function resultScreen(entryId) {
   const n = mistakes.length;
   const mistakesLabel = entry.skipped && entry.wrong ? `Повторить ошибки и пропуски (${n})` : entry.skipped ? `Повторить пропущенные (${n})` : `Повторить ошибки (${n})`;
   const low = entry.percent < REVIEW_PERCENT;
+  const canReport = entry.source.kind !== 'custom';
 
   // Следующая тема того же предмета — для обычной тренировки по одной теме.
   const topic = entry.source.kind === 'topic' && entry.source.topicIds?.length === 1 ? content.topicById.get(entry.source.topicIds[0]) : null;
@@ -160,7 +163,7 @@ export function resultScreen(entryId) {
         { class: 'stack' },
         h('h2', {}, `Разбор ошибок (${mistakes.length})`),
         h('p', { class: 'muted' }, 'Посмотри, где ошибся, и прочитай объяснение. Потом повтори ошибки — кнопка выше.'),
-        h('ol', { class: 'review-list' }, entry.review.map((r, i) => (r.status !== 'correct' ? reviewItem(r, i) : null))),
+        h('ol', { class: 'review-list' }, entry.review.map((r, i) => (r.status !== 'correct' ? reviewItem(r, i, canReport) : null))),
       ),
     );
   } else {
@@ -186,7 +189,7 @@ export function resultScreen(entryId) {
         'details',
         { class: 'card' },
         h('summary', {}, h('strong', {}, `Верные ответы (${correctOnes.length})`)),
-        h('ol', { class: 'review-list' }, correctOnes.map(([r, i]) => reviewItem(r, i))),
+        h('ol', { class: 'review-list' }, correctOnes.map(([r, i]) => reviewItem(r, i, canReport))),
       ),
     );
   }

@@ -1,5 +1,6 @@
 // Локальное хранилище с версией схемы, проверкой данных и восстановлением. Без DOM.
 import { validateCustomTest, validateQuestion } from './validate.js';
+import { sanitizeReports } from './reports.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -40,6 +41,7 @@ export function defaultData() {
     history: [],
     customTests: [],
     activeSession: null,
+    reports: [], // «Нашёл ошибку?»: какие задания ученик уже отметил
   };
 }
 
@@ -115,6 +117,7 @@ export function sanitizeData(raw) {
     if (isValidActiveSession(raw.activeSession)) data.activeSession = raw.activeSession;
     else dropped++;
   }
+  data.reports = sanitizeReports(raw.reports);
   return { data, dropped };
 }
 

@@ -485,3 +485,10 @@ details.card > .review-list { margin-top: 12px; }
 .today__head .card__title { margin: 0; }
 .today--done .progress__bar { background: var(--ok); }
 .streak-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); font-weight: 800; font-size: 0.9rem; }
+
+/* ---------- «Нашёл ошибку?» ---------- */
+.link-btn { background: none; border: none; padding: 10px 0; min-height: 44px; color: var(--primary); text-decoration: underline; cursor: pointer; font: inherit; }
+.link-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.report__done { display: inline-flex; align-items: center; gap: 6px; }
+.report-dialog { display: flex; flex-direction: column; gap: 14px; }
+.report-dialog:not([open]) { display: none; }

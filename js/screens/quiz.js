@@ -3,8 +3,9 @@ import { h, icon, button, confirmDialog, progressBar, emptyState, linkButton } f
 import { href, navigate, setLeaveGuard } from '../router.js';
 import { getData } from '../state.js';
 import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion, correctStreak } from '../quiz.js';
-import { correctAnswerText, optionFeedback } from '../results.js';
+import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.js';
 import { saveActive, completeActive } from '../session.js';
+import { reportControl } from './report.js';
 import { formatClock } from '../utils.js';
 
 export function quizScreen() {
@@ -177,6 +178,10 @@ export function quizScreen() {
       }
     }
     form.appendChild(actions);
+    // «Нашёл ошибку?» — после ответа, под кнопкой «Дальше»; для своих тестов одноклассников не нужно.
+    if (showFeedback && session.source.kind !== 'custom') {
+      form.appendChild(reportControl({ questionId: q.id, topicId: q.topicId, question: q.question, given: givenAnswerText(q, answer.given), correct: correctAnswerText(q) }));
+    }
     card.appendChild(form);
     root.appendChild(card);
 
