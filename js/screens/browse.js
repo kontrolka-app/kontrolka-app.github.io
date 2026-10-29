@@ -363,9 +363,11 @@ export function theoryBlock(topic, { open = true, headingLevel = 'h2', title = `
   );
 }
 
-export function topicScreen(topicId) {
+/** part === 'rule' — открыть сразу на правиле (ссылка «Открыть правило» из разбора ошибок). */
+export function topicScreen(topicId, part) {
   const topic = content.topicById.get(topicId);
   if (!topic) return notFound('Такой темы нет');
+  const showRule = part === 'rule';
   const subject = content.subjectById.get(topic.subjectId);
   const pool = content.questionsByTopic.get(topic.id) || [];
   const history = getData().history;
@@ -380,6 +382,8 @@ export function topicScreen(topicId) {
   const n = mistakeQs.length;
   const mistakesLabel = skippedQs.length ? `Повторить ошибки и пропуски (${n})` : `Повторить ${n} ${plural(n, ['ошибку', 'ошибки', 'ошибок'])}`;
 
+  const theory = theoryBlock(topic, { open: !last || showRule, title: 'Вспомнить правило' });
+  if (showRule && theory) requestAnimationFrame(() => theory.scrollIntoView({ block: 'start' }));
   const miniStat = (label, value) => h('div', { class: 'mini-stats__item' }, h('dt', {}, label), h('dd', {}, value));
   return h(
     'div',
@@ -415,7 +419,7 @@ export function topicScreen(topicId) {
             }
           : null,
         // Правило раскрыто, пока тему ни разу не проходили.
-        beforeMore: theoryBlock(topic, { open: !last, title: 'Вспомнить правило' }),
+        beforeMore: theory,
         onStart: (opts) =>
           startTraining({
             questions: selectQuestions(pool, opts),

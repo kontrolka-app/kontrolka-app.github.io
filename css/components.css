@@ -294,12 +294,12 @@ select.input { cursor: pointer; }
 .ring__bg { stroke: var(--surface-2); }
 .ring__fg { stroke: var(--primary); transition: stroke-dasharray 0.6s; }
 .ring--great .ring__fg, .ring--good .ring__fg { stroke: var(--ok); }
-.ring--ok .ring__fg { stroke: var(--orange); }
-.ring--low .ring__fg { stroke: var(--bad); }
+.ring--ok .ring__fg { stroke: var(--progress-dot); }
+.ring--low .ring__fg { stroke: var(--orange); } /* не красный: низкий результат — не «провал» */
 .ring__value { position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.8rem; font-weight: 800; }
 .delta { font-weight: 700; }
 .delta--up { color: var(--ok); }
-.delta--down { color: var(--bad); }
+.delta--down { color: var(--text-muted); } /* без красного: результат ниже — повод повторить, а не провал */
 
 .stats-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
 @media (min-width: 600px) { .stats-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -452,3 +452,15 @@ details.card > .review-list { margin-top: 12px; }
 .quiz--control .progress { background: var(--surface); }
 .quiz--control .progress__bar { background: var(--violet); }
 .streak { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; padding: 2px 10px; border-radius: 999px; background: var(--surface); color: var(--ok); font-size: 0.95rem; }
+
+/* ---------- Результат: второстепенные действия, «Тема освоена!» ---------- */
+.result-actions .btn--lg { white-space: normal; text-align: left; }
+.result-actions--secondary { flex-direction: row; flex-wrap: wrap; }
+.result-hero--mastered .ring-wrap { animation: celebrate 0.9s ease-out 1; }
+.result-hero--mastered h2 { animation: pop 0.4s ease-out 0.2s both; }
+@keyframes celebrate {
+  0% { transform: scale(0.8) rotate(-8deg); }
+  55% { transform: scale(1.08) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.theory { scroll-margin-top: 80px; } /* «Открыть правило»: не прятать заголовок под шапкой */

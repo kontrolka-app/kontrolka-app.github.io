@@ -1,6 +1,18 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome, groupBySection } from '../js/catalog.js';
+import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome, groupBySection, nextTopic } from '../js/catalog.js';
+
+test('следующая тема: дальше по порядку, пропуская освоенные', () => {
+  const topics = ['a', 'b', 'c', 'd'].map((id) => ({ id }));
+  const mastered = (ids) => (id) => ids.includes(id);
+  assert.equal(nextTopic(topics, 'a', mastered([])).id, 'b');
+  assert.equal(nextTopic(topics, 'a', mastered(['b'])).id, 'c');
+  // Дальше всё освоено — возвращаемся к первой неосвоенной с начала.
+  assert.equal(nextTopic(topics, 'c', mastered(['d', 'c'])).id, 'a');
+  assert.equal(nextTopic(topics, 'b', mastered(['a', 'b', 'c', 'd'])), null);
+  // Текущей темы нет в списке — первая неосвоенная.
+  assert.equal(nextTopic(topics, 'x', mastered(['a'])).id, 'b');
+});
 
 test('темы по разделам: порядок сохраняется, без раздела — «Другие темы»', () => {
   const groups = groupBySection([

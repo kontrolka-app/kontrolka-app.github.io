@@ -1,12 +1,13 @@
 // Экран результата и история тренировок.
 import { h, icon, button, linkButton, pageHeader, emptyState, copyText, toast, confirmDialog } from '../ui.js';
 import { href, navigate } from '../router.js';
-import { content, getData, settings, update } from '../state.js';
-import { verdict, deltaFromPrevious, weakTopics, shareText, percentOf } from '../results.js';
+import { content, getData, settings, update, topicsFor } from '../state.js';
+import { verdict, deltaFromPrevious, weakTopics, shareText, percentOf, lastTopicResults, topicStatus, REVIEW_PERCENT, MASTERED_PERCENT } from '../results.js';
 import { selectQuestions } from '../quiz.js';
 import { startTraining, questionsForEntry } from '../session.js';
 import { formatDate, formatDuration, plural } from '../utils.js';
 import { theoryBlock, notFound } from './browse.js';
+import { nextTopic } from '../catalog.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -51,6 +52,7 @@ function reviewItem(r, index) {
     h('p', {}, h('span', { class: 'muted' }, r.status === 'correct' ? 'Ответ: ' : 'Правильный ответ: '), h('strong', {}, r.correct)),
     r.feedback ? h('p', { class: 'review-item__fb' }, `⚠️ ${r.feedback}`) : null,
     r.explanation ? h('p', { class: 'review-item__expl' }, h('strong', {}, 'Объяснение: '), r.explanation) : null,
+    content.topicById.get(r.topicId)?.theory?.length ? h('a', { class: 'small', href: href('topic', r.topicId, 'rule') }, 'Открыть правило') : null,
   );
 }
 
@@ -61,6 +63,15 @@ export function resultScreen(entryId) {
   const v = verdict(entry.percent);
   const delta = deltaFromPrevious(data.history, entry);
   const mistakes = entry.review.filter((r) => r.status !== 'correct');
+  const n = mistakes.length;
+  const mistakesLabel = entry.skipped && entry.wrong ? `Повторить ошибки и пропуски (${n})` : entry.skipped ? `Повторить пропущенные (${n})` : `Повторить ошибки (${n})`;
+  const low = entry.percent < REVIEW_PERCENT;
+
+  // Следующая тема того же предмета — для обычной тренировки по одной теме.
+  const topic = entry.source.kind === 'topic' && entry.source.topicIds?.length === 1 ? content.topicById.get(entry.source.topicIds[0]) : null;
+  const last = lastTopicResults(data.history);
+  const next = topic ? nextTopic(topicsFor(topic.subjectId, topic.grade), topic.id, (id) => topicStatus(last.get(id)) === 'mastered') : null;
+  const mastered = Boolean(topic) && entry.percent >= MASTERED_PERCENT;
 
   async function retry(onlyMistakes) {
     const ids = onlyMistakes ? mistakes.map((r) => r.questionId) : null;
@@ -77,9 +88,9 @@ export function resultScreen(entryId) {
     });
   }
 
-  // Темы, по которым результат ниже 70%, — показываем правило для повторения.
+  // Темы, по которым результат ниже порога, — показываем правило для повторения.
   const weakTopicBlocks = Object.entries(entry.topicStats || {})
-    .filter(([id, s]) => id !== '_custom' && percentOf(s.correct, s.total) < 70)
+    .filter(([id, s]) => id !== '_custom' && percentOf(s.correct, s.total) < REVIEW_PERCENT)
     .map(([id]) => content.topicById.get(id))
     .filter(Boolean);
 
@@ -89,18 +100,22 @@ export function resultScreen(entryId) {
     pageHeader('Результат', { back: href('home'), subtitle: `${entry.source.title} · ${formatDate(entry.finishedAt)}` }),
     h(
       'section',
-      { class: `card result-hero result-hero--${v.level}` },
+      { class: `card result-hero result-hero--${v.level}${mastered ? ' result-hero--mastered' : ''}` },
       ring(entry.percent, v.level),
       h(
         'div',
         { class: 'result-hero__text' },
-        h('h2', {}, v.title),
+        h('h2', {}, mastered ? 'Тема освоена!' : v.title),
+        // При низком результате сначала — что уже получилось.
+        low ? h('p', {}, entry.correct ? `Уже получилось: ${entry.correct} ${plural(entry.correct, ['верный ответ', 'верных ответа', 'верных ответов'])}.` : 'С первого раза получается не у всех — это нормально.') : null,
         h('p', {}, v.text),
-        delta !== null && delta !== 0
-          ? h('p', { class: `delta ${delta > 0 ? 'delta--up' : 'delta--down'}` }, delta > 0 ? `▲ на ${delta}% лучше прошлой попытки` : `▼ на ${-delta}% ниже прошлой попытки`)
-          : delta === 0
-            ? h('p', { class: 'delta' }, 'Так же, как в прошлый раз')
-            : null,
+        delta !== null
+          ? h(
+              'p',
+              { class: `delta${delta > 0 ? ' delta--up' : delta < 0 ? ' delta--down' : ''}` },
+              `В прошлый раз ${entry.percent - delta}% → сейчас ${entry.percent}%${delta > 0 ? ' ↑' : delta < 0 ? ' ↓' : ''}`,
+            )
+          : null,
       ),
     ),
     h(
@@ -114,9 +129,19 @@ export function resultScreen(entryId) {
     h(
       'div',
       { class: 'result-actions' },
-      mistakes.length ? button(`Повторить ошибки (${mistakes.length})`, () => retry(true), { iconName: 'history', size: 'lg' }) : null,
+      // Один главный шаг: при низком результате — повторить ошибки, иначе — следующая тема.
+      low && n
+        ? button(mistakesLabel, () => retry(true), { iconName: 'history', size: 'lg' })
+        : next
+          ? linkButton(href('topic', next.id), `Следующая тема: ${next.title}`, { iconName: 'arrow', size: 'lg' })
+          : linkButton(href('home'), 'На главную', { iconName: 'home', size: 'lg' }),
+    ),
+    h(
+      'div',
+      { class: 'result-actions result-actions--secondary' },
+      !low && n ? button(mistakesLabel, () => retry(true), { variant: 'secondary', iconName: 'history' }) : null,
       button('Пройти ещё раз', () => retry(false), { variant: 'secondary', iconName: 'play' }),
-      linkButton(href('home'), 'На главную', { variant: 'ghost', iconName: 'home' }),
+      low || next ? linkButton(href('home'), 'На главную', { variant: 'ghost', iconName: 'home' }) : null,
       button(
         'Скопировать результат',
         async () => {
@@ -134,7 +159,7 @@ export function resultScreen(entryId) {
         'section',
         { class: 'stack' },
         h('h2', {}, `Разбор ошибок (${mistakes.length})`),
-        h('p', { class: 'muted' }, 'Посмотри, где ошибся, и прочитай объяснение. Потом нажми «Повторить ошибки».'),
+        h('p', { class: 'muted' }, 'Посмотри, где ошибся, и прочитай объяснение. Потом повтори ошибки — кнопка выше.'),
         h('ol', { class: 'review-list' }, entry.review.map((r, i) => (r.status !== 'correct' ? reviewItem(r, i) : null))),
       ),
     );

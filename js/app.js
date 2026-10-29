@@ -15,7 +15,7 @@ const ROUTES = {
   grade: () => gradeScreen(),
   subjects: () => subjectsScreen(),
   topics: ([id]) => topicsScreen(id),
-  topic: ([id]) => topicScreen(id),
+  topic: ([id, part]) => topicScreen(id, part),
   exam: ([id]) => examScreen(id),
   quiz: () => quizScreen(),
   result: ([id]) => resultScreen(id),
@@ -27,8 +27,8 @@ const ROUTES = {
   editor: ([id]) => editorScreen(id || 'new'),
 };
 
-// Пункт меню, который подсвечивается для каждого экрана.
-const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'mytests', mytest: 'mytests', editor: 'mytests', history: 'history', result: 'history', settings: 'settings' };
+// Пункт меню, который подсвечивается для каждого экрана. Результат — ни один: на него приходят и из тренировки, и из истории.
+const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'mytests', mytest: 'mytests', editor: 'mytests', history: 'history', settings: 'settings' };
 
 const NAV = [
   { id: 'home', label: 'Главная', icon: 'home', to: href('home') },

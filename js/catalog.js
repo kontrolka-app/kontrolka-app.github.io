@@ -40,6 +40,18 @@ export function groupBySection(topics) {
   return [...groups].map(([section, list]) => ({ section, topics: list }));
 }
 
+/**
+ * Следующая тема после текущей: первая дальше по порядку, которую ещё не освоили;
+ * если дальше всё освоено — первая неосвоенная с начала; всё освоено — null.
+ * isMastered(topicId) — освоена ли тема.
+ */
+export function nextTopic(topics, currentId, isMastered) {
+  const i = topics.findIndex((t) => t.id === currentId);
+  const after = topics.slice(i + 1);
+  const before = i >= 0 ? topics.slice(0, i) : [];
+  return [...after, ...before].find((t) => !isMastered(t.id)) || null;
+}
+
 /** Первый вход: ещё не знакомились, нет имени и ни одной тренировки. */
 export function needsWelcome(data) {
   return !data.settings.introDone && !data.settings.nickname && !data.history.length;
