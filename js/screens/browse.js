@@ -2,7 +2,7 @@
 import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
-import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
+import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars } from '../components.js';
 import { selectQuestions } from '../quiz.js';
 import { overallStats, dailyProgress, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
 import { startTraining } from '../session.js';
@@ -388,7 +388,7 @@ export function topicsScreen(subjectId) {
   render();
   return h(
     'div',
-    { class: 'stack topics-page' },
+    { class: 'stack topics-page subject-themed', style: subjectVars(subject) },
     pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href('subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
     reviewBlock,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
@@ -441,7 +441,7 @@ export function topicScreen(topicId, part) {
   const miniStat = (label, value) => h('div', { class: 'mini-stats__item' }, h('dt', {}, label), h('dd', {}, value));
   return h(
     'div',
-    { class: 'stack' },
+    { class: 'stack subject-themed', style: subjectVars(subject) },
     pageHeader(topic.title, {
       back: href('topics', topic.subjectId),
       subtitle: [subject?.name, topic.section].filter(Boolean).join(' · '),
@@ -554,7 +554,7 @@ export function examScreen(subjectId) {
     renderForm();
   }
   renderForm();
-  return h('div', { class: 'stack' }, pageHeader(`Пробная контрольная: ${subject.name}`, { back: href('exam'), subtitle: `${grade} класс` }), h('div', { class: 'layout-2' }, checks, formSlot));
+  return h('div', { class: 'stack subject-themed', style: subjectVars(subject) }, pageHeader(`Пробная контрольная: ${subject.name}`, { back: href('exam'), subtitle: `${grade} класс` }), h('div', { class: 'layout-2' }, checks, formSlot));
 }
 
 export function favoritesScreen() {

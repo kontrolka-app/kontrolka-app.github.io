@@ -3,7 +3,12 @@
     "id": "russian",
     "name": "Русский язык",
     "icon": "📝",
-    "color": "blue",
+    "color": {
+      "bg": "#FDE3DA",
+      "text": "#9A2E12",
+      "darkBg": "#4A2318",
+      "darkText": "#FFC9B8"
+    },
     "searchExample": "глагол",
     "grades": [
       4
@@ -22,7 +27,12 @@
     "id": "math",
     "name": "Математика",
     "icon": "🔢",
-    "color": "violet",
+    "color": {
+      "bg": "#E3E9FF",
+      "text": "#2440B8",
+      "darkBg": "#22305E",
+      "darkText": "#C3CFFF"
+    },
     "searchExample": "доли",
     "grades": [
       4
@@ -41,7 +51,12 @@
     "id": "world",
     "name": "Окружающий мир",
     "icon": "🌍",
-    "color": "teal",
+    "color": {
+      "bg": "#DDF3E6",
+      "text": "#17663A",
+      "darkBg": "#173F29",
+      "darkText": "#A8E8C2"
+    },
     "searchExample": "природные зоны",
     "grades": [
       4
@@ -60,7 +75,12 @@
     "id": "reading",
     "name": "Литературное чтение",
     "icon": "📚",
-    "color": "orange",
+    "color": {
+      "bg": "#FFF0C7",
+      "text": "#7A5300",
+      "darkBg": "#43340E",
+      "darkText": "#FFDD8A"
+    },
     "searchExample": "басни",
     "grades": [
       4

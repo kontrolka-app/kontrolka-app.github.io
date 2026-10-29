@@ -11,7 +11,10 @@ export function h(tag, attrs = {}, ...children) {
     if (value === null || value === undefined || value === false) continue;
     if (key === 'class') el.className = value;
     else if (key === 'dataset') Object.assign(el.dataset, value);
-    else if (key === 'style' && typeof value === 'object') Object.assign(el.style, value);
+    else if (key === 'style' && typeof value === 'object') {
+      // CSS-переменные (--имя) ставятся только через setProperty.
+      for (const [prop, v] of Object.entries(value)) prop.startsWith('--') ? el.style.setProperty(prop, v) : (el.style[prop] = v);
+    }
     else if (key.startsWith('on') && typeof value === 'function') el.addEventListener(key.slice(2).toLowerCase(), value);
     else if (key === 'text') el.textContent = value;
     else if (key in el && !key.includes('-') && key !== 'list' && key !== 'form') {

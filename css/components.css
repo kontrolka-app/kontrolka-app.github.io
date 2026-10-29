@@ -105,10 +105,7 @@ a.card:hover { border-color: var(--primary); }
   background: var(--surface-2);
   flex-shrink: 0;
 }
-.subject-card--blue .subject-card__icon { background: color-mix(in srgb, var(--blue) 14%, transparent); }
-.subject-card--violet .subject-card__icon { background: color-mix(in srgb, var(--violet) 14%, transparent); }
-.subject-card--teal .subject-card__icon { background: color-mix(in srgb, var(--teal) 14%, transparent); }
-.subject-card--orange .subject-card__icon { background: color-mix(in srgb, var(--orange) 14%, transparent); }
+.subject-card__icon { background: var(--s-bg-cur); color: var(--s-text-cur); }
 .subject-card__text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .subject-card__name { font-weight: 700; font-size: 1.1rem; }
 
@@ -492,3 +489,17 @@ details.card > .review-list { margin-top: 12px; }
 .report__done { display: inline-flex; align-items: center; gap: 6px; }
 .report-dialog { display: flex; flex-direction: column; gap: 14px; }
 .report-dialog:not([open]) { display: none; }
+
+/* ---------- Цвет предмета: карточка → список тем → страница темы → тренировка ---------- */
+/* Пары фон/текст — в data/subjects.json (color), контраст ≥ 6:1 в обеих темах. */
+.subject-themed { --s-bg-cur: var(--s-bg, var(--surface-2)); --s-text-cur: var(--s-text, var(--primary)); }
+:root[data-theme='dark'] .subject-themed { --s-bg-cur: var(--s-bg-dark, var(--surface-2)); --s-text-cur: var(--s-text-dark, var(--primary)); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .subject-themed { --s-bg-cur: var(--s-bg-dark, var(--surface-2)); --s-text-cur: var(--s-text-dark, var(--primary)); }
+}
+.chip--subject { background: var(--s-bg-cur); color: var(--s-text-cur); }
+.subject-themed > .page-header { background: var(--s-bg-cur); color: var(--s-text-cur); border-radius: var(--radius); padding: 14px 16px; }
+.subject-themed > .page-header .page-subtitle { color: var(--s-text-cur); }
+.subject-themed > .page-header .btn--ghost { color: var(--s-text-cur); }
+.quiz--learning.subject-themed .progress__bar { background: var(--s-text-cur); }
+.quiz--learning.subject-themed .progress { background: var(--s-bg-cur); }

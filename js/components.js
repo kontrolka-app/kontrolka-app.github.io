@@ -50,7 +50,7 @@ export function topicCard(topic, { showSubject = false, onFavChange } = {}) {
       h(
         'div',
         { class: 'topic-card__meta' },
-        showSubject && subject ? h('span', { class: `chip chip--${subject.color}` }, subject.name) : null,
+        showSubject && subject ? h('span', { class: 'chip chip--subject subject-themed', style: subjectVars(subject) }, subject.name) : null,
         topic.section ? h('span', { class: 'muted small' }, topic.section) : null,
       ),
       h('h3', { class: 'topic-card__title' }, topic.title),
@@ -82,13 +82,20 @@ export function topicRow(topic, lastResult) {
   );
 }
 
+/** Цвет предмета из subjects.json — CSS-переменные для класса subject-themed (светлая и тёмная пара). */
+export function subjectVars(subject) {
+  const c = subject?.color;
+  if (!c || typeof c !== 'object') return null;
+  return { '--s-bg': c.bg, '--s-text': c.text, '--s-bg-dark': c.darkBg || c.bg, '--s-text-dark': c.darkText || c.text };
+}
+
 export function subjectCard(subject, grade, { hrefTo } = {}) {
   const topics = content.topics.filter((t) => t.subjectId === subject.id && t.grade === grade);
   const last = lastTopicResults(getData().history);
   const mastered = topics.filter((t) => topicStatus(last.get(t.id)) === 'mastered').length;
   return h(
     'a',
-    { class: `card subject-card subject-card--${subject.color}`, href: hrefTo || href('topics', subject.id) },
+    { class: 'card subject-card subject-themed', style: subjectVars(subject), href: hrefTo || href('topics', subject.id) },
     h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, subject.icon || '📘'),
     h(
       'span',

@@ -1,7 +1,8 @@
 // Экран прохождения тренировки.
 import { h, icon, button, confirmDialog, progressBar, emptyState, linkButton } from '../ui.js';
 import { href, navigate, setLeaveGuard } from '../router.js';
-import { getData } from '../state.js';
+import { getData, content } from '../state.js';
+import { subjectVars } from '../components.js';
 import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion, correctStreak } from '../quiz.js';
 import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.js';
 import { saveActive, completeActive } from '../session.js';
@@ -19,7 +20,8 @@ export function quizScreen() {
     );
   }
 
-  const root = h('div', { class: `quiz quiz--${session.settings.mode === 'control' ? 'control' : 'learning'}` });
+  const subject = content.subjectById.get(session.source.subjectId);
+  const root = h('div', { class: `quiz quiz--${session.settings.mode === 'control' ? 'control' : 'learning'}${subject ? ' subject-themed' : ''}`, style: subjectVars(subject) });
   let hintShown = false;
   let currentForm = null;
 
