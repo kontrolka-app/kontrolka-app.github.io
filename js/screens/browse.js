@@ -4,7 +4,7 @@ import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
 import { selectQuestions } from '../quiz.js';
-import { overallStats, weakTopics } from '../results.js';
+import { overallStats, weakTopics, lastTopicResults, pendingMistakes } from '../results.js';
 import { startTraining } from '../session.js';
 import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome } from '../catalog.js';
 import { formatDate, plural } from '../utils.js';
@@ -322,12 +322,12 @@ function linksBlock(subject) {
 }
 
 /** Блок с правилом по теме — используется и на странице темы, и в разборе результатов. */
-export function theoryBlock(topic, { open = true, headingLevel = 'h2' } = {}) {
+export function theoryBlock(topic, { open = true, headingLevel = 'h2', title = `📘 Правило: ${topic.title}` } = {}) {
   if (!topic.theory?.length) return null;
   return h(
     'details',
     { class: 'card theory', open },
-    h('summary', { class: 'theory__summary' }, h(headingLevel, { class: 'card__title' }, `📘 Правило: ${topic.title}`)),
+    h('summary', { class: 'theory__summary' }, h(headingLevel, { class: 'card__title' }, title)),
     h(
       'div',
       { class: 'theory__body' },
@@ -342,22 +342,54 @@ export function topicScreen(topicId) {
   if (!topic) return notFound('Такой темы нет');
   const subject = content.subjectById.get(topic.subjectId);
   const pool = content.questionsByTopic.get(topic.id) || [];
+  const history = getData().history;
+  const last = lastTopicResults(history).get(topic.id);
+
+  // Ошибки к разбору — только те вопросы, что ещё есть в заданиях.
+  const byId = new Map(pool.map((q) => [q.id, q]));
+  const pending = pendingMistakes(history, topic.id);
+  const wrongQs = pending.wrong.map((id) => byId.get(id)).filter(Boolean);
+  const skippedQs = pending.skipped.map((id) => byId.get(id)).filter(Boolean);
+  const mistakeQs = [...wrongQs, ...skippedQs];
+  const n = mistakeQs.length;
+  const mistakesLabel = skippedQs.length ? `Повторить ошибки и пропуски (${n})` : `Повторить ${n} ${plural(n, ['ошибку', 'ошибки', 'ошибок'])}`;
+
+  const miniStat = (label, value) => h('div', { class: 'mini-stats__item' }, h('dt', {}, label), h('dd', {}, value));
   return h(
     'div',
     { class: 'stack' },
     pageHeader(topic.title, {
       back: href('topics', topic.subjectId),
-      subtitle: `${subject?.name || ''} · ${topic.grade} класс${topic.section ? ` · ${topic.section}` : ''}`,
+      subtitle: [subject?.name, topic.section].filter(Boolean).join(' · '),
       actions: favoriteButton(topic.id),
     }),
     topic.description ? h('p', { class: 'lead' }, topic.description) : null,
     h(
+      'dl',
+      { class: 'mini-stats' },
+      miniStat('Последний результат', last ? `${last.percent}%` : '—'),
+      miniStat('Ошибок к разбору', String(n)),
+      miniStat('Всего заданий', String(pool.length)),
+    ),
+    h(
       'div',
-      { class: 'layout-2' },
-      h('div', { class: 'stack' }, theoryBlock(topic, { open: true }), subject ? linksBlock(subject) : null),
+      { class: 'topic-main' },
       setupForm({
         pool,
         idPrefix: 'topic',
+        primaryAction: n
+          ? {
+              label: mistakesLabel,
+              onClick: (opts) =>
+                startTraining({
+                  questions: mistakeQs,
+                  source: { kind: 'topic', topicIds: [topic.id], subjectId: topic.subjectId, title: `Работа над ошибками: ${topic.title}` },
+                  settings: { ...opts, count: n, order: 'original' },
+                }),
+            }
+          : null,
+        // Правило раскрыто, пока тему ни разу не проходили.
+        beforeMore: theoryBlock(topic, { open: !last, title: 'Вспомнить правило' }),
         onStart: (opts) =>
           startTraining({
             questions: selectQuestions(pool, opts),
@@ -365,6 +397,7 @@ export function topicScreen(topicId) {
             settings: opts,
           }),
       }),
+      subject ? linksBlock(subject) : null,
     ),
   );
 }

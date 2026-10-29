@@ -408,3 +408,18 @@ details.card > .review-list { margin-top: 12px; }
 .noscript { padding: 24px; text-align: center; }
 
 .icon { flex-shrink: 0; }
+
+/* ---------- Страница темы: мини-статистика, запуск, «Ещё настройки» ---------- */
+.mini-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; max-width: 760px; }
+.mini-stats__item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.mini-stats dt { font-size: 0.8rem; color: var(--text-muted); line-height: 1.25; }
+.mini-stats dd { margin: 2px 0 0; font-size: 1.3rem; font-weight: 800; }
+.topic-main { display: flex; flex-direction: column; gap: var(--gap); max-width: 760px; }
+.setup-form__actions { display: flex; flex-direction: column; gap: 10px; }
+.setup-more__summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 700; }
+.setup-more__summary::-webkit-details-marker { display: none; }
+.setup-more__summary::after { content: '▾'; margin-left: auto; color: var(--text-muted); transition: transform 0.2s; }
+.setup-more:not([open]) .setup-more__summary::after { transform: rotate(-90deg); }
+.setup-more__body { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; }
+.segmented--chips .segmented__option { flex: 0 0 auto; }
+.segmented--chips .segmented__option span { min-width: 56px; }

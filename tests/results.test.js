@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { percentOf, computeResult, buildHistoryEntry, deltaFromPrevious, weakTopics, overallStats, correctAnswerText, givenAnswerText, verdict, shareText } from '../js/results.js';
+import { percentOf, computeResult, buildHistoryEntry, deltaFromPrevious, weakTopics, overallStats, correctAnswerText, givenAnswerText, verdict, shareText, lastTopicResults, topicStatus, pendingMistakes, MASTERED_PERCENT, REVIEW_PERCENT } from '../js/results.js';
 import { createSession, submitAnswer, goNext, finishSession } from '../js/quiz.js';
 import { Q } from './helpers.js';
 
@@ -85,4 +85,29 @@ test('computeResult на пустой сессии не делит на ноль
   const r = computeResult({ questions: [], answers: {}, startedAt: 0, finishedAt: 0 });
   assert.equal(r.percent, 0);
   assert.equal(r.total, 0);
+});
+
+test('последний результат и статус темы', () => {
+  const older = buildHistoryEntry(play(['b', true, '16'])); // t1: 2 из 2, t2: 1 из 1
+  const newer = buildHistoryEntry(play(['b', false, '16'])); // t1: 1 из 2
+  const last = lastTopicResults([newer, older]);
+  assert.equal(last.get('t1').percent, 50, 'берётся самая новая попытка');
+  assert.equal(last.get('t2').percent, 100);
+  assert.equal(topicStatus(last.get('t1')), 'progress');
+  assert.equal(topicStatus(last.get('t2')), 'mastered');
+  assert.equal(topicStatus(undefined), 'new');
+  assert.equal(topicStatus({ percent: MASTERED_PERCENT }), 'mastered');
+  assert.equal(topicStatus({ percent: MASTERED_PERCENT - 1 }), 'progress');
+  assert.ok(REVIEW_PERCENT < MASTERED_PERCENT);
+  assert.equal(lastTopicResults([]).size, 0);
+});
+
+test('ошибки к разбору: последний ответ решает', () => {
+  const first = buildHistoryEntry(play(['c', false])); // t1: оба неверно, t2: пропуск
+  assert.deepEqual(pendingMistakes([first], 't1'), { wrong: ['q-choice', 'q-tf'], skipped: [] });
+  assert.deepEqual(pendingMistakes([first], 't2'), { wrong: [], skipped: ['q-num'] });
+  // Потом исправил ошибку в q-choice — она больше не к разбору.
+  const fixed = buildHistoryEntry(play(['b'], [Q.choice]));
+  assert.deepEqual(pendingMistakes([fixed, first], 't1'), { wrong: ['q-tf'], skipped: [] });
+  assert.deepEqual(pendingMistakes([], 't1'), { wrong: [], skipped: [] });
 });

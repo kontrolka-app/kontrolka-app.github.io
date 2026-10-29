@@ -82,10 +82,10 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
   );
 }
 
-function radioGroup(name, legend, options, value, onChange) {
+function radioGroup(name, legend, options, value, onChange, extraClass = '') {
   return h(
     'fieldset',
-    { class: 'field segmented' },
+    { class: `field segmented ${extraClass}`.trim() },
     h('legend', { class: 'field__label' }, legend),
     h(
       'div',
@@ -103,11 +103,14 @@ function radioGroup(name, legend, options, value, onChange) {
 }
 
 /**
- * Форма настройки тренировки.
- * pool — доступные вопросы; onStart({ questions-настройки }) вызывается при отправке.
+ * Форма запуска тренировки: режим, главная кнопка «Начать — N вопросов»,
+ * остальные настройки свёрнуты в «Ещё настройки».
+ * pool — доступные вопросы; onStart(настройки) вызывается при отправке.
  * forceMode — для «пробной контрольной» режим по умолчанию «контрольная».
+ * primaryAction — { label, onClick(настройки) }: главная кнопка вместо «Начать» (например, «Повторить ошибки»).
+ * beforeMore — блок между кнопками и «Ещё настройками» (например, правило).
  */
-export function setupForm({ pool, onStart, forceMode, idPrefix = 'setup' }) {
+export function setupForm({ pool, onStart, forceMode, idPrefix = 'setup', primaryAction, beforeMore }) {
   const s = settings();
   const state = {
     count: s.defaultCount,
@@ -116,31 +119,36 @@ export function setupForm({ pool, onStart, forceMode, idPrefix = 'setup' }) {
     order: s.defaultOrder,
     showExplanation: s.showExplanation,
   };
+  // Чипы количества: 5 / 10 / 20 и число из настроек, если оно другое (15, 30).
+  const presets = [...new Set([5, 10, 20, s.defaultCount])].sort((a, b) => a - b);
 
-  const countInput = h('input', { type: 'number', id: `${idPrefix}-count`, class: 'input input--short', min: '1', inputMode: 'numeric' });
-  const countHint = h('p', { class: 'field__hint', id: `${idPrefix}-count-hint` });
-  countInput.setAttribute('aria-describedby', countHint.id);
-  const startBtn = h('button', { class: 'btn btn--primary btn--lg btn--block', type: 'submit' }, icon('play'), h('span', {}, 'Начать'));
+  const countSlot = h('div');
+  const countHint = h('p', { class: 'field__hint' });
+  const startBtn = h('button', { class: `btn btn--${primaryAction ? 'secondary' : 'primary'} btn--lg btn--block`, type: 'submit' }, icon('play'), h('span', {}));
   const explanationRow = h('div');
 
   const available = () => countAvailable(pool, state.difficulty);
+  const effectiveCount = () => Math.min(state.count, available());
   const refresh = () => {
     const max = available();
-    countInput.max = String(max);
-    if (state.count > max) state.count = max;
     if (state.count < 1 && max > 0) state.count = Math.min(10, max);
-    countInput.value = String(state.count);
-    countInput.disabled = max === 0;
+    const n = effectiveCount();
     startBtn.disabled = max === 0;
+    startBtn.lastChild.textContent = max === 0 ? 'Нет заданий' : `Начать — ${n} ${plural(n, ['вопрос', 'вопроса', 'вопросов'])}`;
     countHint.textContent = max === 0 ? 'С такой сложностью заданий нет — выбери другую.' : `Доступно заданий: ${max}. Повторов не будет.`;
     explanationRow.hidden = state.mode !== 'learning';
   };
-
-  countInput.addEventListener('input', () => {
-    const v = parseInt(countInput.value, 10);
-    if (Number.isFinite(v)) state.count = Math.max(1, Math.min(v, available()));
-  });
-  countInput.addEventListener('change', refresh);
+  // Чипы перерисовываем только при смене сложности — иначе после выбора числа терялся бы фокус.
+  const renderCount = () => {
+    const max = available();
+    countSlot.textContent = '';
+    const options = presets.filter((p) => p < max).map((p) => ({ value: String(p), label: String(p) }));
+    options.push({ value: 'all', label: `Все (${max})` });
+    const checked = state.count >= max ? 'all' : String(state.count);
+    countSlot.appendChild(
+      radioGroup(`${idPrefix}-count`, 'Количество вопросов', options, checked, (v) => ((state.count = v === 'all' ? Infinity : Number(v)), refresh()), 'segmented--chips'),
+    );
+  };
 
   const difficultyOptions = [
     { value: 'all', label: `Любая (${countAvailable(pool, 'all')})` },
@@ -150,7 +158,7 @@ export function setupForm({ pool, onStart, forceMode, idPrefix = 'setup' }) {
   ];
   const difficultySelect = h(
     'select',
-    { class: 'input', id: `${idPrefix}-difficulty`, onchange: (e) => ((state.difficulty = e.target.value), refresh()) },
+    { class: 'input', id: `${idPrefix}-difficulty`, onchange: (e) => ((state.difficulty = e.target.value), renderCount(), refresh()) },
     difficultyOptions.map((o) => h('option', { value: o.value, selected: o.value === state.difficulty }, o.label)),
   );
 
@@ -163,56 +171,65 @@ export function setupForm({ pool, onStart, forceMode, idPrefix = 'setup' }) {
     ),
   );
 
-  const quick = h(
-    'div',
-    { class: 'quick-counts' },
-    [5, 10, 20].map((n) =>
-      h('button', { type: 'button', class: 'chip-btn', onclick: () => ((state.count = Math.min(n, available())), refresh()) }, String(n)),
-    ),
-    h('button', { type: 'button', class: 'chip-btn', onclick: () => ((state.count = available()), refresh()) }, 'Все'),
+  const modeGroup = radioGroup(
+    `${idPrefix}-mode`,
+    'Как тренируемся?',
+    [
+      { value: 'learning', label: 'С подсказками' },
+      { value: 'control', label: 'Как на контрольной' },
+    ],
+    state.mode,
+    (v) => ((state.mode = v), refresh(), (modeHint.textContent = modeText(v))),
   );
+  const modeHint = h('p', { class: 'field__hint' }, modeText(state.mode));
+  modeGroup.appendChild(modeHint);
 
   const form = h(
     'form',
     {
-      class: 'card setup-form',
+      class: 'setup-form',
       novalidate: true,
       onsubmit: (e) => {
         e.preventDefault();
         refresh();
         if (available() === 0) return;
-        onStart({ ...state });
+        onStart({ ...state, count: effectiveCount() });
       },
     },
-    h('h2', { class: 'card__title' }, 'Настройка тренировки'),
-    h('div', { class: 'field' }, h('label', { class: 'field__label', for: countInput.id }, 'Количество вопросов'), h('div', { class: 'row' }, countInput, quick), countHint),
-    h('div', { class: 'field' }, h('label', { class: 'field__label', for: difficultySelect.id }, 'Сложность'), difficultySelect),
-    radioGroup(
-      `${idPrefix}-mode`,
-      'Режим',
-      [
-        { value: 'learning', label: '📖 Обучение' },
-        { value: 'control', label: '📝 Контрольная' },
-      ],
-      state.mode,
-      (v) => ((state.mode = v), refresh(), (modeHint.textContent = modeText(v))),
+    modeGroup,
+    h(
+      'div',
+      { class: 'setup-form__actions' },
+      primaryAction
+        ? h('button', { type: 'button', class: 'btn btn--primary btn--lg btn--block', onclick: () => primaryAction.onClick({ ...state }) }, icon('history'), h('span', {}, primaryAction.label))
+        : null,
+      startBtn,
     ),
-    null,
-    radioGroup(
-      `${idPrefix}-order`,
-      'Порядок вопросов',
-      [
-        { value: 'random', label: 'Случайный' },
-        { value: 'original', label: 'По порядку' },
-      ],
-      state.order,
-      (v) => (state.order = v),
+    beforeMore || null,
+    h(
+      'details',
+      { class: 'card setup-more' },
+      h('summary', { class: 'setup-more__summary' }, 'Ещё настройки: количество, сложность, порядок'),
+      h(
+        'div',
+        { class: 'setup-more__body' },
+        h('div', { class: 'field' }, countSlot, countHint),
+        h('div', { class: 'field' }, h('label', { class: 'field__label', for: difficultySelect.id }, 'Сложность'), difficultySelect),
+        radioGroup(
+          `${idPrefix}-order`,
+          'Порядок вопросов',
+          [
+            { value: 'random', label: 'Случайный' },
+            { value: 'original', label: 'По порядку' },
+          ],
+          state.order,
+          (v) => (state.order = v),
+        ),
+        explanationRow,
+      ),
     ),
-    explanationRow,
-    startBtn,
   );
-  const modeHint = h('p', { class: 'field__hint' }, modeText(state.mode));
-  form.querySelector('fieldset').appendChild(modeHint);
+  renderCount();
   refresh();
   return form;
 }

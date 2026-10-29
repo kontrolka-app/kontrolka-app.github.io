@@ -1,5 +1,10 @@
 // Подсчёт результатов, разбор ошибок и статистика истории. Без DOM.
 
+/** Тема освоена, если в последней попытке не меньше стольких процентов. */
+export const MASTERED_PERCENT = 80;
+/** Ниже этого процента тему стоит повторить (тот же порог, что «Хорошо!» в результатах). */
+export const REVIEW_PERCENT = 70;
+
 /** Процент выполнения; при нуле заданий — 0 (без деления на ноль). */
 export function percentOf(correct, total) {
   if (!total || total <= 0) return 0;
@@ -91,7 +96,7 @@ export function computeResult(session) {
 /** Короткий отзыв без перевода в школьную оценку. */
 export function verdict(percent) {
   if (percent >= 90) return { level: 'great', title: 'Отлично!', text: 'Ты хорошо знаешь эту тему.' };
-  if (percent >= 70) return { level: 'good', title: 'Хорошо!', text: 'Осталось разобрать несколько ошибок.' };
+  if (percent >= REVIEW_PERCENT) return { level: 'good', title: 'Хорошо!', text: 'Осталось разобрать несколько ошибок.' };
   if (percent >= 50) return { level: 'ok', title: 'Неплохо, но надо повторить', text: 'Прочитай правило и разбор ошибок ниже, потом попробуй ещё раз.' };
   return { level: 'low', title: 'Тему стоит повторить', text: 'Не расстраивайся: прочитай объяснения ниже, повтори правило и пройди тренировку ещё раз.' };
 }
@@ -149,6 +154,43 @@ export function weakTopics(history, { limit = 5 } = {}) {
     .filter((t) => t.mistakes > 0)
     .sort((a, b) => b.mistakes - a.mistakes || a.percent - b.percent)
     .slice(0, limit);
+}
+
+/** Последний результат по каждой теме (история — новые сначала): Map topicId → { percent, finishedAt }. */
+export function lastTopicResults(history) {
+  const last = new Map();
+  for (const h of history) {
+    for (const [topicId, s] of Object.entries(h.topicStats || {})) {
+      if (topicId === '_custom' || last.has(topicId) || !s.total) continue;
+      last.set(topicId, { percent: percentOf(s.correct, s.total), finishedAt: h.finishedAt });
+    }
+  }
+  return last;
+}
+
+/** Статус темы по последнему результату: 'new' — не начата, 'progress' — в процессе, 'mastered' — освоена. */
+export function topicStatus(lastResult) {
+  if (!lastResult) return 'new';
+  return lastResult.percent >= MASTERED_PERCENT ? 'mastered' : 'progress';
+}
+
+/**
+ * Ошибки к разбору по теме: вопросы, на которые в последний раз ответили неверно или пропустили.
+ * Если потом ответил верно — вопрос считается выученным.
+ */
+export function pendingMistakes(history, topicId) {
+  const seen = new Set();
+  const wrong = [];
+  const skipped = [];
+  for (const h of history) {
+    for (const r of h.review || []) {
+      if (r.topicId !== topicId || seen.has(r.questionId)) continue;
+      seen.add(r.questionId);
+      if (r.status === 'wrong') wrong.push(r.questionId);
+      else if (r.status === 'skipped') skipped.push(r.questionId);
+    }
+  }
+  return { wrong, skipped };
 }
 
 /** Общая статистика для главной. */
