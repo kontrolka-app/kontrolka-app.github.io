@@ -4,10 +4,10 @@
     "name": "Русский язык",
     "icon": "📝",
     "color": {
-      "bg": "#FDE3DA",
-      "text": "#9A2E12",
-      "darkBg": "#4A2318",
-      "darkText": "#FFC9B8"
+      "bg": "#F4E8E2",
+      "text": "#8A3B24",
+      "darkBg": "#3A2620",
+      "darkText": "#EBC3B4"
     },
     "searchExample": "глагол",
     "grades": [
