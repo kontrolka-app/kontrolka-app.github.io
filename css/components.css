@@ -544,7 +544,8 @@ details.card > .review-list { margin-top: 12px; }
 .poem-card .status-pill { align-self: flex-start; padding-left: 10px; }
 .poem-page { max-width: 760px; }
 .poem-text { display: flex; flex-direction: column; gap: 18px; font-size: 1.2rem; line-height: 1.7; }
-.poem-line { margin: 0; }
+.poem-line { margin: 0; padding-left: 1.5em; text-indent: -1.5em; } /* перенесённая часть строки — с отступом */
+@media (max-width: 599px) { .poem-text { font-size: 1.1rem; } }
 .poem-gap { display: inline-flex; align-items: center; gap: 1px; padding: 0; border: none; background: none; font: inherit; color: var(--text); cursor: pointer; vertical-align: baseline; min-height: 32px; }
 .poem-gap__bar { display: inline-block; height: 0.9em; border-radius: 4px; background: var(--border); vertical-align: middle; }
 .poem-gap:hover .poem-gap__bar { background: color-mix(in srgb, var(--primary) 30%, var(--border)); }

@@ -151,15 +151,28 @@ function trainer(poem, header) {
     renderText();
   };
 
+  const partOptions = [['all', 'Всё стихотворение'], ...stanzas.map((_, i) => [i, `${i + 1}-я строфа`])];
   const parts =
-    stanzas.length > 1
+    stanzas.length > 6
+      ? // Много строф (как в «Руси») — выпадающий список вместо ряда кнопок.
+        h(
+          'div',
+          { class: 'field' },
+          h('label', { class: 'field__label', for: 'poem-part' }, 'Что учим'),
+          h(
+            'select',
+            { class: 'input', id: 'poem-part', onchange: (e) => ((part = e.target.value === 'all' ? 'all' : Number(e.target.value)), go(0)) },
+            partOptions.map(([v, label]) => h('option', { value: v }, label)),
+          ),
+        )
+      : stanzas.length > 1
       ? h(
           'div',
           { class: 'segmented segmented--chips' },
           h(
             'div',
             { class: 'segmented__options', role: 'radiogroup', 'aria-label': 'Что учим' },
-            [['all', 'Всё стихотворение'], ...stanzas.map((_, i) => [i, `${i + 1}-я строфа`])].map(([v, label]) =>
+            partOptions.map(([v, label]) =>
               h(
                 'label',
                 { class: 'segmented__option' },
