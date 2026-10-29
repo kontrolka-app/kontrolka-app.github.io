@@ -1,19 +1,38 @@
 /* Базовые стили: цветовые токены, светлая/тёмная тема, типографика. */
+
+/* Nunito лежит в проекте (assets/fonts, лицензия SIL OFL — OFL.txt): сайт не обращается к Google. */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url(../assets/fonts/nunito-cyrillic-wght-normal.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url(../assets/fonts/nunito-latin-wght-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  --blue: #2f5bea;
-  --blue-strong: #2347c4;
+  --blue: #2f4fd8;
+  --blue-strong: #2440b8;
   --violet: #7b4ee6;
   --teal: #0f9f8f;
   --orange: #e07a10;
 
-  --bg: #f4f6fc;
+  --bg: #f7f5f0; /* тёплый фон вместо сине-лавандового */
   --surface: #ffffff;
-  --surface-2: #eef2fd;
-  --surface-soft: #f2effd;
-  --text: #182035;
-  --text-muted: #5a6582;
-  --border: #dde3f2;
-  --focus: #2f5bea;
+  --surface-2: #eceffb;
+  --surface-soft: #f3efe6;
+  --text: #1b1f3b;
+  --text-muted: #4f5672; /* темнее, чем было: мелкие подписи читаются лучше */
+  --border: #e3dfd4;
+  --focus: #2f4fd8;
   --primary: var(--blue);
   --primary-text: #ffffff;
   --primary-hover: var(--blue-strong);
@@ -28,7 +47,7 @@
   --radius: 18px;
   --radius-sm: 12px;
   --gap: 16px;
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --base-size: 17px;
   color-scheme: light;
 }
@@ -44,6 +63,7 @@
     --border: #2c3858;
     --focus: #8eaaff;
     --primary: #5b7ff5;
+    --primary-text: #0b1020; /* белый на #5b7ff5 — всего 3,6:1 */
     --primary-hover: #7593ff;
     --ok: #5fd39a;
     --ok-bg: #143327;
@@ -67,6 +87,7 @@
   --border: #2c3858;
   --focus: #8eaaff;
   --primary: #5b7ff5;
+  --primary-text: #0b1020;
   --primary-hover: #7593ff;
   --ok: #5fd39a;
   --ok-bg: #143327;
@@ -102,7 +123,8 @@ body {
   overflow-wrap: break-word;
 }
 
-h1, h2, h3 { line-height: 1.25; margin: 0; hyphens: auto; -webkit-hyphens: auto; }
+h1, h2, h3 { line-height: 1.25; margin: 0; font-weight: 800; hyphens: auto; -webkit-hyphens: auto; }
+h1 { font-weight: 900; }
 h1 { font-size: 1.45rem; }
 h2 { font-size: 1.25rem; }
 h3 { font-size: 1.05rem; }
@@ -141,7 +163,7 @@ img, svg { max-width: 100%; }
 .skip-link:focus { top: 8px; color: var(--primary-text); }
 
 .muted { color: var(--text-muted); }
-.small { font-size: 0.85rem; }
+.small { font-size: 0.9rem; }
 .center { text-align: center; }
 .lead { font-size: 1.05rem; color: var(--text-muted); }
 
