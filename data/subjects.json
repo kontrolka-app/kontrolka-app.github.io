@@ -2,7 +2,7 @@
   {
     "id": "russian",
     "name": "Русский язык",
-    "icon": "text",
+    "icon": "📝",
     "color": {
       "bg": "#FDE3DA",
       "text": "#9A2E12",
@@ -26,7 +26,7 @@
   {
     "id": "math",
     "name": "Математика",
-    "icon": "calc",
+    "icon": "🔢",
     "color": {
       "bg": "#E3E9FF",
       "text": "#2440B8",
@@ -50,7 +50,7 @@
   {
     "id": "world",
     "name": "Окружающий мир",
-    "icon": "globe",
+    "icon": "🌍",
     "color": {
       "bg": "#DDF3E6",
       "text": "#17663A",
@@ -74,7 +74,7 @@
   {
     "id": "reading",
     "name": "Литературное чтение",
-    "icon": "book-open",
+    "icon": "📚",
     "color": {
       "bg": "#FFF0C7",
       "text": "#7A5300",

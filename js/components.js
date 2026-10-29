@@ -1,5 +1,5 @@
 // Повторно используемые части экранов.
-import { h, icon, hasIcon } from './ui.js';
+import { h, icon } from './ui.js';
 import { href } from './router.js';
 import { content, isFavorite, toggleFavorite, topicDifficulty, settings, getData } from './state.js';
 import { countAvailable } from './quiz.js';
@@ -96,7 +96,7 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
   return h(
     'a',
     { class: 'card subject-card subject-themed', style: subjectVars(subject), href: hrefTo || href('topics', subject.id) },
-    h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, icon(hasIcon(subject.icon) ? subject.icon : 'book', { size: 28 })),
+    h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, subject.icon || '📘'),
     h(
       'span',
       { class: 'subject-card__text' },

@@ -51,7 +51,7 @@ function reviewItem(r, index, canReport) {
     h('p', { class: 'review-item__q' }, r.question),
     r.status !== 'correct' ? h('p', {}, h('span', { class: 'muted' }, 'Твой ответ: '), h('span', { class: 'answer-wrong' }, r.given)) : null,
     h('p', {}, h('span', { class: 'muted' }, r.status === 'correct' ? 'Ответ: ' : 'Правильный ответ: '), h('strong', {}, r.correct)),
-    r.feedback ? h('p', { class: 'review-item__fb' }, icon('alert', { size: 18 }), h('span', {}, r.feedback)) : null,
+    r.feedback ? h('p', { class: 'review-item__fb' }, `⚠️ ${r.feedback}`) : null,
     r.explanation ? h('p', { class: 'review-item__expl' }, h('strong', {}, 'Объяснение: '), r.explanation) : null,
     content.topicById.get(r.topicId)?.theory?.length ? h('a', { class: 'small', href: href('topic', r.topicId, 'rule') }, 'Открыть правило') : null,
     canReport ? reportControl({ questionId: r.questionId, topicId: r.topicId, question: r.question, given: r.given, correct: r.correct }) : null,
@@ -167,7 +167,7 @@ export function resultScreen(entryId) {
       ),
     );
   } else {
-    root.appendChild(h('section', { class: 'card' }, emptyState({ iconName: 'trophy', title: 'Ни одной ошибки!', text: 'Можно попробовать сложные задания или другую тему.' })));
+    root.appendChild(h('section', { class: 'card' }, emptyState({ emoji: '🏆', title: 'Ни одной ошибки!', text: 'Можно попробовать сложные задания или другую тему.' })));
   }
 
   if (weakTopicBlocks.length) {
@@ -208,7 +208,7 @@ export function historyScreen() {
       'div',
       { class: 'stack' },
       pageHeader('Прогресс', { back: href('home') }),
-      h('div', { class: 'card' }, emptyState({ iconName: 'chart', title: 'Пока нет завершённых тренировок', text: 'Здесь будут результаты и то, как они меняются.', action: linkButton(href('subjects'), 'Начать тренировку') })),
+      h('div', { class: 'card' }, emptyState({ emoji: '📈', title: 'Пока нет завершённых тренировок', text: 'Здесь будут результаты и то, как они меняются.', action: linkButton(href('subjects'), 'Начать тренировку') })),
     );
   }
   const weak = weakTopics(history).filter((w) => content.topicById.has(w.topicId));

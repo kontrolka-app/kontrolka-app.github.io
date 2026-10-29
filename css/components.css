@@ -365,11 +365,7 @@ details.card > .review-list { margin-top: 12px; }
 
 /* ---------- Пустые состояния, загрузка, уведомления, диалог ---------- */
 .empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 12px; }
-.empty__icon { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--surface-2); color: var(--primary); }
-.card__title--icon { display: flex; align-items: center; gap: 8px; }
-.card__title--icon .icon { flex-shrink: 0; color: var(--primary); }
-.hint, .review-item__fb { display: flex; align-items: flex-start; gap: 8px; }
-.hint .icon, .review-item__fb .icon { flex-shrink: 0; margin-top: 2px; }
+.empty__emoji { font-size: 2.5rem; }
 .empty p { color: var(--text-muted); max-width: 46ch; }
 .empty .btn { margin-top: 6px; }
 
@@ -512,3 +508,7 @@ details.card > .review-list { margin-top: 12px; }
 .welcome-subjects__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
 .welcome-subject { justify-content: flex-start; background: var(--s-bg-cur); color: var(--s-text-cur); border-color: transparent; }
 .welcome-subject:hover { border-color: var(--s-text-cur); color: var(--s-text-cur); }
+
+/* Заголовок карточки со значком (блок «Мои тесты» на экране «Я»). */
+.card__title--icon { display: flex; align-items: center; gap: 8px; }
+.card__title--icon .icon { flex-shrink: 0; color: var(--primary); }

@@ -1,5 +1,5 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, hasIcon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
+import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars } from '../components.js';
@@ -140,14 +140,14 @@ export function homeScreen() {
         h('div', { class: 'section-head' }, h('h2', {}, `Предметы · ${grade} класс`), h('a', { href: href('grade'), class: 'small' }, 'Сменить класс')),
         subjects.length
           ? h('div', { class: 'grid grid--2' }, subjects.map((sub) => subjectCard(sub, grade)))
-          : h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас есть материалы только для 4 класса. Можно выбрать другой класс или составить свой тест.', action: linkButton(href('grade'), 'Выбрать класс') })),
+          : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас есть материалы только для 4 класса. Можно выбрать другой класс или составить свой тест.', action: linkButton(href('grade'), 'Выбрать класс') })),
       ),
     );
 
     // ВПР — сразу под предметами, олимпиада — скромнее.
     const special = [
-      { section: 'ВПР и МЦКО', iconName: 'target', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.', cls: 'card card--accent stack' },
-      { section: 'Олимпиада', iconName: 'medal', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.', cls: 'card stack' },
+      { section: 'ВПР и МЦКО', emoji: '🎯', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.', cls: 'card card--accent stack' },
+      { section: 'Олимпиада', emoji: '🏅', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.', cls: 'card stack' },
     ]
       .map((x) => ({ ...x, topics: gradeTopics.filter((t) => t.section === x.section) }))
       .filter((x) => x.topics.length);
@@ -156,7 +156,7 @@ export function homeScreen() {
         h(
           'section',
           { class: x.cls },
-          h('div', {}, h('h2', { class: 'card__title card__title--icon' }, icon(x.iconName), h('span', {}, x.title)), h('p', { class: 'muted' }, x.text)),
+          h('div', {}, h('h2', { class: 'card__title' }, `${x.emoji} ${x.title}`), h('p', { class: 'muted' }, x.text)),
           h(
             'div',
             { class: 'row wrap' },
@@ -274,7 +274,7 @@ export function welcomeScreen() {
                 h(
                   'button',
                   { type: 'button', class: 'btn btn--secondary btn--lg subject-themed welcome-subject', style: subjectVars(sub), onclick: () => finish(typedName(), sub.id) },
-                  icon(hasIcon(sub.icon) ? sub.icon : 'book'),
+                  h('span', { 'aria-hidden': 'true' }, sub.icon || '📘'),
                   h('span', {}, sub.name),
                 ),
               ),
@@ -322,7 +322,7 @@ export function gradeScreen() {
             ),
           ),
         )
-      : h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: 'Задания не загрузились', text: 'Обнови страницу. Если не помогло — попробуй позже.' })),
+      : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Задания не загрузились', text: 'Обнови страницу. Если не помогло — попробуй позже.' })),
     soon.length && available.length ? h('p', { class: 'muted' }, `Скоро: ${gradeRangesText(soon)} класс`) : null,
   );
 }
@@ -340,7 +340,7 @@ export function subjectsScreen() {
     pageHeader('Темы', { back: href('home'), subtitle: `${grade} класс · выбери предмет`, actions: h('a', { class: 'btn btn--ghost', href: href('grade') }, 'Сменить класс') }),
     subjects.length
       ? h('div', { class: 'grid grid--2' }, subjects.map((s) => subjectCard(s, grade)))
-      : h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас материалы есть только для 4 класса.', action: linkButton(href('grade'), 'Выбрать другой класс') })),
+      : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас материалы есть только для 4 класса.', action: linkButton(href('grade'), 'Выбрать другой класс') })),
   );
 }
 
@@ -382,14 +382,14 @@ export function topicsScreen(subjectId) {
     list.textContent = '';
     if (reviewBlock) reviewBlock.hidden = Boolean(q);
     if (!topics.length) {
-      list.appendChild(h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: `Для ${grade} класса тем по этому предмету пока нет`, action: linkButton(href('subjects'), 'К предметам') })));
+      list.appendChild(h('div', { class: 'card' }, emptyState({ emoji: '📭', title: `Для ${grade} класса тем по этому предмету пока нет`, action: linkButton(href('subjects'), 'К предметам') })));
     } else if (nothingFound) {
       list.appendChild(
         h(
           'div',
           { class: 'card' },
           emptyState({
-            iconName: 'search',
+            emoji: '🔍',
             title: 'Темы не найдены',
             text: `По запросу «${input.value.trim()}» ничего нет.`,
             action: h('button', { type: 'button', class: 'btn btn--secondary', onclick: () => ((input.value = ''), render(), input.focus()) }, 'Очистить поиск'),
@@ -417,7 +417,7 @@ export function topicsScreen(subjectId) {
   return h(
     'div',
     { class: 'stack topics-page subject-themed', style: subjectVars(subject) },
-    pageHeader(subject.name, { back: href('subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
+    pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href('subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
     reviewBlock,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
@@ -436,12 +436,12 @@ function linksBlock(subject) {
 }
 
 /** Блок с правилом по теме — используется и на странице темы, и в разборе результатов. */
-export function theoryBlock(topic, { open = true, headingLevel = 'h2', title = `Правило: ${topic.title}` } = {}) {
+export function theoryBlock(topic, { open = true, headingLevel = 'h2', title = `📘 Правило: ${topic.title}` } = {}) {
   if (!topic.theory?.length) return null;
   return h(
     'details',
     { class: 'card theory', open },
-    h('summary', { class: 'theory__summary' }, h(headingLevel, { class: 'card__title card__title--icon' }, icon('book'), h('span', {}, title))),
+    h('summary', { class: 'theory__summary' }, h(headingLevel, { class: 'card__title' }, title)),
     h(
       'div',
       { class: 'theory__body' },
@@ -524,7 +524,7 @@ export function examScreen(subjectId) {
       pageHeader('Пробная контрольная', { back: href('home'), subtitle: 'Вопросы из нескольких тем вперемешку — как на настоящей контрольной. Выбери предмет.' }),
       subjects.length
         ? h('div', { class: 'grid grid--2' }, subjects.map((s) => subjectCard(s, grade, { hrefTo: href('exam', s.id) })))
-        : h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: 'Для этого класса заданий пока нет', action: linkButton(href('grade'), 'Выбрать класс') })),
+        : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Для этого класса заданий пока нет', action: linkButton(href('grade'), 'Выбрать класс') })),
     );
   }
   const subject = content.subjectById.get(subjectId);
@@ -593,10 +593,10 @@ export function favoritesScreen() {
     pageHeader('Избранные темы', { back: href('home') }),
     favTopics.length
       ? h('div', { class: 'grid grid--2' }, favTopics.map((t) => topicCard(t, { showSubject: true, onFavChange: () => navigate('favorites') })))
-      : h('div', { class: 'card' }, emptyState({ iconName: 'star', title: 'Пока пусто', text: 'Нажми на звёздочку у темы, чтобы быстро возвращаться к ней.', action: linkButton(href('subjects'), 'К предметам') })),
+      : h('div', { class: 'card' }, emptyState({ emoji: '⭐', title: 'Пока пусто', text: 'Нажми на звёздочку у темы, чтобы быстро возвращаться к ней.', action: linkButton(href('subjects'), 'К предметам') })),
   );
 }
 
 export function notFound(text = 'Страница не найдена') {
-  return h('div', { class: 'card' }, emptyState({ iconName: 'compass', title: text, action: linkButton(href('home'), 'На главную') }));
+  return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: text, action: linkButton(href('home'), 'На главную') }));
 }

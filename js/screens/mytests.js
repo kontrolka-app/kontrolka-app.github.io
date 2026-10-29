@@ -96,7 +96,7 @@ export function myTestsScreen() {
           'div',
           { class: 'card' },
           emptyState({
-            iconName: 'edit',
+            emoji: '✏️',
             title: 'Своих тестов пока нет',
             text: 'Создай тест по теме ближайшей контрольной и отправь файл одноклассникам. Или открой тест, который прислали тебе.',
             action: linkButton(href('editor', 'new'), 'Создать первый тест', { iconName: 'plus' }),
