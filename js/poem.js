@@ -63,3 +63,41 @@ export function validatePoemInput({ title, text }) {
   if (t.length > POEM_TEXT_MAX) errors.push(`Слишком длинный текст: не больше ${POEM_TEXT_MAX} знаков.`);
   return errors;
 }
+
+export const CUSTOM_POEMS_LIMIT = 50;
+
+/** Пустые данные «Учим стихи» в localStorage: свои тексты и отметки «Рассказал без подсказок». */
+export function defaultPoems() {
+  return { custom: [], learned: {} };
+}
+
+/**
+ * Проверка сохранённых данных: повреждённое отбрасывается, остальное остаётся.
+ * custom: [{ id, title, author?, text, sourceId?, createdAt }] — sourceId, если текст вставлен к стиху из списка учебника.
+ */
+export function sanitizePoems(raw) {
+  const out = defaultPoems();
+  if (!raw || typeof raw !== 'object') return out;
+  const str = (v, max) => (typeof v === 'string' ? v.slice(0, max) : '');
+  if (Array.isArray(raw.custom)) {
+    const ids = new Set();
+    for (const p of raw.custom) {
+      if (!p || typeof p.id !== 'string' || !p.id || ids.has(p.id)) continue;
+      if (validatePoemInput(p).length) continue;
+      ids.add(p.id);
+      out.custom.push({
+        id: p.id.slice(0, 100),
+        title: str(p.title, 120).trim(),
+        author: str(p.author, 120).trim(),
+        text: p.text,
+        sourceId: str(p.sourceId, 100),
+        createdAt: Number.isFinite(p.createdAt) ? p.createdAt : 0,
+      });
+      if (out.custom.length >= CUSTOM_POEMS_LIMIT) break;
+    }
+  }
+  if (raw.learned && typeof raw.learned === 'object' && !Array.isArray(raw.learned)) {
+    for (const [id, at] of Object.entries(raw.learned)) if (id.length < 100 && Number.isFinite(at)) out.learned[id] = at;
+  }
+  return out;
+}

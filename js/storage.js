@@ -1,6 +1,7 @@
 // Локальное хранилище с версией схемы, проверкой данных и восстановлением. Без DOM.
 import { validateCustomTest, validateQuestion } from './validate.js';
 import { sanitizeReports } from './reports.js';
+import { defaultPoems, sanitizePoems } from './poem.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -42,6 +43,7 @@ export function defaultData() {
     customTests: [],
     activeSession: null,
     reports: [], // «Нашёл ошибку?»: какие задания ученик уже отметил
+    poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
   };
 }
 
@@ -118,6 +120,7 @@ export function sanitizeData(raw) {
     else dropped++;
   }
   data.reports = sanitizeReports(raw.reports);
+  data.poems = sanitizePoems(raw.poems);
   return { data, dropped };
 }
 

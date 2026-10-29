@@ -45,3 +45,15 @@ test('первая буква и проверка своего стихотво�
   assert.equal(validatePoemInput({ title: ' ', text: '' }).length, 2);
   assert.equal(validatePoemInput({ title: 'x', text: 'а'.repeat(6000) }).length, 1);
 });
+
+test('хранение: свои стихи и отметки проверяются, старые данные читаются', async () => {
+  const { sanitizePoems } = await import('../js/poem.js');
+  const { sanitizeData } = await import('../js/storage.js');
+  const good = { id: 'p1', title: 'Моё', text: 'Строка раз\nСтрока два', createdAt: 5 };
+  const r = sanitizePoems({ custom: [good, good, { id: 'p2', title: '', text: 'x' }, null], learned: { p1: 10, bad: 'x' } });
+  assert.equal(r.custom.length, 1);
+  assert.equal(r.custom[0].sourceId, '');
+  assert.deepEqual(r.learned, { p1: 10 });
+  assert.deepEqual(sanitizePoems('мусор'), { custom: [], learned: {} });
+  assert.deepEqual(sanitizeData({ schemaVersion: 1 }).data.poems, { custom: [], learned: {} });
+});
