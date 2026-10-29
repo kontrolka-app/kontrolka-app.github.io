@@ -1,12 +1,12 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, emptyState, linkButton, pageHeader, externalLink, toast } from '../ui.js';
+import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
 import { selectQuestions } from '../quiz.js';
 import { overallStats, weakTopics } from '../results.js';
 import { startTraining } from '../session.js';
-import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES } from '../catalog.js';
+import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome } from '../catalog.js';
 import { formatDate, plural } from '../utils.js';
 
 function logo() {
@@ -19,6 +19,7 @@ function logo() {
 
 export function homeScreen() {
   const data = getData();
+  if (needsWelcome(data)) return welcomeScreen();
   const s = settings();
   const grade = s.grade;
   const stats = overallStats(data.history);
@@ -152,6 +153,54 @@ export function homeScreen() {
     ),
   );
   return root;
+}
+
+/** Знакомство при первом входе: имя (необязательно) и класс, если есть из чего выбирать. */
+export function welcomeScreen() {
+  const grades = availableGrades(content.topics);
+  const current = settings().grade;
+  const name = h('input', { class: 'input', id: 'welcome-name', maxLength: 40, autocomplete: 'off', placeholder: 'Например: Макс' });
+  const gradeSelect =
+    grades.length > 1
+      ? h('select', { class: 'input', id: 'welcome-grade' }, h('option', { value: '' }, 'Выбери класс'), grades.map((g) => h('option', { value: g, selected: g === current }, `${g} класс`)))
+      : null;
+  const finish = (nickname) => {
+    const grade = gradeSelect ? Number(gradeSelect.value) || null : current;
+    update((d) => {
+      d.settings.introDone = true;
+      if (nickname) d.settings.nickname = nickname;
+      d.settings.grade = grade;
+      return d;
+    });
+    navigate(grade ? 'subjects' : 'grade');
+  };
+  return h(
+    'div',
+    { class: 'stack' },
+    h(
+      'section',
+      { class: 'hero' },
+      logo(),
+      h('div', {}, h('h1', { class: 'hero__title page-title', tabindex: '-1' }, 'Привет! Давай знакомиться'), h('p', { class: 'hero__text' }, 'Здесь можно тренироваться перед контрольной и разбирать ошибки.')),
+    ),
+    h(
+      'form',
+      {
+        class: 'card stack',
+        onsubmit: (e) => {
+          e.preventDefault();
+          finish(name.value.trim().slice(0, 40));
+        },
+      },
+      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-name' }, 'Как тебя зовут?'), name, h('p', { class: 'field__hint' }, 'Можно не писать. Имя останется только в этом браузере.')),
+      gradeSelect
+        ? h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-grade' }, 'В каком ты классе?'), gradeSelect)
+        : current
+          ? h('p', { class: 'muted' }, `Твой класс: ${current}. Сменить можно в настройках.`)
+          : null,
+      h('div', { class: 'row wrap' }, button('Дальше', null, { type: 'submit', iconName: 'arrow', size: 'lg' }), button('Пропустить', () => finish(''), { variant: 'secondary', size: 'lg' })),
+    ),
+  );
 }
 
 export function gradeScreen() {

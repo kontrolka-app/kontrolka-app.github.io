@@ -1,6 +1,21 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { searchTopics, availableGrades, resolveGrade, gradeRangesText } from '../js/catalog.js';
+import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome } from '../js/catalog.js';
+import { defaultData } from '../js/storage.js';
+
+test('знакомство: только при первом входе', () => {
+  const fresh = defaultData();
+  assert.equal(needsWelcome(fresh), true);
+  const withName = defaultData();
+  withName.settings.nickname = 'Макс';
+  assert.equal(needsWelcome(withName), false);
+  const withHistory = defaultData();
+  withHistory.history = [{ id: 'h1' }];
+  assert.equal(needsWelcome(withHistory), false);
+  const skipped = defaultData();
+  skipped.settings.introDone = true;
+  assert.equal(needsWelcome(skipped), false);
+});
 
 test('классы с заданиями: без повторов, по возрастанию, только 1–11', () => {
   assert.deepEqual(availableGrades([{ grade: 4 }, { grade: 2 }, { grade: 4 }, { grade: 12 }, {}]), [2, 4]);

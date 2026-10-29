@@ -29,6 +29,11 @@ export function gradeRangesText(grades) {
   return parts.join(', ');
 }
 
+/** Первый вход: ещё не знакомились, нет имени и ни одной тренировки. */
+export function needsWelcome(data) {
+  return !data.settings.introDone && !data.settings.nickname && !data.history.length;
+}
+
 const fold = (s) => String(s).toLowerCase().replace(/ё/g, 'е');
 
 /**

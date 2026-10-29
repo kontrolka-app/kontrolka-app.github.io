@@ -26,6 +26,7 @@ export function defaultSettings() {
     defaultOrder: 'random',
     defaultDifficulty: 'all',
     showExplanation: true,
+    introDone: false,
   };
 }
 
@@ -52,6 +53,7 @@ function sanitizeSettings(raw) {
   if (typeof raw.nickname === 'string') s.nickname = raw.nickname.slice(0, 40);
   if (Number.isInteger(raw.defaultCount) && raw.defaultCount >= 1 && raw.defaultCount <= 100) s.defaultCount = raw.defaultCount;
   if (typeof raw.showExplanation === 'boolean') s.showExplanation = raw.showExplanation;
+  if (typeof raw.introDone === 'boolean') s.introDone = raw.introDone;
   return s;
 }
 

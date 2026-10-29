@@ -64,11 +64,18 @@ test('частично повреждённые данные: плохие за�
   assert.equal(data.settings.grade, null);
   assert.equal(data.settings.nickname, '');
   assert.equal(data.settings.defaultCount, 10);
+  assert.equal(data.settings.introDone, false);
   assert.deepEqual(data.favorites, ['t1']);
   assert.equal(data.history.length, 1);
   assert.equal(data.customTests.length, 1);
   assert.equal(data.activeSession, null);
   assert.equal(dropped, 5);
+});
+
+test('отметка о знакомстве: старые данные без неё читаются, своя сохраняется', () => {
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { nickname: 'Макс' } }).data.settings.introDone, false);
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { introDone: true } }).data.settings.introDone, true);
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { introDone: 'да' } }).data.settings.introDone, false);
 });
 
 test('данные не того типа целиком', () => {

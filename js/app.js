@@ -1,9 +1,9 @@
 // Точка входа: загрузка данных, навигация и отрисовка экранов.
 import { h, toast, icon } from './ui.js';
-import { startRouter, href, setLeaveGuard } from './router.js';
-import { initStorage, applyAppearance, content, settings, update } from './state.js';
+import { startRouter, href, setLeaveGuard, parseHash } from './router.js';
+import { initStorage, applyAppearance, content, settings, update, getData } from './state.js';
 import { loadContent } from './data.js';
-import { availableGrades, resolveGrade } from './catalog.js';
+import { availableGrades, resolveGrade, needsWelcome } from './catalog.js';
 import { homeScreen, gradeScreen, subjectsScreen, topicsScreen, topicScreen, examScreen, favoritesScreen, notFound } from './screens/browse.js';
 import { quizScreen } from './screens/quiz.js';
 import { resultScreen, historyScreen } from './screens/results.js';
@@ -88,7 +88,9 @@ async function boot() {
   const resolved = resolveGrade(grade, availableGrades(content.topics));
   if (resolved !== grade) update((d) => ((d.settings.grade = resolved), d));
   startRouter(render);
-  if (resolved && resolved !== grade) toast(`Выбран ${resolved} класс — сменить можно в настройках`);
+  // На экране знакомства класс и так написан — сообщение там лишнее.
+  const welcome = parseHash(location.hash).name === 'home' && needsWelcome(getData());
+  if (resolved && resolved !== grade && !welcome) toast(`Выбран ${resolved} класс — сменить можно в настройках`);
   if (warning) toast(warning, 'error');
   if (content.loadErrors.length) {
     console.warn(content.loadErrors);
