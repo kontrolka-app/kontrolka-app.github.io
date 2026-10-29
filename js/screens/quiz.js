@@ -293,11 +293,12 @@ function answerControl(q, given, locked, answerInfo) {
   }
 
   const isNumber = q.type === 'number';
+  const isDigits = q.type === 'digits';
   const input = h('input', {
     type: 'text',
     id: 'answer-input',
     class: `input input--answer${answerInfo ? (answerInfo.status === 'correct' ? ' is-correct' : ' is-wrong') : ''}`,
-    inputMode: isNumber ? 'decimal' : 'text',
+    inputMode: isNumber ? 'decimal' : isDigits ? 'numeric' : 'text',
     autocomplete: 'off',
     autocapitalize: 'off',
     spellcheck: false,
@@ -309,7 +310,8 @@ function answerControl(q, given, locked, answerInfo) {
   const wrap = h(
     'div',
     { class: 'field' },
-    h('label', { class: 'field__label', for: 'answer-input' }, isNumber ? 'Твой ответ (число)' : 'Твой ответ'),
+    h('label', { class: 'field__label', for: 'answer-input' }, isNumber ? 'Твой ответ (число)' : isDigits ? 'Твой ответ (цифры)' : 'Твой ответ'),
+    isDigits ? h('p', { class: 'field__hint' }, q.ordered === false ? 'Запиши номера верных ответов цифрами подряд, в любом порядке.' : 'Запиши цифры подряд, в нужном порядке, например 2413.') : null,
     h('div', { class: 'answer-row' }, input, isNumber && q.unit ? h('span', { class: 'unit' }, q.unit) : null),
   );
   if (!locked) requestAnimationFrame(() => input.focus({ preventScroll: true }));

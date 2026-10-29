@@ -2,7 +2,7 @@
 // Модуль без обращений к DOM — используется и в браузере, и в тестах Node.
 
 export const DIFFICULTIES = ['easy', 'medium', 'hard'];
-export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare'];
+export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare', 'digits'];
 /** Знаки для заданий «поставь знак сравнения». */
 export const COMPARE_SIGNS = ['<', '=', '>'];
 export const MIN_GRADE = 1;
@@ -76,6 +76,11 @@ export function validateQuestion(q, ctx = {}) {
       if (typeof q.correctAnswer !== 'number' || !Number.isFinite(q.correctAnswer)) errors.push(`${where}: правильный ответ должен быть числом`);
       if (q.tolerance !== undefined && (typeof q.tolerance !== 'number' || q.tolerance < 0)) errors.push(`${where}: tolerance — неотрицательное число`);
       if (q.unit !== undefined && !isStr(q.unit)) errors.push(`${where}: unit должен быть строкой`);
+      break;
+    case 'digits':
+      if (!isStr(q.correctAnswer) || !/^\d+$/.test(q.correctAnswer)) errors.push(`${where}: для ответа цифрами правильный ответ — строка из цифр, например «3142»`);
+      if (q.ordered !== undefined && typeof q.ordered !== 'boolean') errors.push(`${where}: ordered — true или false`);
+      if (q.ordered === false && isStr(q.correctAnswer) && new Set(q.correctAnswer).size !== q.correctAnswer.length) errors.push(`${where}: при ordered: false цифры не должны повторяться`);
       break;
     case 'compare':
       if (!COMPARE_SIGNS.includes(q.correctAnswer)) errors.push(`${where}: для сравнения правильный ответ — «<», «=» или «>»`);

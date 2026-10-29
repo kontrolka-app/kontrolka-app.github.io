@@ -33,6 +33,14 @@ export function checkAnswer(question, given) {
       const tolerance = question.tolerance || 0;
       return { status: Math.abs(n - question.correctAnswer) <= tolerance + 1e-9 ? 'correct' : 'wrong' };
     }
+    case 'digits': {
+      // Как на бланке ВПР: «3142» — порядок важен; при ordered: false — «135» и «531» одно и то же.
+      const answer = String(given ?? '').replace(/[\s,.;]/g, '');
+      if (!answer) return { status: 'invalid', message: 'Впиши цифры.' };
+      if (!/^\d+$/.test(answer)) return { status: 'invalid', message: 'Здесь нужны только цифры, например 2413.' };
+      const norm = (s) => (question.ordered === false ? [...s].sort().join('') : s);
+      return { status: norm(answer) === norm(question.correctAnswer) ? 'correct' : 'wrong' };
+    }
     case 'compare': {
       if (!COMPARE_SIGNS.includes(given)) return { status: 'invalid', message: 'Выбери знак: <, = или >.' };
       return { status: given === question.correctAnswer ? 'correct' : 'wrong' };

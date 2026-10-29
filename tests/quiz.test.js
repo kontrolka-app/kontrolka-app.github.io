@@ -182,3 +182,21 @@ test('сравнение: знак <, = или >, остальное — не з
   assert.deepEqual(validateQuestion(q, { custom: true }), []);
   assert.equal(validateQuestion({ ...q, correctAnswer: '≤' }, { custom: true }).length, 1);
 });
+
+test('ответ цифрами: порядок важен или нет', () => {
+  const ordered = { id: 'q-d1', type: 'digits', difficulty: 'easy', question: 'Порядок событий', correctAnswer: '3142' };
+  assert.equal(checkAnswer(ordered, '3142').status, 'correct');
+  assert.equal(checkAnswer(ordered, ' 3 1 4 2 ').status, 'correct');
+  assert.equal(checkAnswer(ordered, '3,1,4,2').status, 'correct');
+  assert.equal(checkAnswer(ordered, '1342').status, 'wrong');
+  assert.equal(checkAnswer(ordered, '').status, 'invalid');
+  assert.equal(checkAnswer(ordered, '3а42').status, 'invalid');
+  const anyOrder = { ...ordered, id: 'q-d2', correctAnswer: '135', ordered: false };
+  assert.equal(checkAnswer(anyOrder, '531').status, 'correct');
+  assert.equal(checkAnswer(anyOrder, '13').status, 'wrong');
+  assert.equal(checkAnswer(anyOrder, '1355').status, 'wrong');
+  assert.deepEqual(validateQuestion(ordered, { custom: true }), []);
+  assert.deepEqual(validateQuestion(anyOrder, { custom: true }), []);
+  assert.equal(validateQuestion({ ...ordered, correctAnswer: 3142 }, { custom: true }).length, 1);
+  assert.equal(validateQuestion({ ...anyOrder, correctAnswer: '113' }, { custom: true }).length, 1);
+});
