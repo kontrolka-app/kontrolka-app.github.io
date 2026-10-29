@@ -3,6 +3,8 @@
 
 export const SPEED_RECORDS_LIMIT = 100;
 export const SPEED_QUESTIONS = 4;
+/** Быстрее этого не читают даже взрослые — значит, «Стоп» нажат раньше, чем дочитан текст. */
+export const MAX_WPM = 400;
 
 /** Слов в тексте: считаются только «слова» с буквами или цифрами (тире и кавычки — нет). */
 export function wordCount(paragraphs) {
@@ -12,10 +14,11 @@ export function wordCount(paragraphs) {
     .filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 }
 
-/** Слов в минуту, целое. Меньше 3 секунд — не считаем (случайное нажатие). */
+/** Слов в минуту, целое. Меньше 3 секунд или быстрее MAX_WPM — не считаем (нажато раньше времени). */
 export function wordsPerMinute(words, ms) {
   if (!Number.isFinite(ms) || ms < 3000 || !words) return null;
-  return Math.round((words * 60000) / ms);
+  const wpm = Math.round((words * 60000) / ms);
+  return wpm > MAX_WPM ? null : wpm;
 }
 
 /** Вопросы на понимание к тексту: первые несколько с выбором ответа или «верно/неверно», в порядке данных. */

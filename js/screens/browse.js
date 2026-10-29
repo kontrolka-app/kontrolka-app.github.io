@@ -438,6 +438,7 @@ export function topicsScreen(subjectId) {
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
+    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('speed') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '⏱️'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Скорость чтения'), h('span', { class: 'small muted' }, 'Засеки время, прочитай текст и ответь на вопросы')), icon('arrow')) : null,
     linksBlock(subject),
   );
 }

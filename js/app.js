@@ -10,6 +10,7 @@ import { resultScreen, historyScreen } from './screens/results.js';
 import { settingsScreen } from './screens/settings.js';
 import { myTestsScreen, myTestSetupScreen, editorScreen } from './screens/mytests.js';
 import { poemsScreen, poemScreen, poemEditScreen } from './screens/poems.js';
+import { speedListScreen, speedScreen } from './screens/speed.js';
 
 const ROUTES = {
   home: () => homeScreen(),
@@ -29,11 +30,12 @@ const ROUTES = {
   poems: () => poemsScreen(),
   poem: ([id]) => poemScreen(id),
   'poem-edit': ([id]) => poemEditScreen(id || 'new'),
+  speed: ([id]) => (id ? speedScreen(id) : speedListScreen()),
 };
 
 // Пункт меню, который подсвечивается для каждого экрана. Результат — ни один: на него приходят и из тренировки, и из истории.
 // «Я» — это настройки и «Мои тесты» (тесты по-прежнему открываются и с главной).
-const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me', poems: 'subjects', poem: 'subjects', 'poem-edit': 'subjects' };
+const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me', poems: 'subjects', poem: 'subjects', 'poem-edit': 'subjects', speed: 'subjects' };
 
 const NAV = [
   { id: 'home', label: 'Главная', icon: 'home', to: href('home') },

@@ -9,6 +9,7 @@ test('слова и скорость', () => {
   assert.equal(wordsPerMinute(120, 90000), 80);
   assert.equal(wordsPerMinute(100, 2000), null, 'меньше 3 секунд — случайное нажатие');
   assert.equal(wordsPerMinute(0, 60000), null);
+  assert.equal(wordsPerMinute(150, 10000), null, '900 слов в минуту — «Стоп» нажат раньше времени');
 });
 
 test('тексты и вопросы для тренажёра', () => {
