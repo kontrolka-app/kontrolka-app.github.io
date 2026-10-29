@@ -4,8 +4,30 @@ import { href, navigate } from '../router.js';
 import { getData, settings, update, replaceAll, resetAll, applyAppearance, content } from '../state.js';
 import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
+import { masteredCount } from '../stats.js';
 
 export const APP_VERSION = '1.0.0';
+
+/** «Мои достижения»: счётчики за всё время (не пропадают, когда старая история обрезается). */
+function achievementsBlock(data) {
+  const st = data.stats;
+  const fact = (value, label) => h('div', {}, h('dt', {}, label), h('dd', {}, String(value)));
+  return h(
+    'section',
+    { class: 'card stack', id: 'achievements' },
+    h('h2', { class: 'card__title' }, '🏆 Мои достижения'),
+    h(
+      'dl',
+      { class: 'progress-facts progress-facts--wide' },
+      // Подписи не зависят от числа — так не бывает «2 темы освоено».
+      fact(st.days.length, 'дней с занятиями'),
+      fact(st.bestStreak, 'лучшая серия дней подряд'),
+      fact(st.questions, 'решено вопросов'),
+      fact(st.correct, 'верных ответов'),
+      fact(masteredCount(st), 'освоено тем'),
+    ),
+  );
+}
 
 /** В списке только классы с заданиями; «Не выбран» — когда есть из чего выбирать. */
 function gradeOptions(current) {
@@ -72,6 +94,7 @@ export function settingsScreen() {
     'div',
     { class: 'stack' },
     pageHeader('Я', { back: href('home'), subtitle: s.nickname ? `${s.nickname} · мои тесты и настройки` : 'Мои тесты и настройки' }),
+    achievementsBlock(data),
     h(
       'section',
       { class: 'card stack' },

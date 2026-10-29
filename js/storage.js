@@ -3,6 +3,7 @@ import { validateCustomTest, validateQuestion } from './validate.js';
 import { sanitizeReports } from './reports.js';
 import { defaultPoems, sanitizePoems } from './poem.js';
 import { sanitizeSpeed } from './speed.js';
+import { emptyStats, sanitizeStats } from './stats.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -46,6 +47,7 @@ export function defaultData() {
     reports: [], // «Нашёл ошибку?»: какие задания ученик уже отметил
     poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
     speed: [], // тренажёр скорости чтения: результаты, новые сначала
+    stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
   };
 }
 
@@ -124,6 +126,8 @@ export function sanitizeData(raw) {
   data.reports = sanitizeReports(raw.reports);
   data.poems = sanitizePoems(raw.poems);
   data.speed = sanitizeSpeed(raw.speed);
+  // Нет счётчиков (данные до этапа F) — считаем из истории, чтобы ничего не пропало.
+  data.stats = sanitizeStats(raw.stats, data.history);
   return { data, dropped };
 }
 

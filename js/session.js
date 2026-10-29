@@ -1,6 +1,7 @@
 // Связка логики сессии с хранилищем: запуск, сохранение прогресса, завершение.
 import { createSession, finishSession } from './quiz.js';
 import { buildHistoryEntry } from './results.js';
+import { addEntry } from './stats.js';
 import { getData, update, content } from './state.js';
 import { confirmDialog, toast } from './ui.js';
 import { navigate } from './router.js';
@@ -51,7 +52,10 @@ export function completeActive(session) {
   const entry = buildHistoryEntry(finished);
   update((d) => {
     d.activeSession = null;
-    if (!d.history.some((h) => h.id === entry.id)) d.history.unshift(entry);
+    if (!d.history.some((h) => h.id === entry.id)) {
+      d.history.unshift(entry);
+      d.stats = addEntry(d.stats, entry);
+    }
     return d;
   });
   return entry.id;
