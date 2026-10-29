@@ -606,3 +606,14 @@ details.card > .review-list { margin-top: 12px; }
 .speed-norm--below { background: var(--skip-bg); color: var(--text); }
 .speed-norm--ok, .speed-norm--above { background: var(--ok-bg); color: var(--text); }
 .progress-facts--wide { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); row-gap: 14px; }
+
+/* ---------- Значки ---------- */
+.badge-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.badge-tile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding: 12px 8px; border-radius: var(--radius-sm); border: 1px dashed var(--border); background: var(--surface); }
+.badge-tile__emoji { font-size: 2rem; line-height: 1.1; filter: grayscale(1); opacity: 0.45; }
+.badge-tile__title { font-weight: 800; color: var(--text-muted); }
+.badge-tile__note { color: var(--text-muted); }
+.badge-tile--got { border-style: solid; border-color: color-mix(in srgb, var(--ok) 45%, var(--border)); background: var(--ok-bg); }
+.badge-tile--got .badge-tile__emoji { filter: none; opacity: 1; }
+.badge-tile--got .badge-tile__title { color: var(--text); }
+.new-badges .badge-tile { animation: celebrate 0.9s ease-out 1; }

@@ -4,6 +4,8 @@ import { href } from './router.js';
 import { content, isFavorite, toggleFavorite, topicDifficulty, settings, getData } from './state.js';
 import { countAvailable } from './quiz.js';
 import { topicStatus, lastTopicResults } from './results.js';
+import { BADGES } from './achievements.js';
+import { formatDate } from './utils.js';
 import { DIFFICULTY_LABELS, plural } from './utils.js';
 
 export function difficultyBadge(level) {
@@ -36,6 +38,26 @@ export function favoriteButton(topicId, { onChange } = {}) {
   });
   paint();
   return btn;
+}
+
+/** Сетка значков: полученные — цветные с датой, остальные — серые с подсказкой, как получить. */
+export function badgeGrid(badges, { only } = {}) {
+  const list = only ? BADGES.filter((b) => only.includes(b.id)) : BADGES;
+  return h(
+    'ul',
+    { class: 'badge-grid' },
+    list.map((b) => {
+      const at = badges[b.id];
+      return h(
+        'li',
+        { class: `badge-tile${at ? ' badge-tile--got' : ''}` },
+        h('span', { class: 'badge-tile__emoji', 'aria-hidden': 'true' }, b.emoji),
+        h('span', { class: 'badge-tile__title' }, b.title),
+        h('span', { class: 'badge-tile__note small' }, at ? `получен ${formatDate(at)}` : b.how),
+        h('span', { class: 'sr-only' }, at ? ', получен' : ', ещё не получен'),
+      );
+    }),
+  );
 }
 
 const STATUS_LABELS = { new: 'не начата', progress: 'в процессе', mastered: 'освоена' };

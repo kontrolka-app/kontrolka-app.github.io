@@ -5,6 +5,8 @@ import { getData, settings, update, replaceAll, resetAll, applyAppearance, conte
 import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
+import { badgeGrid } from '../components.js';
+import { BADGES } from '../achievements.js';
 
 export const APP_VERSION = '1.0.0';
 
@@ -26,6 +28,8 @@ function achievementsBlock(data) {
       fact(st.correct, 'верных ответов'),
       fact(masteredCount(st), 'освоено тем'),
     ),
+    h('h3', {}, `Значки: ${Object.keys(data.badges).length} из ${BADGES.length}`),
+    badgeGrid(data.badges),
   );
 }
 

@@ -13,7 +13,7 @@ export const BADGES = [
   { id: 'sniper', emoji: '🎯', title: 'Снайпер', how: 'Ответь верно на 10 вопросов подряд в одной тренировке.' },
   { id: 'fixer', emoji: '🔧', title: 'Работа над ошибками', how: 'Повтори свои ошибки и исправь их все.' },
   { id: 'leap', emoji: '📈', title: 'Рывок', how: 'Подними результат по теме: было меньше 50% — стало 80% и больше.' },
-  { id: 'expert', emoji: '🧠', title: 'Знаток раздела', how: 'Освой все темы одного раздела.' },
+  { id: 'expert', emoji: '🧠', title: 'Знаток раздела', how: 'Освой все темы одного раздела (в нём хотя бы две темы).' },
   { id: 'traveler', emoji: '🧭', title: 'Путешественник', how: 'Позанимайся по всем предметам.' },
   { id: 'olympiad', emoji: '🏅', title: 'Олимпиадник', how: 'Реши верно олимпиадную задачу.' },
   { id: 'vpr', emoji: '📝', title: 'Готов к ВПР', how: 'Пройди тренировку по ВПР от 10 вопросов.' },
@@ -78,7 +78,8 @@ export function badgesForTotals(stats, customTests, cat) {
   if (stats.questions >= 500) out.add('q500');
   if (stats.questions >= 1000) out.add('q1000');
   const mastered = (id) => stats.topicLast[id] >= MASTERED_PERCENT;
-  if (cat.sections.some((ids) => ids.length && ids.every(mastered))) out.add('expert');
+  // Раздел из одной темы — слишком просто для «Знатока»: нужны хотя бы две темы.
+  if (cat.sections.some((ids) => ids.length >= 2 && ids.every(mastered))) out.add('expert');
   if (cat.subjects.length > 1 && cat.subjects.every((ids) => ids.some((id) => stats.topicLast[id] !== undefined))) out.add('traveler');
   if ((customTests || []).some((t) => t.origin !== 'imported')) out.add('teacher');
   return out;

@@ -9,6 +9,7 @@ import { formatDate, formatDuration, plural } from '../utils.js';
 import { theoryBlock, notFound } from './browse.js';
 import { nextTopic } from '../catalog.js';
 import { reportControl } from './report.js';
+import { badgeGrid } from '../components.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -70,6 +71,8 @@ export function resultScreen(entryId) {
   const mistakesLabel = entry.skipped && entry.wrong ? `Повторить ошибки и пропуски (${n})` : entry.skipped ? `Повторить пропущенные (${n})` : `Повторить ошибки (${n})`;
   const low = entry.percent < REVIEW_PERCENT;
   const canReport = entry.source.kind !== 'custom';
+  // Значки, полученные именно в этой тренировке (дата получения = время её окончания).
+  const newBadges = Object.entries(data.badges).filter(([, at]) => at === entry.finishedAt).map(([id]) => id);
 
   // Следующая тема того же предмета — для обычной тренировки по одной теме.
   const topic = entry.source.kind === 'topic' && entry.source.topicIds?.length === 1 ? content.topicById.get(entry.source.topicIds[0]) : null;
@@ -122,6 +125,9 @@ export function resultScreen(entryId) {
           : null,
       ),
     ),
+    newBadges.length
+      ? h('section', { class: 'card new-badges' }, h('h2', { class: 'card__title' }, newBadges.length > 1 ? '🎉 Новые значки!' : '🎉 Новый значок!'), badgeGrid(data.badges, { only: newBadges }), h('a', { href: href('settings') + '', class: 'small' }, 'Все значки — в разделе «Я»'))
+      : null,
     h(
       'dl',
       { class: 'stats-row' },

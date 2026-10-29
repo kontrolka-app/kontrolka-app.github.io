@@ -49,6 +49,7 @@ test('значки по счётчикам', () => {
   assert.deepEqual([...got].sort(), ['expert', 'first', 'month', 'q100', 'q500', 'teacher', 'traveler', 'week']);
   assert.ok(!badgesForTotals(emptyStats(), [{ origin: 'imported' }], cat).has('teacher'));
   assert.ok(!badgesForTotals({ ...emptyStats(), topicLast: { m1: 90 } }, [], cat).has('traveler'));
+  assert.ok(!badgesForTotals({ ...emptyStats(), topicLast: { r1: 100 } }, [], cat).has('expert'), 'раздел из одной темы не считается');
 });
 
 test('получение: дата запоминается, повторно не выдаётся; история; проверка сохранённого', () => {
