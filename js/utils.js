@@ -98,7 +98,8 @@ export function slugify(s) {
   return out || 'test';
 }
 
-export const DIFFICULTY_LABELS = { easy: 'лёгкая', medium: 'средняя', hard: 'сложная' };
+export const MODE_LABELS = { learning: 'с подсказками', control: 'как на контрольной' };
+export const DIFFICULTY_LABELS ={ easy: 'лёгкая', medium: 'средняя', hard: 'сложная' };
 export const TYPE_LABELS = {
   'single-choice': 'Выбор ответа',
   text: 'Ввод слова',

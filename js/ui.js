@@ -98,10 +98,11 @@ export function toast(message, kind = 'info') {
 }
 
 /**
- * Модальный диалог подтверждения. Возвращает Promise<boolean>.
- * Escape и кнопка «Отмена» дают false.
+ * Модальный диалог подтверждения. Возвращает Promise: true — «Да», false — «Отмена»,
+ * null — окно закрыто клавишей Escape (для простых вопросов это тоже «нет»).
+ * safeFirst — выделить основным стилем безопасный вариант (кнопку отмены).
  */
-export function confirmDialog(message, { title = 'Подтверждение', okText = 'Да', cancelText = 'Отмена', danger = false } = {}) {
+export function confirmDialog(message, { title = 'Подтверждение', okText = 'Да', cancelText = 'Отмена', danger = false, safeFirst = false } = {}) {
   return new Promise((resolve) => {
     const dialog = document.createElement('dialog');
     if (typeof dialog.showModal !== 'function') {
@@ -121,17 +122,17 @@ export function confirmDialog(message, { title = 'Подтверждение', o
       h(
         'div',
         { class: 'dialog__actions' },
-        h('button', { class: 'btn btn--ghost', type: 'button', onclick: () => done(false) }, cancelText),
-        h('button', { class: `btn ${danger ? 'btn--danger' : 'btn--primary'}`, type: 'button', onclick: () => done(true) }, okText),
+        h('button', { class: `btn ${safeFirst ? 'btn--primary' : 'btn--ghost'}`, type: 'button', 'data-cancel': '', onclick: () => done(false) }, cancelText),
+        h('button', { class: `btn ${danger ? 'btn--danger' : safeFirst ? 'btn--secondary' : 'btn--primary'}`, type: 'button', onclick: () => done(true) }, okText),
       ),
     );
     dialog.addEventListener('cancel', (e) => {
       e.preventDefault();
-      done(false);
+      done(null);
     });
     document.body.appendChild(dialog);
     dialog.showModal();
-    dialog.querySelector('.btn--ghost').focus();
+    dialog.querySelector('[data-cancel]').focus();
   });
 }
 

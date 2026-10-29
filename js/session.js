@@ -4,6 +4,7 @@ import { buildHistoryEntry } from './results.js';
 import { getData, update, content } from './state.js';
 import { confirmDialog, toast } from './ui.js';
 import { navigate } from './router.js';
+import { MODE_LABELS } from './utils.js';
 
 /** Запускает тренировку. Если есть незавершённая — спрашивает, можно ли её заменить. */
 export async function startTraining({ questions, source, settings }) {
@@ -13,11 +14,13 @@ export async function startTraining({ questions, source, settings }) {
   }
   const active = getData().activeSession;
   if (active) {
-    const ok = await confirmDialog(`У тебя есть незаконченная тренировка «${active.source.title}». Начать новую? Прогресс старой пропадёт.`, {
-      title: 'Начать заново?',
-      okText: 'Начать новую',
-      cancelText: 'Оставить',
-    });
+    const done = Object.keys(active.answers).length;
+    const ok = await confirmDialog(
+      `У тебя есть незаконченная тренировка «${active.source.title}» (${MODE_LABELS[active.settings.mode] || 'с подсказками'}): отвечено ${done} из ${active.questions.length}. Если начать новую, прогресс старой пропадёт.`,
+      { title: 'Начать заново?', okText: 'Начать новую', cancelText: 'Продолжить старую', safeFirst: true },
+    );
+    // «Продолжить старую» сразу открывает незаконченную тренировку; Escape просто закрывает окно.
+    if (ok === false) navigate('quiz');
     if (!ok) return false;
   }
   let session;
