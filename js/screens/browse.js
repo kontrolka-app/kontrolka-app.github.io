@@ -404,8 +404,14 @@ export function topicsScreen(subjectId) {
           h(
             'details',
             { class: 'card topic-section', open: Boolean(q) || g.section === openSection },
-            h('summary', { class: 'topic-section__summary' }, h('h2', { class: 'topic-section__title' }, g.section), h('span', { class: 'topic-section__count small' }, `освоено ${masteredIn(all)} из ${all.length}`)),
-            h('ul', { class: 'topic-list' }, g.topics.map((t) => h('li', {}, topicRow(t, lastResults.get(t.id))))),
+            h(
+              'summary',
+              { class: 'topic-section__summary' },
+              h('h2', { class: 'topic-section__title' }, g.section),
+              h('span', { class: 'topic-section__count small' }, `освоено ${masteredIn(all)} из ${all.length}`),
+              h('span', { class: 'topic-section__bar', 'aria-hidden': 'true' }, h('span', { style: { width: `${Math.round((masteredIn(all) / all.length) * 100)}%` } })),
+            ),
+            h('div', { class: 'grid grid--2 topic-cards' }, g.topics.map((t) => topicCard(t, { lastResult: lastResults.get(t.id) ?? null }))),
           ),
         );
       }

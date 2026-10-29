@@ -428,7 +428,6 @@ details.card > .review-list { margin-top: 12px; }
 .segmented--chips .segmented__option span { min-width: 56px; }
 
 /* ---------- Список тем: разделы и строки со статусом ---------- */
-.topics-page > * { max-width: 760px; }
 .topic-section { padding-top: 6px; padding-bottom: 6px; }
 .topic-section__summary { cursor: pointer; list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 48px; padding-right: 24px; position: relative; }
 .topic-section__summary::-webkit-details-marker { display: none; }
@@ -512,3 +511,24 @@ details.card > .review-list { margin-top: 12px; }
 /* Заголовок карточки со значком (блок «Мои тесты» на экране «Я»). */
 .card__title--icon { display: flex; align-items: center; gap: 8px; }
 .card__title--icon .icon { flex-shrink: 0; color: var(--primary); }
+
+/* ---------- Список тем: цветные разделы и карточки со статусом ---------- */
+.topic-sections .topic-section { padding: 0; overflow: hidden; }
+.topic-sections .topic-section__summary { background: var(--s-bg-cur); color: var(--s-text-cur); padding: 12px 44px 12px 16px; }
+.topic-sections .topic-section__summary::after { right: 16px; color: var(--s-text-cur); }
+.topic-sections .topic-section__count { color: var(--s-text-cur); }
+.topic-section__bar { flex-basis: 100%; height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 70%, transparent); overflow: hidden; }
+.topic-section__bar > span { display: block; height: 100%; background: var(--s-text-cur); border-radius: 999px; }
+.topic-cards { padding: 12px; }
+.topic-card { border-left: 5px solid var(--border); }
+.topic-card--progress { border-left-color: var(--progress-dot); }
+.topic-card--mastered { border-left-color: var(--ok); }
+.status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; background: var(--surface-2); color: var(--text-muted); }
+.status-pill .topic-row__status { width: 18px; height: 18px; }
+.status-pill--progress { background: var(--skip-bg); color: var(--skip); }
+.status-pill--progress .topic-row__status { border-color: var(--skip); background: var(--progress-dot); }
+.status-pill--mastered { background: var(--ok-bg); color: var(--ok); }
+.status-pill--mastered .topic-row__status { border-color: var(--ok); background: var(--ok); color: var(--surface); }
+.status-pill--mastered .topic-row__status .icon { width: 12px; height: 12px; stroke-width: 3; }
+.topic-cards .topic-card__footer { justify-content: flex-start; gap: 6px 10px; }
+@media (max-width: 599px) { .topic-cards { padding: 8px; } }

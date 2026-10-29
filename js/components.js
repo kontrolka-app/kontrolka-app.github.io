@@ -38,12 +38,17 @@ export function favoriteButton(topicId, { onChange } = {}) {
   return btn;
 }
 
-export function topicCard(topic, { showSubject = false, onFavChange } = {}) {
+const STATUS_LABELS = { new: 'не начата', progress: 'в процессе', mastered: 'освоена' };
+
+/** Карточка темы: название, описание, статус и последний результат, число вопросов, сложность, ☆. */
+export function topicCard(topic, { showSubject = false, onFavChange, lastResult } = {}) {
   const subject = content.subjectById.get(topic.subjectId);
   const n = (content.questionsByTopic.get(topic.id) || []).length;
+  const last = lastResult !== undefined ? lastResult : lastTopicResults(getData().history).get(topic.id);
+  const status = topicStatus(last);
   return h(
     'article',
-    { class: 'card topic-card' },
+    { class: `card topic-card topic-card--${status}` },
     h(
       'a',
       { class: 'topic-card__link', href: href('topic', topic.id) },
@@ -51,22 +56,27 @@ export function topicCard(topic, { showSubject = false, onFavChange } = {}) {
         'div',
         { class: 'topic-card__meta' },
         showSubject && subject ? h('span', { class: 'chip chip--subject subject-themed', style: subjectVars(subject) }, subject.name) : null,
-        topic.section ? h('span', { class: 'muted small' }, topic.section) : null,
+        // Раздел подписываем только вне списка предмета (в избранном): в списке он уже в заголовке.
+        showSubject && topic.section ? h('span', { class: 'muted small' }, topic.section) : null,
       ),
       h('h3', { class: 'topic-card__title' }, topic.title),
       topic.description ? h('p', { class: 'topic-card__desc' }, topic.description) : null,
       h(
         'div',
         { class: 'topic-card__footer' },
-        h('span', { class: 'small muted' }, `${topic.grade} класс · ${n} ${plural(n, ['вопрос', 'вопроса', 'вопросов'])}`),
+        h(
+          'span',
+          { class: `status-pill status-pill--${status}` },
+          h('span', { class: 'topic-row__status', 'aria-hidden': 'true' }, status === 'mastered' ? icon('check') : null),
+          h('span', {}, last ? `${STATUS_LABELS[status]} · ${last.percent}%` : STATUS_LABELS[status]),
+        ),
+        h('span', { class: 'small muted' }, `${n} ${plural(n, ['вопрос', 'вопроса', 'вопросов'])}`),
         difficultyBadge(topicDifficulty(topic.id)),
       ),
     ),
     favoriteButton(topic.id, { onChange: onFavChange }),
   );
 }
-
-const STATUS_LABELS = { new: 'не начата', progress: 'в процессе', mastered: 'освоена' };
 
 /** Строка темы в списке: значок статуса, название, последний процент. */
 export function topicRow(topic, lastResult) {
