@@ -28,14 +28,14 @@ const ROUTES = {
 };
 
 // Пункт меню, который подсвечивается для каждого экрана. Результат — ни один: на него приходят и из тренировки, и из истории.
-const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'mytests', mytest: 'mytests', editor: 'mytests', history: 'history', settings: 'settings' };
+// «Я» — это настройки и «Мои тесты» (тесты по-прежнему открываются и с главной).
+const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me' };
 
 const NAV = [
   { id: 'home', label: 'Главная', icon: 'home', to: href('home') },
   { id: 'subjects', label: 'Темы', icon: 'book', to: href('subjects') },
-  { id: 'mytests', label: 'Мои тесты', icon: 'tests', to: href('mytests') },
-  { id: 'history', label: 'История', icon: 'history', to: href('history') },
-  { id: 'settings', label: 'Настройки', icon: 'settings', to: href('settings') },
+  { id: 'progress', label: 'Прогресс', icon: 'chart', to: href('history') },
+  { id: 'me', label: 'Я', icon: 'user', to: href('settings') },
 ];
 
 function buildNav() {

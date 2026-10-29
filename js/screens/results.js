@@ -207,7 +207,7 @@ export function historyScreen() {
     return h(
       'div',
       { class: 'stack' },
-      pageHeader('История', { back: href('home') }),
+      pageHeader('Прогресс', { back: href('home') }),
       h('div', { class: 'card' }, emptyState({ iconName: 'chart', title: 'Пока нет завершённых тренировок', text: 'Здесь будут результаты и то, как они меняются.', action: linkButton(href('subjects'), 'Начать тренировку') })),
     );
   }
@@ -215,7 +215,7 @@ export function historyScreen() {
   return h(
     'div',
     { class: 'stack' },
-    pageHeader('История', {
+    pageHeader('Прогресс', {
       back: href('home'),
       subtitle: `${history.length} ${plural(history.length, ['тренировка', 'тренировки', 'тренировок'])}`,
       actions: button(

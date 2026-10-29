@@ -48,7 +48,7 @@ export function myTestsScreen() {
   return h(
     'div',
     { class: 'stack' },
-    pageHeader('Мои тесты', { back: href('home'), subtitle: 'Составляй тесты сам и открывай тесты от одноклассников.' }),
+    pageHeader('Мои тесты', { back: href('settings'), subtitle: 'Составляй тесты сам и открывай тесты от одноклассников.' }),
     h(
       'div',
       { class: 'row wrap' },

@@ -71,7 +71,21 @@ export function settingsScreen() {
   return h(
     'div',
     { class: 'stack' },
-    pageHeader('Настройки', { back: href('home') }),
+    pageHeader('Я', { back: href('home'), subtitle: s.nickname ? `${s.nickname} · мои тесты и настройки` : 'Мои тесты и настройки' }),
+    h(
+      'section',
+      { class: 'card stack' },
+      h('h2', { class: 'card__title card__title--icon' }, icon('tests'), h('span', {}, 'Мои тесты')),
+      h(
+        'p',
+        { class: 'muted' },
+        data.customTests.length
+          ? `Тестов: ${data.customTests.length}. Составляй свои и открывай тесты от одноклассников.`
+          : 'Составь свой тест для класса или открой тест, который прислали одноклассники.',
+      ),
+      h('div', {}, h('a', { class: 'btn btn--secondary', href: href('mytests') }, icon('arrow'), h('span', {}, 'Открыть «Мои тесты»'))),
+    ),
+    h('h2', {}, 'Настройки'),
     h(
       'section',
       { class: 'card stack' },

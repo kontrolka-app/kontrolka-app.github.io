@@ -77,6 +77,7 @@ const ICONS = {
   trophy: 'M8 4h8v5a4 4 0 01-8 0zM8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4M12 13v4M8 21h8M10 17h4',
   chart: 'M4 20V4M4 20h16M8 15l4-5 3 3 5-6',
   alert: 'M12 3l10 18H2zM12 10v4M12 17h0',
+  user: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0',
 };
 
 export function icon(name, { size = 20, label } = {}) {

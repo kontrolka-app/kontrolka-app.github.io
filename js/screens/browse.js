@@ -309,7 +309,7 @@ export function subjectsScreen() {
   return h(
     'div',
     { class: 'stack' },
-    pageHeader('Предметы', { back: href('home'), subtitle: `${grade} класс`, actions: h('a', { class: 'btn btn--ghost', href: href('grade') }, 'Сменить класс') }),
+    pageHeader('Темы', { back: href('home'), subtitle: `${grade} класс · выбери предмет`, actions: h('a', { class: 'btn btn--ghost', href: href('grade') }, 'Сменить класс') }),
     subjects.length
       ? h('div', { class: 'grid grid--2' }, subjects.map((s) => subjectCard(s, grade)))
       : h('div', { class: 'card' }, emptyState({ iconName: 'inbox', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас материалы есть только для 4 класса.', action: linkButton(href('grade'), 'Выбрать другой класс') })),
