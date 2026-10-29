@@ -4,6 +4,7 @@
     "name": "Русский язык",
     "icon": "📝",
     "color": "blue",
+    "searchExample": "глагол",
     "grades": [
       4
     ],
@@ -22,6 +23,7 @@
     "name": "Математика",
     "icon": "🔢",
     "color": "violet",
+    "searchExample": "доли",
     "grades": [
       4
     ],
@@ -40,6 +42,7 @@
     "name": "Окружающий мир",
     "icon": "🌍",
     "color": "teal",
+    "searchExample": "природные зоны",
     "grades": [
       4
     ],
@@ -58,6 +61,7 @@
     "name": "Литературное чтение",
     "icon": "📚",
     "color": "orange",
+    "searchExample": "басни",
     "grades": [
       4
     ],

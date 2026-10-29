@@ -1,6 +1,20 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome } from '../js/catalog.js';
+import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome, groupBySection } from '../js/catalog.js';
+
+test('темы по разделам: порядок сохраняется, без раздела — «Другие темы»', () => {
+  const groups = groupBySection([
+    { id: 'a', section: 'Числа' },
+    { id: 'b', section: 'Величины' },
+    { id: 'c', section: 'Числа' },
+    { id: 'd' },
+  ]);
+  assert.deepEqual(
+    groups.map((g) => [g.section, g.topics.map((t) => t.id)]),
+    [['Числа', ['a', 'c']], ['Величины', ['b']], ['Другие темы', ['d']]],
+  );
+  assert.deepEqual(groupBySection([]), []);
+});
 import { defaultData } from '../js/storage.js';
 
 test('знакомство: только при первом входе', () => {

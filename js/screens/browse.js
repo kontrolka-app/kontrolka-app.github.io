@@ -2,11 +2,11 @@
 import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
-import { topicCard, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
+import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
 import { selectQuestions } from '../quiz.js';
-import { overallStats, weakTopics, lastTopicResults, pendingMistakes } from '../results.js';
+import { overallStats, weakTopics, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
 import { startTraining } from '../session.js';
-import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome } from '../catalog.js';
+import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection } from '../catalog.js';
 import { formatDate, plural } from '../utils.js';
 
 function logo() {
@@ -265,19 +265,41 @@ export function topicsScreen(subjectId) {
     return h('div');
   }
   const topics = topicsFor(subjectId, grade);
-  const list = h('div', { class: 'grid grid--2', id: 'topic-list' });
+  const lastResults = lastTopicResults(getData().history);
+  const masteredIn = (list) => list.filter((t) => topicStatus(lastResults.get(t.id)) === 'mastered').length;
+  // Раскрыт раздел с последней пройденной темой; если ничего не проходили — первый.
+  let openSection = null;
+  let lastAt = -1;
+  for (const t of topics) {
+    const r = lastResults.get(t.id);
+    if (r && r.finishedAt > lastAt) [lastAt, openSection] = [r.finishedAt, t.section || 'Другие темы'];
+  }
+  const groups = groupBySection(topics);
+  if (!openSection && groups.length) openSection = groups[0].section;
+  const toReview = topics.filter((t) => lastResults.get(t.id)?.percent < REVIEW_PERCENT);
+
+  const reviewBlock = toReview.length
+    ? h(
+        'section',
+        { class: 'card topic-review' },
+        h('h2', { class: 'card__title' }, 'Стоит повторить'),
+        h('ul', { class: 'topic-list' }, toReview.map((t) => h('li', {}, topicRow(t, lastResults.get(t.id))))),
+      )
+    : null;
+  const list = h('div', { class: 'stack topic-sections', id: 'topic-list' });
   const status = h('p', { class: 'small muted', 'aria-live': 'polite' });
-  const input = h('input', { type: 'search', class: 'input', id: 'topic-search', placeholder: 'Например: глагол', autocomplete: 'off' });
+  const input = h('input', { type: 'search', class: 'input', id: 'topic-search', placeholder: subject.searchExample ? `Например: ${subject.searchExample}` : 'Название темы', autocomplete: 'off' });
   const render = () => {
     const { query: q, found, nothingFound } = searchTopics(topics, input.value);
     list.textContent = '';
+    if (reviewBlock) reviewBlock.hidden = Boolean(q);
     if (!topics.length) {
-      list.appendChild(h('div', { class: 'card span-all' }, emptyState({ emoji: '📭', title: `Для ${grade} класса тем по этому предмету пока нет`, action: linkButton(href('subjects'), 'К предметам') })));
+      list.appendChild(h('div', { class: 'card' }, emptyState({ emoji: '📭', title: `Для ${grade} класса тем по этому предмету пока нет`, action: linkButton(href('subjects'), 'К предметам') })));
     } else if (nothingFound) {
       list.appendChild(
         h(
           'div',
-          { class: 'card span-all' },
+          { class: 'card' },
           emptyState({
             emoji: '🔍',
             title: 'Темы не найдены',
@@ -287,24 +309,28 @@ export function topicsScreen(subjectId) {
         ),
       );
     } else {
-      // Группируем по разделам учебника.
-      let lastSection = null;
-      for (const t of found) {
-        if (t.section && t.section !== lastSection) {
-          list.appendChild(h('h2', { class: 'section-label span-all' }, t.section));
-          lastSection = t.section;
-        }
-        list.appendChild(topicCard(t));
+      // Разделы учебника сворачиваются; при поиске раскрыты все разделы с совпадениями.
+      for (const g of groupBySection(found)) {
+        const all = groups.find((x) => x.section === g.section)?.topics || g.topics;
+        list.appendChild(
+          h(
+            'details',
+            { class: 'card topic-section', open: Boolean(q) || g.section === openSection },
+            h('summary', { class: 'topic-section__summary' }, h('h2', { class: 'topic-section__title' }, g.section), h('span', { class: 'topic-section__count small' }, `освоено ${masteredIn(all)} из ${all.length}`)),
+            h('ul', { class: 'topic-list' }, g.topics.map((t) => h('li', {}, topicRow(t, lastResults.get(t.id))))),
+          ),
+        );
       }
     }
-    status.textContent = q ? `Найдено тем: ${found.length}` : `Всего тем: ${topics.length}`;
+    status.textContent = q ? `Найдено тем: ${found.length}` : '';
   };
   input.addEventListener('input', render);
   render();
   return h(
     'div',
-    { class: 'stack' },
-    pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href('subjects'), subtitle: `${grade} класс · выбери тему` }),
+    { class: 'stack topics-page' },
+    pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href('subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
+    reviewBlock,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
     linksBlock(subject),

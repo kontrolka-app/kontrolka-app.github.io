@@ -3,6 +3,7 @@ import { h, icon } from './ui.js';
 import { href } from './router.js';
 import { content, isFavorite, toggleFavorite, topicDifficulty, settings } from './state.js';
 import { countAvailable } from './quiz.js';
+import { topicStatus } from './results.js';
 import { DIFFICULTY_LABELS, plural } from './utils.js';
 
 export function difficultyBadge(level) {
@@ -62,6 +63,22 @@ export function topicCard(topic, { showSubject = false, onFavChange } = {}) {
       ),
     ),
     favoriteButton(topic.id, { onChange: onFavChange }),
+  );
+}
+
+const STATUS_LABELS = { new: 'не начата', progress: 'в процессе', mastered: 'освоена' };
+
+/** Строка темы в списке: значок статуса, название, последний процент. */
+export function topicRow(topic, lastResult) {
+  const status = topicStatus(lastResult);
+  return h(
+    'a',
+    { class: `topic-row topic-row--${status}`, href: href('topic', topic.id) },
+    h('span', { class: 'topic-row__status', 'aria-hidden': 'true' }, status === 'mastered' ? icon('check') : null),
+    h('span', { class: 'topic-row__title' }, topic.title),
+    ' ', // пробел для экранного диктора: «название 70%», а не «название70%»
+    lastResult ? h('span', { class: 'topic-row__percent' }, `${lastResult.percent}%`) : null,
+    h('span', { class: 'sr-only' }, `, ${STATUS_LABELS[status]}`),
   );
 }
 

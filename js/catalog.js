@@ -29,6 +29,17 @@ export function gradeRangesText(grades) {
   return parts.join(', ');
 }
 
+/** Темы по разделам учебника в исходном порядке: [{ section, topics }]. Темы без раздела — в «Другие темы». */
+export function groupBySection(topics) {
+  const groups = new Map();
+  for (const t of topics) {
+    const key = t.section || 'Другие темы';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(t);
+  }
+  return [...groups].map(([section, list]) => ({ section, topics: list }));
+}
+
 /** Первый вход: ещё не знакомились, нет имени и ни одной тренировки. */
 export function needsWelcome(data) {
   return !data.settings.introDone && !data.settings.nickname && !data.history.length;

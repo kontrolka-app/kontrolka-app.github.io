@@ -23,6 +23,7 @@
   --bad-bg: #fdeceb;
   --skip: #8a6100;
   --skip-bg: #fdf3dc;
+  --progress-dot: #f2b705; /* «в процессе»: жёлтый круг с тёмной обводкой --skip */
   --shadow: 0 1px 2px rgba(24, 32, 53, 0.06), 0 4px 16px rgba(24, 32, 53, 0.06);
   --radius: 18px;
   --radius-sm: 12px;
@@ -50,6 +51,7 @@
     --bad-bg: #3b1d20;
     --skip: #f0c060;
     --skip-bg: #352a12;
+    --progress-dot: #f0c060;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
     color-scheme: dark;
   }
@@ -72,6 +74,7 @@
   --bad-bg: #3b1d20;
   --skip: #f0c060;
   --skip-bg: #352a12;
+  --progress-dot: #f0c060;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
   color-scheme: dark;
 }
