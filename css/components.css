@@ -532,3 +532,26 @@ details.card > .review-list { margin-top: 12px; }
 .status-pill--mastered .topic-row__status .icon { width: 12px; height: 12px; stroke-width: 3; }
 .topic-cards .topic-card__footer { justify-content: flex-start; gap: 6px 10px; }
 @media (max-width: 599px) { .topic-cards { padding: 8px; } }
+
+/* ---------- «Учим стихи» ---------- */
+.poems-link { display: flex !important; align-items: center; gap: 14px; }
+.poems-link__emoji { font-size: 1.8rem; width: 56px; height: 56px; display: grid; place-items: center; border-radius: 16px; background: #FFF0C7; flex-shrink: 0; }
+:root[data-theme='dark'] .poems-link__emoji { background: #43340E; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .poems-link__emoji { background: #43340E; } }
+.poem-card { display: flex !important; flex-direction: column; gap: 6px; }
+.poem-card__title { font-weight: 800; font-size: 1.05rem; }
+.poem-card--learned { border-left: 5px solid var(--ok); }
+.poem-card .status-pill { align-self: flex-start; padding-left: 10px; }
+.poem-page { max-width: 760px; }
+.poem-text { display: flex; flex-direction: column; gap: 18px; font-size: 1.2rem; line-height: 1.7; }
+.poem-line { margin: 0; }
+.poem-gap { display: inline-flex; align-items: center; gap: 1px; padding: 0; border: none; background: none; font: inherit; color: var(--text); cursor: pointer; vertical-align: baseline; min-height: 32px; }
+.poem-gap__bar { display: inline-block; height: 0.9em; border-radius: 4px; background: var(--border); vertical-align: middle; }
+.poem-gap:hover .poem-gap__bar { background: color-mix(in srgb, var(--primary) 30%, var(--border)); }
+.poem-gap:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.poem-gap__peek { color: var(--primary); font-weight: 700; }
+.poem-controls { display: flex; flex-wrap: wrap; gap: 10px; }
+.poem-controls .btn--lg { flex: 1 1 220px; }
+.poem-done { display: flex; flex-wrap: wrap; gap: 10px; }
+.poem-input { font-size: 1.05rem; line-height: 1.6; }
+.status-pill > span:only-child { padding-left: 6px; }

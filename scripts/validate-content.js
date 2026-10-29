@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { validateContent } from '../js/validate.js';
+import { validatePoemCatalog } from '../js/poem.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -40,6 +41,13 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
       failed = true;
       console.log('  ОШИБКА:', e);
     }
+  }
+  // «Учим стихи»: список стихов из учебника.
+  const poems = JSON.parse(await readFile(path.join(root, 'data', 'poems-4.json'), 'utf8'));
+  console.log(`poems-4.json: стихов ${poems.poems.length}, с текстом ${poems.poems.filter((p) => !p.pasteOnly).length}`);
+  for (const e of validatePoemCatalog(poems)) {
+    failed = true;
+    console.log('  ОШИБКА:', e);
   }
   console.log(failed ? '\nНайдены ошибки.' : '\nДанные в порядке.');
   process.exit(failed ? 1 : 0);

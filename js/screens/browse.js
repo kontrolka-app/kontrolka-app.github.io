@@ -167,6 +167,16 @@ export function homeScreen() {
     }
   }
 
+  root.appendChild(
+    h(
+      'a',
+      { class: 'card poems-link', href: href('poems') },
+      h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'),
+      h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Стихи из учебника: закрывай слова по одному и расскажи наизусть')),
+      icon('arrow'),
+    ),
+  );
+
   // Избранное — только если есть: звёздочка «в избранное» есть на странице темы.
   const favTopics = data.favorites.map((id) => content.topicById.get(id)).filter(Boolean);
   if (favTopics.length) {
@@ -427,6 +437,7 @@ export function topicsScreen(subjectId) {
     reviewBlock,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
+    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
     linksBlock(subject),
   );
 }

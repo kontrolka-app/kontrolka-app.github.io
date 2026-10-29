@@ -101,3 +101,26 @@ export function sanitizePoems(raw) {
   }
   return out;
 }
+
+/**
+ * Проверка списка стихов из учебника (data/poems-4.json).
+ * У стиха либо есть text (автор в общественном достоянии, текст сверен со сканом),
+ * либо pasteOnly: true — в списке только автор, название и страница, текст ребёнок вставляет сам.
+ */
+export function validatePoemCatalog(cat) {
+  const errors = [];
+  if (!cat || !Array.isArray(cat.poems)) return ['Нет списка poems'];
+  const ids = new Set();
+  for (const p of cat.poems) {
+    const where = `Стих «${p?.id}»`;
+    if (!p || typeof p.id !== 'string' || !/^[a-z0-9-]+$/.test(p.id)) errors.push(`${where}: id — латиница, цифры и дефис`);
+    else if (ids.has(p.id)) errors.push(`${where}: повторяется id`);
+    ids.add(p?.id);
+    if (!String(p?.author ?? '').trim() || !String(p?.title ?? '').trim()) errors.push(`${where}: нужны автор и название`);
+    if (!Number.isInteger(p?.part) || !Number.isInteger(p?.page)) errors.push(`${where}: нужны часть и страница учебника`);
+    if (p?.pasteOnly === true) {
+      if (p.text !== undefined) errors.push(`${where}: у pasteOnly не должно быть текста`);
+    } else if (validatePoemInput(p ?? {}).length) errors.push(`${where}: нет текста (или нужен pasteOnly: true)`);
+  }
+  return errors;
+}

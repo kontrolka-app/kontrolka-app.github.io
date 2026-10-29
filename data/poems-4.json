@@ -1,0 +1,11 @@
+{
+  "grade": 4,
+  "source": "Литературное чтение. 4 класс (Школа России), части 1 и 2",
+  "note": "Текст — только у авторов в общественном достоянии, сверен со сканом учебника по странице. pasteOnly — текст ребёнок вставляет сам.",
+  "poems": [
+    { "id": "prokofiev-bereza", "author": "А. А. Прокофьев", "title": "«Люблю берёзу русскую…»", "part": 1, "page": 109, "pasteOnly": true },
+    { "id": "zhigulin-rodina", "author": "А. В. Жигулин", "title": "«О, Родина! В неярком блеске…»", "part": 2, "page": 98, "pasteOnly": true },
+    { "id": "gamzatov-zhuravli", "author": "Р. Гамзатов", "title": "Журавли (песня, отрывок)", "part": 2, "page": 100, "pasteOnly": true },
+    { "id": "kharitonov-den-pobedy", "author": "В. Харитонов", "title": "День Победы (песня, отрывок)", "part": 2, "page": 100, "pasteOnly": true }
+  ]
+}

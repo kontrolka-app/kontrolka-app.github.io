@@ -1,6 +1,7 @@
 // Загрузка учебного содержимого из JSON. Повреждённые файлы и вопросы пропускаются, а не ломают приложение.
 import { validateContent, validateQuestion, validateTopic } from './validate.js';
 import { content } from './state.js';
+import { validatePoemCatalog } from './poem.js';
 
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-cache' });
@@ -72,3 +73,19 @@ export async function loadContent() {
   content.loadErrors = errors;
   return content;
 }
+
+let poemCatalog = null;
+/** Список стихов из учебника для «Учим стихи». Загружается при первом заходе в раздел. */
+export async function loadPoemCatalog() {
+  if (poemCatalog) return poemCatalog;
+  try {
+    const cat = await fetchJson('data/poems-4.json');
+    const bad = new Set();
+    for (const e of validatePoemCatalog(cat)) bad.add(e.match(/«(.*?)»/)?.[1]);
+    poemCatalog = { ...cat, poems: cat.poems.filter((p) => !bad.has(p.id)) };
+  } catch {
+    poemCatalog = { poems: [], error: true };
+  }
+  return poemCatalog;
+}
+
