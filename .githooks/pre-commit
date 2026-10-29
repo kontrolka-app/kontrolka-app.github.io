@@ -1,0 +1,30 @@
+#!/bin/sh
+# Перед коммитом: не пускаем учебники/PDF в репозиторий и проверяем данные и тесты.
+# Включается один раз: git config core.hooksPath .githooks
+
+fail=0
+
+# 1. Чужие материалы (учебники, демоверсии, олимпиады) публиковать нельзя.
+bad=$(git diff --cached --name-only --diff-filter=ACM | grep -Ei '(^|/)(uchebniki|учебники)/|\.(pdf|djvu|zip|docx?)$')
+if [ -n "$bad" ]; then
+    echo "  В коммит попали файлы, которые нельзя публиковать:"
+    echo "$bad" | sed 's/^/    /'
+    fail=1
+fi
+
+# 2. Учебные данные и автотесты.
+if ! npm run --silent validate >/dev/null 2>&1; then
+    echo "  Проверка данных не прошла: npm run validate"
+    fail=1
+fi
+if ! npm test --silent >/dev/null 2>&1; then
+    echo "  Автотесты не прошли: npm test"
+    fail=1
+fi
+
+if [ "$fail" -ne 0 ]; then
+    echo ""
+    echo "Коммит отклонён. Исправьте и повторите."
+    exit 1
+fi
+exit 0

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f5bea"/>
+      <stop offset="1" stop-color="#7b4ee6"/>
+    </linearGradient>
+  </defs>
+  <!-- Тетрадный лист с галочкой — знак «проверь себя» -->
+  <rect x="6" y="4" width="46" height="56" rx="10" fill="url(#g)"/>
+  <rect x="14" y="12" width="30" height="40" rx="5" fill="#fff"/>
+  <path d="M18 22h22M18 30h22M18 38h12" stroke="#c7d3fb" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="46" cy="46" r="13" fill="#14b8a6" stroke="#fff" stroke-width="3"/>
+  <path d="M40 46.5l4.2 4.2 8-8.4" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "russian",
+    "name": "Русский язык",
+    "icon": "📝",
+    "color": "blue",
+    "grades": [
+      4
+    ],
+    "files": [
+      "content/russian-4.json"
+    ],
+    "links": [
+      {
+        "title": "Библиотека ЦОК — бесплатные уроки Минпросвещения (в каталоге выбери «Русский язык» и 4 класс)",
+        "url": "https://xn--h1aafgkbnx.xn--p1ai/"
+      }
+    ]
+  },
+  {
+    "id": "math",
+    "name": "Математика",
+    "icon": "🔢",
+    "color": "violet",
+    "grades": [
+      4
+    ],
+    "files": [
+      "content/math-4.json"
+    ],
+    "links": [
+      {
+        "title": "Библиотека ЦОК — бесплатные уроки Минпросвещения (в каталоге выбери «Математика» и 4 класс)",
+        "url": "https://xn--h1aafgkbnx.xn--p1ai/"
+      }
+    ]
+  },
+  {
+    "id": "world",
+    "name": "Окружающий мир",
+    "icon": "🌍",
+    "color": "teal",
+    "grades": [
+      4
+    ],
+    "files": [
+      "content/world-4.json"
+    ],
+    "links": [
+      {
+        "title": "Библиотека ЦОК — бесплатные уроки Минпросвещения (в каталоге выбери «Окружающий мир» и 4 класс)",
+        "url": "https://xn--h1aafgkbnx.xn--p1ai/"
+      }
+    ]
+  },
+  {
+    "id": "reading",
+    "name": "Литературное чтение",
+    "icon": "📚",
+    "color": "orange",
+    "grades": [
+      4
+    ],
+    "files": [
+      "content/reading-4.json"
+    ],
+    "links": [
+      {
+        "title": "Библиотека ЦОК — бесплатные уроки Минпросвещения (в каталоге выбери «Литературное чтение» и 4 класс)",
+        "url": "https://xn--h1aafgkbnx.xn--p1ai/"
+      }
+    ]
+  }
+]
