@@ -1,6 +1,7 @@
 // Значки: за что даются, проверка после тренировки, хранение даты получения. Без DOM.
 // Больше половины значков — за регулярность и исправление ошибок, а не за 100%.
 import { MASTERED_PERCENT } from './results.js';
+import { plural } from './utils.js';
 
 export const BADGES = [
   { id: 'first', emoji: '👣', title: 'Первый шаг', how: 'Пройди первую тренировку.' },
@@ -118,4 +119,12 @@ export function sanitizeBadges(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out;
   for (const [id, at] of Object.entries(raw)) if (BADGE_IDS.has(id) && Number.isFinite(at) && at > 0) out[id] = at;
   return out;
+}
+
+/** Текст «похвастаться»: «Макс в Контрольке: 23 дня, 640 вопросов, 9 значков из 15». */
+export function shareAchievementsText({ nickname, avatarName, stats, badges }) {
+  const who = nickname ? (avatarName ? `${nickname} (${avatarName})` : nickname) : avatarName || 'Я';
+  const n = (x, forms) => `${x} ${plural(x, forms)}`;
+  const got = Object.keys(badges).length;
+  return `${who} в Контрольке: ${n(stats.days.length, ['день', 'дня', 'дней'])}, ${n(stats.questions, ['вопрос', 'вопроса', 'вопросов'])}, ${n(got, ['значок', 'значка', 'значков'])} из ${BADGES.length}`;
 }

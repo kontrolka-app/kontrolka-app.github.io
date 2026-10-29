@@ -1,12 +1,12 @@
 // Настройки, экспорт/импорт и сброс.
-import { h, pageHeader, button, confirmDialog, toast, downloadJson, readFileText, icon } from '../ui.js';
+import { h, pageHeader, button, confirmDialog, toast, downloadJson, readFileText, icon, copyText } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { getData, settings, update, replaceAll, resetAll, applyAppearance, content } from '../state.js';
 import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
 import { badgeGrid } from '../components.js';
-import { BADGES } from '../achievements.js';
+import { BADGES, shareAchievementsText } from '../achievements.js';
 
 export const APP_VERSION = '1.0.0';
 
@@ -30,6 +30,18 @@ function achievementsBlock(data) {
     ),
     h('h3', {}, `Значки: ${Object.keys(data.badges).length} из ${BADGES.length}`),
     badgeGrid(data.badges),
+    h(
+      'div',
+      {},
+      button(
+        'Поделиться достижениями',
+        async () => {
+          const ok = await copyText(shareAchievementsText({ nickname: data.settings.nickname, stats: data.stats, badges: data.badges }));
+          toast(ok ? 'Скопировано — отправь другу или в чат класса.' : 'Не удалось скопировать.', ok ? 'info' : 'error');
+        },
+        { variant: 'secondary', iconName: 'copy' },
+      ),
+    ),
   );
 }
 

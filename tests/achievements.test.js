@@ -66,3 +66,11 @@ test('получение: дата запоминается, повторно н
   assert.deepEqual(sanitizeBadges({ first: 5, nope: 1, week: 'x' }), { first: 5 });
   assert.deepEqual(sanitizeData({ schemaVersion: 1 }).data.badges, {});
 });
+
+test('текст «похвастаться»', async () => {
+  const { shareAchievementsText } = await import('../js/achievements.js');
+  const stats = { ...emptyStats(), days: Array(23).fill('x'), questions: 640 };
+  const badges = Object.fromEntries(['first', 'week', 'q100', 'q500', 'perfect', 'sniper', 'fixer', 'leap', 'teacher'].map((id) => [id, 1]));
+  assert.equal(shareAchievementsText({ nickname: 'Макс', stats, badges }), 'Макс в Контрольке: 23 дня, 640 вопросов, 9 значков из 15');
+  assert.equal(shareAchievementsText({ nickname: '', avatarName: 'Енот Профессор', stats: { ...emptyStats(), days: ['a'], questions: 21 }, badges: { first: 1 } }), 'Енот Профессор в Контрольке: 1 день, 21 вопрос, 1 значок из 15');
+});
