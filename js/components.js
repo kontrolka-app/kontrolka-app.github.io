@@ -1,9 +1,9 @@
 // Повторно используемые части экранов.
 import { h, icon } from './ui.js';
 import { href } from './router.js';
-import { content, isFavorite, toggleFavorite, topicDifficulty, settings } from './state.js';
+import { content, isFavorite, toggleFavorite, topicDifficulty, settings, getData } from './state.js';
 import { countAvailable } from './quiz.js';
-import { topicStatus } from './results.js';
+import { topicStatus, lastTopicResults } from './results.js';
 import { DIFFICULTY_LABELS, plural } from './utils.js';
 
 export function difficultyBadge(level) {
@@ -84,7 +84,8 @@ export function topicRow(topic, lastResult) {
 
 export function subjectCard(subject, grade, { hrefTo } = {}) {
   const topics = content.topics.filter((t) => t.subjectId === subject.id && t.grade === grade);
-  const n = topics.reduce((s, t) => s + (content.questionsByTopic.get(t.id) || []).length, 0);
+  const last = lastTopicResults(getData().history);
+  const mastered = topics.filter((t) => topicStatus(last.get(t.id)) === 'mastered').length;
   return h(
     'a',
     { class: `card subject-card subject-card--${subject.color}`, href: hrefTo || href('topics', subject.id) },
@@ -93,7 +94,7 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
       'span',
       { class: 'subject-card__text' },
       h('span', { class: 'subject-card__name' }, subject.name),
-      h('span', { class: 'small muted' }, `${topics.length} ${plural(topics.length, ['тема', 'темы', 'тем'])} · ${n} ${plural(n, ['вопрос', 'вопроса', 'вопросов'])}`),
+      h('span', { class: 'small muted' }, `Освоено ${mastered} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}`),
     ),
     icon('arrow'),
   );

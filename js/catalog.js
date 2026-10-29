@@ -52,6 +52,33 @@ export function nextTopic(topics, currentId, isMastered) {
   return [...after, ...before].find((t) => !isMastered(t.id)) || null;
 }
 
+/**
+ * Что предложить на главной, когда нет незаконченной тренировки (история — новые сначала):
+ * { kind: 'mistakes', topic, count } — самая недавняя тема, где остались неразобранные ошибки;
+ * { kind: 'next', topic } — следующая не начатая тема того же раздела (потом — того же предмета);
+ * null — истории нет или всё уже начато.
+ * pendingCount(topicId) — сколько ошибок к разбору; isStarted(topicId) — проходили ли тему.
+ */
+export function suggestNext(history, topics, { pendingCount, isStarted }) {
+  const byId = new Map(topics.map((t) => [t.id, t]));
+  const recent = [];
+  for (const h of history) {
+    if (h.source?.kind !== 'topic') continue;
+    for (const id of h.source.topicIds || []) if (byId.has(id) && !recent.includes(id)) recent.push(id);
+  }
+  for (const id of recent) {
+    const count = pendingCount(id);
+    if (count > 0) return { kind: 'mistakes', topic: byId.get(id), count };
+  }
+  const last = byId.get(recent[0]);
+  if (!last) return null;
+  const subject = topics.filter((t) => t.subjectId === last.subjectId && t.grade === last.grade);
+  const section = subject.filter((t) => t.section === last.section);
+  const pick = (list) => list.find((t) => !isStarted(t.id));
+  const next = pick(section.slice(section.indexOf(last) + 1)) || pick(subject.slice(subject.indexOf(last) + 1)) || pick(subject);
+  return next ? { kind: 'next', topic: next } : null;
+}
+
 /** Первый вход: ещё не знакомились, нет имени и ни одной тренировки. */
 export function needsWelcome(data) {
   return !data.settings.introDone && !data.settings.nickname && !data.history.length;

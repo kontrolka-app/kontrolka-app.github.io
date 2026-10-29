@@ -1,6 +1,34 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome, groupBySection, nextTopic } from '../js/catalog.js';
+import { searchTopics, availableGrades, resolveGrade, gradeRangesText, needsWelcome, groupBySection, nextTopic, suggestNext } from '../js/catalog.js';
+
+test('совет на главной: сначала ошибки, потом следующая тема раздела', () => {
+  const topics = [
+    { id: 'a1', subjectId: 'm', grade: 4, section: 'A' },
+    { id: 'a2', subjectId: 'm', grade: 4, section: 'A' },
+    { id: 'b1', subjectId: 'm', grade: 4, section: 'B' },
+    { id: 'r1', subjectId: 'r', grade: 4, section: 'R' },
+  ];
+  const entry = (id) => ({ source: { kind: 'topic', topicIds: [id] } });
+  const exam = { source: { kind: 'exam', topicIds: ['r1'] } };
+  const started = (ids) => (id) => ids.includes(id);
+
+  // Ошибки в недавней теме — повторить их.
+  let s = suggestNext([entry('a1')], topics, { pendingCount: (id) => (id === 'a1' ? 3 : 0), isStarted: started(['a1']) });
+  assert.deepEqual([s.kind, s.topic.id, s.count], ['mistakes', 'a1', 3]);
+
+  // Ошибок нет — следующая не начатая тема того же раздела.
+  s = suggestNext([entry('a1')], topics, { pendingCount: () => 0, isStarted: started(['a1']) });
+  assert.deepEqual([s.kind, s.topic.id], ['next', 'a2']);
+
+  // Раздел пройден — следующая тема предмета; пробная контрольная не считается «последней темой».
+  s = suggestNext([exam, entry('a2'), entry('a1')], topics, { pendingCount: () => 0, isStarted: started(['a1', 'a2', 'r1']) });
+  assert.deepEqual([s.kind, s.topic.id], ['next', 'b1']);
+
+  // Всё начато или истории нет — совета нет.
+  assert.equal(suggestNext([entry('b1')], topics, { pendingCount: () => 0, isStarted: () => true }), null);
+  assert.equal(suggestNext([], topics, { pendingCount: () => 0, isStarted: () => false }), null);
+});
 
 test('следующая тема: дальше по порядку, пропуская освоенные', () => {
   const topics = ['a', 'b', 'c', 'd'].map((id) => ({ id }));

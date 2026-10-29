@@ -4,10 +4,10 @@ import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
 import { selectQuestions } from '../quiz.js';
-import { overallStats, weakTopics, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
+import { overallStats, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
 import { startTraining } from '../session.js';
-import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection } from '../catalog.js';
-import { formatDate, plural } from '../utils.js';
+import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection, suggestNext } from '../catalog.js';
+import { plural } from '../utils.js';
 
 function logo() {
   return h(
@@ -22,73 +22,97 @@ export function homeScreen() {
   if (needsWelcome(data)) return welcomeScreen();
   const s = settings();
   const grade = s.grade;
-  const stats = overallStats(data.history);
-  const last = data.history[0];
+  const history = data.history;
+  const last = lastTopicResults(history);
+  const gradeTopics = grade ? content.topics.filter((t) => t.grade === grade) : [];
   const root = h('div', { class: 'stack' });
+
+  // Главное действие — одно: продолжить начатое, повторить ошибки, следующая тема или начать.
+  let main;
+  const a = data.activeSession;
+  if (a) {
+    const done = Object.keys(a.answers).length;
+    main = {
+      title: `Продолжить: «${a.source.title}»`,
+      text: `${a.settings.mode === 'control' ? 'Как на контрольной' : 'С подсказками'} · вопрос ${Math.min(done + 1, a.questions.length)} из ${a.questions.length}`,
+      action: linkButton(href('quiz'), 'Продолжить', { iconName: 'arrow', size: 'lg' }),
+    };
+  } else {
+    const tip = grade
+      ? suggestNext(history, gradeTopics, {
+          pendingCount: (id) => pendingFor(history, id).questions.length,
+          isStarted: (id) => last.has(id),
+        })
+      : null;
+    if (tip?.kind === 'mistakes') {
+      main = {
+        title: `Повтори ошибки: «${tip.topic.title}»`,
+        text: 'Разбери то, что не получилось в прошлый раз.',
+        action: button(pendingFor(history, tip.topic.id).label, () => startMistakes(tip.topic, pendingFor(history, tip.topic.id).questions, { mode: 'learning', showExplanation: s.showExplanation }), { iconName: 'history', size: 'lg' }),
+      };
+    } else if (tip?.kind === 'next') {
+      main = {
+        title: `Следующая тема: «${tip.topic.title}»`,
+        text: content.subjectById.get(tip.topic.subjectId)?.name || '',
+        action: linkButton(href('topic', tip.topic.id), 'Следующая тема', { iconName: 'arrow', size: 'lg' }),
+      };
+    } else {
+      main = {
+        title: null,
+        text: 'Выбери предмет и тему, потренируйся и разберись в ошибках. Всё сохраняется прямо в браузере.',
+        action: linkButton(grade ? href('subjects') : href('grade'), 'Начать подготовку', { iconName: 'play', size: 'lg' }),
+      };
+    }
+  }
 
   root.appendChild(
     h(
       'section',
       { class: 'hero' },
       logo(),
-      h('div', {}, h('h1', { class: 'hero__title page-title', tabindex: '-1' }, s.nickname ? `Привет, ${s.nickname}!` : 'Готовимся к контрольной!'), h('p', { class: 'hero__text' }, 'Выбери тему, потренируйся и разберись в ошибках. Всё сохраняется прямо в браузере.')),
       h(
         'div',
-        { class: 'hero__actions' },
-        linkButton(grade ? href('subjects') : href('grade'), 'Начать подготовку', { iconName: 'play', size: 'lg' }),
-        linkButton(grade ? href('exam') : href('grade'), 'Пробная контрольная', { variant: 'secondary', iconName: 'tests', size: 'lg' }),
+        { class: 'hero__body' },
+        h('h1', { class: 'hero__title page-title', tabindex: '-1' }, s.nickname ? `Привет, ${s.nickname}!` : 'Готовимся к контрольной!'),
+        main.title ? h('p', { class: 'hero__next' }, main.title) : null,
+        main.text ? h('p', { class: 'hero__text' }, main.text) : null,
       ),
+      h('div', { class: 'hero__actions' }, main.action, linkButton(grade ? href('exam') : href('grade'), 'Пробная контрольная', { variant: 'secondary', iconName: 'tests' })),
     ),
   );
 
-  if (data.activeSession) {
-    const a = data.activeSession;
-    const done = Object.keys(a.answers).length;
-    root.appendChild(
-      h(
-        'section',
-        { class: 'card card--accent continue' },
-        h('div', {}, h('h2', { class: 'card__title' }, 'Продолжить обучение'), h('p', {}, `«${a.source.title}» — отвечено ${done} из ${a.questions.length}`)),
-        linkButton(href('quiz'), 'Продолжить', { iconName: 'arrow' }),
-      ),
-    );
-  }
-
-  if (!data.history.length) {
-    root.appendChild(
-      h(
-        'section',
-        { class: 'card' },
-        emptyState({
-          emoji: '🚀',
-          title: 'Здесь появится твой прогресс',
-          text: grade ? 'Пройди первую тренировку — и мы покажем результат и темы, которые стоит повторить.' : 'Сначала выбери свой класс, потом тему — и начинай первую тренировку.',
-          action: linkButton(grade ? href('subjects') : href('grade'), grade ? 'Выбрать тему' : 'Выбрать класс'),
-        }),
-      ),
-    );
-  } else {
-    const weak = weakTopics(data.history, { limit: 3 }).filter((w) => content.topicById.has(w.topicId));
+  // Прогресс — только если уже что-то проходили; пустую заглушку не показываем.
+  if (history.length) {
+    const stats = overallStats(history);
+    const masteredCount = gradeTopics.filter((t) => topicStatus(last.get(t.id)) === 'mastered').length;
+    const toReview = gradeTopics
+      .filter((t) => last.get(t.id)?.percent < REVIEW_PERCENT)
+      .sort((x, y) => last.get(x.id).percent - last.get(y.id).percent)
+      .slice(0, 3);
     root.appendChild(
       h(
         'section',
         { class: 'grid grid--2' },
         h(
           'a',
-          { class: 'card stat-card', href: href('result', last.id) },
-          h('h2', { class: 'card__title' }, 'Последний результат'),
-          h('p', { class: 'stat-card__big' }, `${last.percent}%`),
-          h('p', {}, `${last.source.title}: ${last.correct} из ${last.total}`),
-          h('p', { class: 'small muted' }, formatDate(last.finishedAt)),
-        ),
-        h(
-          'a',
           { class: 'card stat-card', href: href('history') },
           h('h2', { class: 'card__title' }, 'Мой прогресс'),
-          h('p', { class: 'stat-card__big' }, `${stats.percent}%`),
-          h('p', {}, `${stats.sessions} ${plural(stats.sessions, ['тренировка', 'тренировки', 'тренировок'])}, верных ответов: ${stats.correct} из ${stats.answered}`),
-          weak.length ? h('p', { class: 'small muted' }, `Повторить: ${weak.map((w) => content.topicById.get(w.topicId).title).join(', ')}`) : null,
+          h(
+            'dl',
+            { class: 'progress-facts' },
+            h('div', {}, h('dt', {}, plural(stats.sessions, ['тренировка', 'тренировки', 'тренировок'])), h('dd', {}, String(stats.sessions))),
+            h('div', {}, h('dt', {}, 'верных ответов'), h('dd', {}, `${stats.percent}%`)),
+            grade ? h('div', {}, h('dt', {}, 'тем освоено'), h('dd', {}, `${masteredCount} из ${gradeTopics.length}`)) : null,
+          ),
         ),
+        toReview.length
+          ? h(
+              'section',
+              { class: 'card' },
+              h('h2', { class: 'card__title' }, 'Стоит повторить'),
+              h('ul', { class: 'topic-list' }, toReview.map((t) => h('li', {}, topicRow(t, last.get(t.id))))),
+            )
+          : null,
       ),
     );
   }
@@ -105,54 +129,76 @@ export function homeScreen() {
           : h('div', { class: 'card' }, emptyState({ emoji: '📭', title: `Для ${grade} класса заданий пока нет`, text: 'Сейчас есть материалы только для 4 класса. Можно выбрать другой класс или составить свой тест.', action: linkButton(href('grade'), 'Выбрать класс') })),
       ),
     );
-  }
 
-  if (grade) {
-    // Быстрый доступ к темам подготовки к ВПР/МЦКО и олимпиадным заданиям.
+    // ВПР — сразу под предметами, олимпиада — скромнее.
     const special = [
-      { section: 'ВПР и МЦКО', emoji: '🎯', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.' },
-      { section: 'Олимпиада', emoji: '🏅', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.' },
+      { section: 'ВПР и МЦКО', emoji: '🎯', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.', cls: 'card card--accent stack' },
+      { section: 'Олимпиада', emoji: '🏅', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.', cls: 'card stack' },
     ]
-      .map((s) => ({ ...s, topics: content.topics.filter((t) => t.grade === grade && t.section === s.section) }))
-      .filter((s) => s.topics.length);
-    for (const s of special) {
+      .map((x) => ({ ...x, topics: gradeTopics.filter((t) => t.section === x.section) }))
+      .filter((x) => x.topics.length);
+    for (const x of special) {
       root.appendChild(
         h(
           'section',
-          { class: 'card card--accent stack' },
-          h('div', {}, h('h2', { class: 'card__title' }, `${s.emoji} ${s.title}`), h('p', { class: 'muted' }, s.text)),
+          { class: x.cls },
+          h('div', {}, h('h2', { class: 'card__title' }, `${x.emoji} ${x.title}`), h('p', { class: 'muted' }, x.text)),
           h(
             'div',
             { class: 'row wrap' },
-            s.topics.map((t) => linkButton(href('topic', t.id), content.subjectById.get(t.subjectId)?.name || t.title, { variant: 'secondary' })),
+            x.topics.map((t) => linkButton(href('topic', t.id), content.subjectById.get(t.subjectId)?.name || t.title, { variant: 'secondary' })),
           ),
         ),
       );
     }
   }
 
+  // Избранное — только если есть: звёздочка «в избранное» есть на странице темы.
   const favTopics = data.favorites.map((id) => content.topicById.get(id)).filter(Boolean);
-  root.appendChild(
-    h(
-      'section',
-      { class: 'stack' },
-      h('div', { class: 'section-head' }, h('h2', {}, 'Избранные темы'), favTopics.length ? h('a', { href: href('favorites'), class: 'small' }, 'Все') : null),
-      favTopics.length
-        ? h('div', { class: 'grid grid--2' }, favTopics.slice(0, 4).map((t) => topicCard(t, { showSubject: true, onFavChange: () => navigate('home') })))
-        : h('p', { class: 'muted' }, 'Нажми ☆ у темы, чтобы она появилась здесь.'),
-    ),
-  );
+  if (favTopics.length) {
+    root.appendChild(
+      h(
+        'section',
+        { class: 'stack' },
+        h('div', { class: 'section-head' }, h('h2', {}, 'Избранные темы'), h('a', { href: href('favorites'), class: 'small' }, 'Все')),
+        h('div', { class: 'grid grid--2' }, favTopics.slice(0, 4).map((t) => topicCard(t, { showSubject: true, onFavChange: () => navigate('home') }))),
+      ),
+    );
+  }
 
   root.appendChild(
     h(
-      'section',
-      { class: 'card card--soft' },
-      h('h2', { class: 'card__title' }, '✏️ Составь тест для класса'),
-      h('p', {}, 'Придумай свои вопросы, сохрани тест в файл и отправь одноклассникам. Чтобы придумать хороший вопрос, тему нужно понять — это тоже подготовка!'),
-      linkButton(href('mytests'), 'Мои тесты', { variant: 'secondary', iconName: 'edit' }),
+      'p',
+      { class: 'home-mytests' },
+      h('a', { href: href('mytests') }, icon('edit'), h('span', {}, 'Составь тест для класса')),
+      h('span', { class: 'muted' }, ' — придумай свои вопросы и отправь одноклассникам.'),
     ),
   );
   return root;
+}
+
+/** Работа над ошибками по теме: вопросы по порядку, режим — из настроек запуска. */
+function startMistakes(topic, questions, opts) {
+  return startTraining({
+    questions,
+    source: { kind: 'topic', topicIds: [topic.id], subjectId: topic.subjectId, title: `Работа над ошибками: ${topic.title}` },
+    settings: { ...opts, count: questions.length, order: 'original' },
+  });
+}
+
+/** Неразобранные ошибки и пропуски по теме — только вопросы, которые ещё есть в заданиях, и подпись для кнопки. */
+function pendingFor(history, topicId) {
+  const byId = new Map((content.questionsByTopic.get(topicId) || []).map((q) => [q.id, q]));
+  const p = pendingMistakes(history, topicId);
+  const wrong = p.wrong.map((id) => byId.get(id)).filter(Boolean);
+  const skipped = p.skipped.map((id) => byId.get(id)).filter(Boolean);
+  const n = wrong.length + skipped.length;
+  const label = !skipped.length
+    ? `Повторить ${n} ${plural(n, ['ошибку', 'ошибки', 'ошибок'])}`
+    : wrong.length
+      ? `Повторить ошибки и пропуски (${n})`
+      : `Повторить пропущенные (${n})`;
+  return { questions: [...wrong, ...skipped], label };
 }
 
 /** Знакомство при первом входе: имя (необязательно) и класс, если есть из чего выбирать. */
@@ -373,14 +419,8 @@ export function topicScreen(topicId, part) {
   const history = getData().history;
   const last = lastTopicResults(history).get(topic.id);
 
-  // Ошибки к разбору — только те вопросы, что ещё есть в заданиях.
-  const byId = new Map(pool.map((q) => [q.id, q]));
-  const pending = pendingMistakes(history, topic.id);
-  const wrongQs = pending.wrong.map((id) => byId.get(id)).filter(Boolean);
-  const skippedQs = pending.skipped.map((id) => byId.get(id)).filter(Boolean);
-  const mistakeQs = [...wrongQs, ...skippedQs];
+  const { questions: mistakeQs, label: mistakesLabel } = pendingFor(history, topic.id);
   const n = mistakeQs.length;
-  const mistakesLabel = skippedQs.length ? `Повторить ошибки и пропуски (${n})` : `Повторить ${n} ${plural(n, ['ошибку', 'ошибки', 'ошибок'])}`;
 
   const theory = theoryBlock(topic, { open: !last || showRule, title: 'Вспомнить правило' });
   if (showRule && theory) requestAnimationFrame(() => theory.scrollIntoView({ block: 'start' }));
@@ -410,12 +450,7 @@ export function topicScreen(topicId, part) {
         primaryAction: n
           ? {
               label: mistakesLabel,
-              onClick: (opts) =>
-                startTraining({
-                  questions: mistakeQs,
-                  source: { kind: 'topic', topicIds: [topic.id], subjectId: topic.subjectId, title: `Работа над ошибками: ${topic.title}` },
-                  settings: { ...opts, count: n, order: 'original' },
-                }),
+              onClick: (opts) => startMistakes(topic, mistakeQs, opts),
             }
           : null,
         // Правило раскрыто, пока тему ни разу не проходили.
