@@ -6,6 +6,7 @@ import { topicCard, subjectCard, setupForm, favoriteButton, difficultyBadge } fr
 import { selectQuestions } from '../quiz.js';
 import { overallStats, weakTopics } from '../results.js';
 import { startTraining } from '../session.js';
+import { searchTopics } from '../catalog.js';
 import { formatDate, plural } from '../utils.js';
 
 function logo() {
@@ -207,15 +208,20 @@ export function topicsScreen(subjectId) {
   const subject = content.subjectById.get(subjectId);
   const grade = settings().grade;
   if (!subject) return notFound('Такого предмета нет');
+  if (!grade) {
+    navigate('grade');
+    return h('div');
+  }
   const topics = topicsFor(subjectId, grade);
   const list = h('div', { class: 'grid grid--2', id: 'topic-list' });
   const status = h('p', { class: 'small muted', 'aria-live': 'polite' });
   const input = h('input', { type: 'search', class: 'input', id: 'topic-search', placeholder: 'Например: глагол', autocomplete: 'off' });
   const render = () => {
-    const q = input.value.trim().toLowerCase().replace(/ё/g, 'е');
-    const found = topics.filter((t) => `${t.title} ${t.section || ''} ${t.description || ''}`.toLowerCase().replace(/ё/g, 'е').includes(q));
+    const { query: q, found, nothingFound } = searchTopics(topics, input.value);
     list.textContent = '';
-    if (!found.length) {
+    if (!topics.length) {
+      list.appendChild(h('div', { class: 'card span-all' }, emptyState({ emoji: '📭', title: `Для ${grade} класса тем по этому предмету пока нет`, action: linkButton(href('subjects'), 'К предметам') })));
+    } else if (nothingFound) {
       list.appendChild(
         h(
           'div',
