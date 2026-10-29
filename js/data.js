@@ -1,5 +1,5 @@
 // Загрузка учебного содержимого из JSON. Повреждённые файлы и вопросы пропускаются, а не ломают приложение.
-import { validateContent, validateQuestion, validateTopic } from './validate.js';
+import { validateContent, validateQuestion, validateTopic, validatePassage } from './validate.js';
 import { content } from './state.js';
 import { validatePoemCatalog } from './poem.js';
 
@@ -35,6 +35,7 @@ export async function loadContent() {
 
   const topics = [];
   const questions = [];
+  const passages = [];
   const seenQ = new Set();
   const seenT = new Set();
   for (const item of loaded) {
@@ -52,8 +53,15 @@ export async function loadContent() {
         topics.push(t);
       }
     }
+    const passageIds = new Set();
+    for (const p of item.data.passages || []) {
+      if (validatePassage(p).length === 0 && !passageIds.has(p.id)) {
+        passageIds.add(p.id);
+        passages.push(p);
+      }
+    }
     for (const q of item.data.questions || []) {
-      if (validateQuestion(q, { subjectIds, topicIds }).length === 0 && !seenQ.has(q.id)) {
+      if (validateQuestion(q, { subjectIds, topicIds, passageIds }).length === 0 && !seenQ.has(q.id)) {
         seenQ.add(q.id);
         questions.push(q);
       }
@@ -63,6 +71,7 @@ export async function loadContent() {
   content.subjects = subjects;
   content.subjectById = new Map(subjects.map((s) => [s.id, s]));
   content.questions = questions;
+  content.passageById = new Map(passages.map((p) => [p.id, p]));
   content.questionsByTopic = new Map();
   for (const q of questions) {
     if (!content.questionsByTopic.has(q.topicId)) content.questionsByTopic.set(q.topicId, []);

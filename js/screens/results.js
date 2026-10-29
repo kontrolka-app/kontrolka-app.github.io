@@ -48,6 +48,7 @@ function reviewItem(r, index, canReport) {
       h('span', { class: 'review-item__num' }, `№${index + 1}`),
       h('span', { class: `status status--${r.status}` }, icon(r.status === 'correct' ? 'check' : r.status === 'wrong' ? 'cross' : 'skip', { size: 16 }), h('span', {}, STATUS_TEXT[r.status])),
     ),
+    r.passageId && content.passageById.get(r.passageId) ? h('p', { class: 'small muted' }, `К тексту «${content.passageById.get(r.passageId).title}»`) : null,
     h('p', { class: 'review-item__q' }, r.question),
     r.status !== 'correct' ? h('p', {}, h('span', { class: 'muted' }, 'Твой ответ: '), h('span', { class: 'answer-wrong' }, r.given)) : null,
     h('p', {}, h('span', { class: 'muted' }, r.status === 'correct' ? 'Ответ: ' : 'Правильный ответ: '), h('strong', {}, r.correct)),

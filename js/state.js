@@ -13,6 +13,7 @@ export const content = {
   topicById: new Map(),
   subjectById: new Map(),
   questionsByTopic: new Map(),
+  passageById: new Map(),
   loadErrors: [],
 };
 

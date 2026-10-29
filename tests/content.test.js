@@ -133,3 +133,15 @@ test('в учебных данных примеры правил не подск
   const found = await findAllOverlaps();
   assert.deepEqual(found.map((f) => `${f.topicId}: ${f.example} → ${f.questionId}`), []);
 });
+
+test('тексты для смыслового чтения: passageId должен вести к тексту', () => {
+  const base = { subjectId: 'reading', topics: [{ id: 't', subjectId: 'reading', grade: 4, title: 'Т' }] };
+  const q = { id: 'q1', grade: 4, subjectId: 'reading', topicId: 't', difficulty: 'easy', type: 'true-false', question: 'Верно?', correctAnswer: true, passageId: 'p1' };
+  const passage = { id: 'p1', title: 'Скворечник', intro: 'Прочитай текст.', paragraphs: ['Абзац один.', 'Абзац два.'] };
+  assert.deepEqual(validateContent({ ...base, passages: [passage], questions: [q] }, { subjectIds: new Set(['reading']) }), []);
+  assert.match(validateContent({ ...base, questions: [q] }, { subjectIds: new Set(['reading']) }).join(), /текст «p1» не найден/);
+  assert.match(validateContent({ ...base, passages: [{ id: 'p1', title: '', paragraphs: [] }], questions: [q] }).join(), /нет названия.*paragraphs/);
+  // Вопросы без passageId работают как раньше.
+  const { passageId, ...plain } = q;
+  assert.deepEqual(validateContent({ ...base, questions: [plain] }, { subjectIds: new Set(['reading']) }), []);
+});

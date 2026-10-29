@@ -36,6 +36,10 @@ export function validateQuestion(q, ctx = {}) {
     if (ctx.subjectIds && !ctx.subjectIds.has(q.subjectId)) errors.push(`${where}: предмет «${q.subjectId}» не существует`);
     if (ctx.topicIds && !ctx.topicIds.has(q.topicId)) errors.push(`${where}: тема «${q.topicId}» не существует`);
   }
+  if (q.passageId !== undefined) {
+    if (!isNonEmptyStr(q.passageId)) errors.push(`${where}: passageId должен быть строкой`);
+    else if (ctx.passageIds && !ctx.passageIds.has(q.passageId)) errors.push(`${where}: текст «${q.passageId}» не найден в passages`);
+  }
 
   switch (q.type) {
     case 'single-choice': {
@@ -114,6 +118,22 @@ export function exampleOverlaps(topics, questions) {
   return found;
 }
 
+/**
+ * Текст для чтения, к которому относятся несколько вопросов (смысловое чтение).
+ * { id, title, author?, intro? («Прочитай текст.»), poem? (строки стихотворения), paragraphs: [] }
+ */
+export function validatePassage(p) {
+  const errors = [];
+  const where = isObj(p) && isStr(p.id) ? `Текст «${p.id}»` : 'Текст';
+  if (!isObj(p)) return [`${where}: не является объектом`];
+  if (!isNonEmptyStr(p.id)) errors.push(`${where}: нет id`);
+  if (!isNonEmptyStr(p.title)) errors.push(`${where}: нет названия`);
+  if (!Array.isArray(p.paragraphs) || !p.paragraphs.length || !p.paragraphs.every(isNonEmptyStr)) errors.push(`${where}: paragraphs — непустой список абзацев`);
+  for (const key of ['author', 'intro']) if (p[key] !== undefined && !isStr(p[key])) errors.push(`${where}: ${key} должен быть строкой`);
+  if (p.poem !== undefined && typeof p.poem !== 'boolean') errors.push(`${where}: poem — true или false`);
+  return errors;
+}
+
 /** Проверяет тему. */
 export function validateTopic(t, ctx = {}) {
   const errors = [];
@@ -154,9 +174,18 @@ export function validateContent(content, { subjectIds, seenQuestionIds = new Set
       topicIds.add(t.id);
     }
   }
+  const passageIds = new Set();
+  if (content.passages !== undefined && !Array.isArray(content.passages)) errors.push('Файл содержимого: passages должен быть списком');
+  for (const p of content.passages || []) {
+    errors.push(...validatePassage(p));
+    if (isObj(p) && isStr(p.id)) {
+      if (passageIds.has(p.id)) errors.push(`Текст «${p.id}»: повторяющийся id`);
+      passageIds.add(p.id);
+    }
+  }
   const perTopic = new Map();
   for (const q of content.questions) {
-    errors.push(...validateQuestion(q, { subjectIds, topicIds }));
+    errors.push(...validateQuestion(q, { subjectIds, topicIds, passageIds }));
     if (isObj(q) && isStr(q.id)) {
       if (seenQuestionIds.has(q.id)) errors.push(`Вопрос «${q.id}»: повторяющийся id`);
       seenQuestionIds.add(q.id);

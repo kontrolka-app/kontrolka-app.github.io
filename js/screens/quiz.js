@@ -24,6 +24,8 @@ export function quizScreen() {
   const root = h('div', { class: `quiz quiz--${session.settings.mode === 'control' ? 'control' : 'learning'}${subject ? ' subject-themed' : ''}`, style: subjectVars(subject) });
   let hintShown = false;
   let currentForm = null;
+  // Текст к вопросам смыслового чтения: при первой встрече раскрыт, дальше — как оставил ребёнок.
+  const passageOpen = new Map();
 
   // Enter = «Ответить», потом Enter = «Дальше» — откуда бы ни нажали (кроме кнопок, ссылок и полей ввода — у них своё поведение).
   root.addEventListener('keydown', (e) => {
@@ -107,6 +109,8 @@ export function quizScreen() {
     // Длинные вопросы (например, с текстом для чтения) показываем обычным шрифтом — так легче читать.
     const long = q.question.length > 220;
     card.appendChild(h('h1', { class: `quiz__question${long ? ' quiz__question--long' : ''}`, id: 'q-text', tabindex: '-1' }, q.question));
+    const passage = q.passageId ? content.passageById.get(q.passageId) : null;
+    if (passage) card.appendChild(passageBlock(passage, passageOpen));
 
     const answered = Boolean(answer);
     const showFeedback = answered && learning;
@@ -204,6 +208,19 @@ export function quizScreen() {
 }
 
 const SIGN_NAMES = { '<': 'меньше', '=': 'равно', '>': 'больше' };
+
+/** Раскрывающийся текст для чтения: «Текст «Скворечник»». Состояние запоминается на всю тренировку. */
+function passageBlock(p, openState) {
+  if (!openState.has(p.id)) openState.set(p.id, true);
+  const block = h(
+    'details',
+    { class: `passage${p.poem ? ' passage--poem' : ''}`, open: openState.get(p.id) },
+    h('summary', { class: 'passage__summary' }, h('span', {}, `Текст «${p.title}»`), p.author ? h('span', { class: 'small muted' }, p.author) : null),
+    h('div', { class: 'passage__body' }, p.intro ? h('p', { class: 'small muted' }, p.intro) : null, p.paragraphs.map((t) => h('p', {}, t))),
+  );
+  block.addEventListener('toggle', () => openState.set(p.id, block.open));
+  return block;
+}
 
 /** Поле ответа под тип задания. read() возвращает ответ в формате для checkAnswer. */
 function answerControl(q, given, locked, answerInfo) {

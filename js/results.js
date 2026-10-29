@@ -71,6 +71,7 @@ export function computeResult(session) {
     if (status === 'correct') topicStats[key].correct++;
     return {
       questionId: q.id,
+      passageId: q.passageId || null,
       topicId: q.topicId || null,
       question: q.question,
       status,
