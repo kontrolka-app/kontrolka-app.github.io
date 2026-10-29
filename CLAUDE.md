@@ -7,6 +7,7 @@
 - `npm start` — локальный сервер http://localhost:8080 (`scripts/serve.js`). Через `file://` приложение не работает.
 - `npm test` — автотесты `node:test` (`tests/*.test.js`).
 - `npm run validate` — проверка всех учебных данных. Запускать после любой правки `data/`.
+- `npm run check-examples` — примеры в правилах не совпадают с выражениями из вопросов (входит в `npm test`).
 
 ## Структура
 

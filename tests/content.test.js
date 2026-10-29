@@ -2,7 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { loadAndValidateAll } from '../scripts/validate-content.js';
-import { validateQuestion, validateContent, validateCustomTest } from '../js/validate.js';
+import { validateQuestion, validateContent, validateCustomTest, expressionsIn, exampleOverlaps } from '../js/validate.js';
+import { findAllOverlaps } from '../scripts/check-examples.js';
 import { parseTestFile, toShareFile, cleanTest, newTest, newQuestion, changeQuestionType } from '../js/customTests.js';
 import { checkAnswer } from '../js/quiz.js';
 import { Q } from './helpers.js';
@@ -108,4 +109,27 @@ test('обмен тестом: повреждённые и чужие файлы
   assert.equal(parseTestFile('{"a":1}').ok, false);
   assert.equal(parseTestFile(JSON.stringify({ format: 'kontrolka-test', version: 2, test: {} })).ok, false);
   assert.equal(parseTestFile(JSON.stringify({ format: 'kontrolka-test', version: 1, test: { id: 'x', title: 'T', questions: [] } })).ok, false);
+});
+
+test('выражения из примеров: в едином виде, дробь-запись не считается действием', () => {
+  assert.deepEqual(expressionsIn('48 + 52 × 3 = 48 + 156 = 204'), ['48+52×3', '48+156']);
+  assert.deepEqual(expressionsIn('(90 − 30) : 3'), ['(90-30):3']);
+  assert.deepEqual(expressionsIn('47 685 + 36 547'), ['47685+36547']);
+  assert.deepEqual(expressionsIn('1/2 > 1/3'), []);
+  assert.deepEqual(expressionsIn('Корень слова — общая часть'), []);
+});
+
+test('совпадение примера правила с вопросом находится', () => {
+  const topics = [{ id: 't', subjectId: 'math', examples: ['48 + 52 × 3 = 204'], theory: ['Сначала умножают.'] }];
+  const questions = [
+    { id: 'q1', subjectId: 'math', question: 'Вычисли: 48 + 52 × 3' },
+    { id: 'q2', subjectId: 'math', question: 'Вычисли: 36 + 14 × 5' },
+    { id: 'q3', subjectId: 'russian', question: '48 + 52 × 3' },
+  ];
+  assert.deepEqual(exampleOverlaps(topics, questions).map((f) => f.questionId), ['q1']);
+});
+
+test('в учебных данных примеры правил не подсказывают ответы', async () => {
+  const found = await findAllOverlaps();
+  assert.deepEqual(found.map((f) => `${f.topicId}: ${f.example} → ${f.questionId}`), []);
 });

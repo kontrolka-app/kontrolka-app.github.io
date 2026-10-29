@@ -82,6 +82,38 @@ export function validateQuestion(q, ctx = {}) {
   return errors;
 }
 
+// Числовое выражение: число, знак действия, число… (числа могут быть с пробелами-разрядами и в скобках).
+const EXPRESSION = /\(?\d[\d ]*\)?(?:\s*[+\-−–×·*:÷/]\s*\(?\d[\d ]*\)?)+/g;
+const normalizeExpression = (e) => e.replace(/\s+/g, '').replace(/[−–]/g, '-').replace(/[·*]/g, '×').replace(/÷/g, ':');
+
+/** Выражения из текста в едином виде: «48 + 52 × 3 = 204» → ['48+52×3', '204']… только с хотя бы одним знаком действия. */
+export function expressionsIn(text) {
+  return [...String(text).matchAll(EXPRESSION)]
+    .map((m) => normalizeExpression(m[0]))
+    .filter((e) => /\d[+\-×:/]\d|\)[+\-×:/]|[+\-×:/]\(/.test(e))
+    .filter((e) => !/^\d+\/\d+$/.test(e)); // «1/3» — запись дроби, а не действие: ответа не выдаёт
+}
+
+/**
+ * Примеры в правилах, которые подсказывают ответ: числовое выражение из примера или текста
+ * правила встречается в тексте вопроса (той же или другой темы того же предмета).
+ * Возвращает [{ topicId, example, questionId, expression }].
+ */
+export function exampleOverlaps(topics, questions) {
+  const found = [];
+  const qExprs = questions.map((q) => ({ q, exprs: new Set(expressionsIn(q.question)) }));
+  for (const t of topics) {
+    for (const example of [...(t.theory || []), ...(t.examples || [])]) {
+      for (const expression of expressionsIn(example)) {
+        for (const { q, exprs } of qExprs) {
+          if (q.subjectId === t.subjectId && exprs.has(expression)) found.push({ topicId: t.id, example, questionId: q.id, expression });
+        }
+      }
+    }
+  }
+  return found;
+}
+
 /** Проверяет тему. */
 export function validateTopic(t, ctx = {}) {
   const errors = [];
