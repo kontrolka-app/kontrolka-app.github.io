@@ -156,7 +156,7 @@ export function quizScreen() {
     root.appendChild(card);
 
     if (!learning && !answered) {
-      root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце. Подсказок на контрольной нет 🙂'));
+      root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце. Подсказок на контрольной нет 🤪'));
     }
 
     // Фокус: после ответа — на кнопку «Дальше», при новом вопросе — на текст вопроса.
