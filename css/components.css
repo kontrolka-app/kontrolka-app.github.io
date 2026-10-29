@@ -507,3 +507,8 @@ details.card > .review-list { margin-top: 12px; }
 .subject-themed > .page-header .btn--ghost { color: var(--s-text-cur); }
 .quiz--learning.subject-themed .progress__bar { background: var(--s-text-cur); }
 .quiz--learning.subject-themed .progress { background: var(--s-bg-cur); }
+
+/* ---------- Знакомство: сразу выбор предмета ---------- */
+.welcome-subjects__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.welcome-subject { justify-content: flex-start; background: var(--s-bg-cur); color: var(--s-text-cur); border-color: transparent; }
+.welcome-subject:hover { border-color: var(--s-text-cur); color: var(--s-text-cur); }

@@ -1,5 +1,5 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
+import { h, icon, hasIcon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars } from '../components.js';
@@ -224,7 +224,7 @@ export function welcomeScreen() {
     grades.length > 1
       ? h('select', { class: 'input', id: 'welcome-grade' }, h('option', { value: '' }, 'Выбери класс'), grades.map((g) => h('option', { value: g, selected: g === current }, `${g} класс`)))
       : null;
-  const finish = (nickname) => {
+  const finish = (nickname, subjectId) => {
     const grade = gradeSelect ? Number(gradeSelect.value) || null : current;
     update((d) => {
       d.settings.introDone = true;
@@ -232,8 +232,12 @@ export function welcomeScreen() {
       d.settings.grade = grade;
       return d;
     });
-    navigate(grade ? 'subjects' : 'grade');
+    if (subjectId && grade) navigate('topics', subjectId);
+    else navigate(grade ? 'subjects' : 'grade');
   };
+  const typedName = () => name.value.trim().slice(0, 40);
+  // Класс уже известен — сразу предлагаем предмет: так до первого вопроса три нажатия (предмет → тема → «Начать»).
+  const subjects = !gradeSelect && current ? subjectsForGrade(current) : [];
   return h(
     'div',
     { class: 'stack' },
@@ -249,7 +253,7 @@ export function welcomeScreen() {
         class: 'card stack',
         onsubmit: (e) => {
           e.preventDefault();
-          finish(name.value.trim().slice(0, 40));
+          finish(typedName());
         },
       },
       h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-name' }, 'Как тебя зовут?'), name, h('p', { class: 'field__hint' }, 'Можно не писать. Имя останется только в этом браузере.')),
@@ -258,7 +262,31 @@ export function welcomeScreen() {
         : current
           ? h('p', { class: 'muted' }, `Твой класс: ${current}. Сменить можно в настройках.`)
           : null,
-      h('div', { class: 'row wrap' }, button('Дальше', null, { type: 'submit', iconName: 'arrow', size: 'lg' }), button('Пропустить', () => finish(''), { variant: 'secondary', size: 'lg' })),
+      subjects.length
+        ? h(
+            'fieldset',
+            { class: 'field welcome-subjects' },
+            h('legend', { class: 'field__label' }, 'С чего начнём?'),
+            h(
+              'div',
+              { class: 'welcome-subjects__list' },
+              subjects.map((sub) =>
+                h(
+                  'button',
+                  { type: 'button', class: 'btn btn--secondary btn--lg subject-themed welcome-subject', style: subjectVars(sub), onclick: () => finish(typedName(), sub.id) },
+                  icon(hasIcon(sub.icon) ? sub.icon : 'book'),
+                  h('span', {}, sub.name),
+                ),
+              ),
+            ),
+          )
+        : null,
+      h(
+        'div',
+        { class: 'row wrap' },
+        subjects.length ? null : button('Дальше', null, { type: 'submit', iconName: 'arrow', size: 'lg' }),
+        button(subjects.length ? 'Пропустить — выберу потом' : 'Пропустить', () => finish(''), { variant: 'ghost' }),
+      ),
     ),
   );
 }
