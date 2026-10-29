@@ -193,6 +193,35 @@ export function pendingMistakes(history, topicId) {
   return { wrong, skipped };
 }
 
+/** Ключ дня по местному времени: «2026-10-29». */
+export function dayKey(ts) {
+  const d = new Date(ts);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/**
+ * Цель дня и серия дней. Засчитываются отвеченные вопросы (пропуски — нет).
+ * День в серии — если цель в этот день выполнена. Сегодня цель ещё не выполнена — серия
+ * считается до вчера (не обнуляется посреди дня). Пропустил день — серия просто начинается заново.
+ */
+export function dailyProgress(history, goal, now = Date.now()) {
+  const perDay = new Map();
+  for (const h of history) {
+    if (!h.finishedAt) continue;
+    const k = dayKey(h.finishedAt);
+    perDay.set(k, (perDay.get(k) || 0) + Math.max(0, (h.total || 0) - (h.skipped || 0)));
+  }
+  const today = perDay.get(dayKey(now)) || 0;
+  const day = new Date(now);
+  if (today < goal) day.setDate(day.getDate() - 1);
+  let streak = 0;
+  while ((perDay.get(dayKey(day.getTime())) || 0) >= goal) {
+    streak++;
+    day.setDate(day.getDate() - 1);
+  }
+  return { today, goal, done: today >= goal, streak };
+}
+
 /** Общая статистика для главной. */
 export function overallStats(history) {
   const sessions = history.length;

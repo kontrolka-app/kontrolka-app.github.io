@@ -78,6 +78,12 @@ test('отметка о знакомстве: старые данные без �
   assert.equal(sanitizeData({ schemaVersion: 1, settings: { introDone: 'да' } }).data.settings.introDone, false);
 });
 
+test('цель на день: только 5, 10 или 20, по умолчанию 10', () => {
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: {} }).data.settings.dailyGoal, 10);
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { dailyGoal: 20 } }).data.settings.dailyGoal, 20);
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { dailyGoal: 7 } }).data.settings.dailyGoal, 10);
+});
+
 test('данные не того типа целиком', () => {
   for (const raw of [null, 42, 'строка', []]) {
     const { data } = sanitizeData(raw);

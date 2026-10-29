@@ -230,7 +230,7 @@ export function pageHeader(title, { back, subtitle, actions } = {}) {
 }
 
 export function progressBar(value, max, label) {
-  const pct = max > 0 ? Math.round((value / max) * 100) : 0;
+  const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0;
   return h(
     'div',
     { class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(max), 'aria-valuenow': String(value), 'aria-label': label },

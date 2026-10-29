@@ -92,12 +92,13 @@ export function settingsScreen() {
         h('p', { class: 'field__hint' }, 'Только имя или прозвище — без фамилии. Оно видно в приветствии и в скопированном результате.'),
       ),
       select('def-count', 'Вопросов в тренировке по умолчанию', s.defaultCount, [5, 10, 15, 20, 30].map((n) => [n, String(n)]), (v) => set('defaultCount', Number(v))),
-      select('def-mode', 'Режим по умолчанию', s.defaultMode, [['learning', 'Обучение'], ['control', 'Контрольная']], (v) => set('defaultMode', v)),
+      select('def-mode', 'Режим по умолчанию', s.defaultMode, [['learning', 'С подсказками'], ['control', 'Как на контрольной']], (v) => set('defaultMode', v)),
+      select('daily-goal', 'Цель на день', s.dailyGoal, [5, 10, 20].map((n) => [n, `${n} вопросов`]), (v) => set('dailyGoal', Number(v)), 'На главной будет видно, сколько уже сделано сегодня. Пропустил день — ничего страшного, серия просто начнётся заново.'),
       h(
         'label',
         { class: 'check' },
         h('input', { type: 'checkbox', checked: s.showExplanation, onchange: (e) => set('showExplanation', e.target.checked) }),
-        h('span', {}, 'В режиме обучения сразу показывать объяснение'),
+        h('span', {}, 'В режиме «С подсказками» сразу показывать объяснение'),
       ),
     ),
     h(

@@ -1,10 +1,10 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast } from '../ui.js';
+import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, difficultyBadge } from '../components.js';
 import { selectQuestions } from '../quiz.js';
-import { overallStats, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
+import { overallStats, dailyProgress, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
 import { startTraining } from '../session.js';
 import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection, suggestNext } from '../catalog.js';
 import { plural } from '../utils.js';
@@ -83,6 +83,20 @@ export function homeScreen() {
 
   // Прогресс — только если уже что-то проходили; пустую заглушку не показываем.
   if (history.length) {
+    const day = dailyProgress(history, s.dailyGoal);
+    root.appendChild(
+      h(
+        'section',
+        { class: `card today${day.done ? ' today--done' : ''}` },
+        h(
+          'div',
+          { class: 'today__head' },
+          h('h2', { class: 'card__title' }, day.done ? 'Цель на сегодня выполнена!' : `Сегодня ${Math.min(day.today, day.goal)} из ${day.goal} ${plural(day.goal, ['вопроса', 'вопросов', 'вопросов'])}`),
+          day.streak >= 2 ? h('span', { class: 'streak-badge' }, icon('star', { size: 16 }), h('span', {}, `${day.streak} ${plural(day.streak, ['день', 'дня', 'дней'])} подряд`)) : null,
+        ),
+        progressBar(day.today, day.goal, `Сегодня отвечено ${day.today} из ${day.goal}`),
+      ),
+    );
     const stats = overallStats(history);
     const masteredCount = gradeTopics.filter((t) => topicStatus(last.get(t.id)) === 'mastered').length;
     const toReview = gradeTopics

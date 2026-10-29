@@ -13,6 +13,7 @@ export const SETTINGS_SCHEMA = {
   defaultMode: ['learning', 'control'],
   defaultOrder: ['random', 'original'],
   defaultDifficulty: ['all', 'easy', 'medium', 'hard'],
+  dailyGoal: [5, 10, 20],
 };
 
 export function defaultSettings() {
@@ -27,6 +28,7 @@ export function defaultSettings() {
     defaultDifficulty: 'all',
     showExplanation: true,
     introDone: false,
+    dailyGoal: 10,
   };
 }
 

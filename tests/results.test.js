@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { percentOf, computeResult, buildHistoryEntry, deltaFromPrevious, weakTopics, overallStats, correctAnswerText, givenAnswerText, verdict, shareText, lastTopicResults, topicStatus, pendingMistakes, MASTERED_PERCENT, REVIEW_PERCENT } from '../js/results.js';
+import { percentOf, computeResult, buildHistoryEntry, deltaFromPrevious, weakTopics, overallStats, correctAnswerText, givenAnswerText, verdict, shareText, lastTopicResults, topicStatus, pendingMistakes, MASTERED_PERCENT, REVIEW_PERCENT, dailyProgress, dayKey } from '../js/results.js';
 import { createSession, submitAnswer, goNext, finishSession } from '../js/quiz.js';
 import { Q } from './helpers.js';
 
@@ -110,4 +110,24 @@ test('ошибки к разбору: последний ответ решает
   const fixed = buildHistoryEntry(play(['b'], [Q.choice]));
   assert.deepEqual(pendingMistakes([fixed, first], 't1'), { wrong: ['q-tf'], skipped: [] });
   assert.deepEqual(pendingMistakes([], 't1'), { wrong: [], skipped: [] });
+});
+
+test('цель дня и серия дней — по местному времени, пропуски не считаются', () => {
+  const at = (day, hour = 12) => new Date(2026, 9, day, hour).getTime(); // октябрь 2026
+  const e = (day, total, skipped = 0, hour) => ({ finishedAt: at(day, hour), total, skipped });
+  assert.equal(dayKey(at(29, 23)), '2026-10-29');
+
+  // Сегодня (29-е) 6 из 10: ещё не выполнено, серия считается до вчера (27–28 выполнены).
+  let p = dailyProgress([e(29, 8, 2), e(28, 10), e(27, 5, 0, 9), e(27, 5, 0, 21)], 10, at(29, 18));
+  assert.deepEqual(p, { today: 6, goal: 10, done: false, streak: 2 });
+
+  // Выполнил сегодня — сегодня тоже в серии.
+  p = dailyProgress([e(29, 10), e(28, 10), e(27, 10)], 10, at(29, 18));
+  assert.equal(p.done, true);
+  assert.equal(p.streak, 3);
+
+  // Пропустил день — серия начинается заново, без «штрафа».
+  p = dailyProgress([e(29, 10), e(27, 10)], 10, at(29, 18));
+  assert.equal(p.streak, 1);
+  assert.deepEqual(dailyProgress([], 10, at(29)), { today: 0, goal: 10, done: false, streak: 0 });
 });

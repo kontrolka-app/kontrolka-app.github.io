@@ -472,3 +472,10 @@ details.card > .review-list { margin-top: 12px; }
 .progress-facts dd { order: -1; margin: 0; font-size: 1.5rem; font-weight: 800; color: var(--primary); line-height: 1.15; }
 .progress-facts dt { font-size: 0.85rem; color: var(--text-muted); }
 .home-mytests a { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+
+/* ---------- Главная: цель дня и серия ---------- */
+.today { display: flex; flex-direction: column; gap: 10px; }
+.today__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.today__head .card__title { margin: 0; }
+.today--done .progress__bar { background: var(--ok); }
+.streak-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); font-weight: 800; font-size: 0.9rem; }
