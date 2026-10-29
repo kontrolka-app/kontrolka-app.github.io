@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { checkAnswer, selectQuestions, countAvailable, createSession, submitAnswer, skipQuestion, goNext, finishSession } from '../js/quiz.js';
+import { checkAnswer, selectQuestions, countAvailable, createSession, submitAnswer, skipQuestion, goNext, finishSession, correctStreak } from '../js/quiz.js';
 import { normalizeText, parseNumber } from '../js/utils.js';
 import { Q, ALL, seededRng } from './helpers.js';
 
@@ -153,4 +153,21 @@ test('проверка идёт по данным, сохранённым в с�
   q.correctAnswer = 'a'; // изменение исходного объекта после старта не влияет на сессию
   s = submitAnswer(s, 'b').session;
   assert.equal(s.answers['q-choice'].status, 'correct');
+});
+
+test('серия верных ответов подряд', () => {
+  const qs = [Q.choice, Q.tf, Q.num, Q.text];
+  let s = createSession({ questions: qs, source: {} });
+  assert.equal(correctStreak(s), 0, 'ещё нет ответов');
+  s = submitAnswer(s, 'b').session; // верно
+  assert.equal(correctStreak(s), 1);
+  s = goNext(s);
+  s = submitAnswer(s, true).session; // верно
+  assert.equal(correctStreak(s), 2);
+  s = goNext(s);
+  s = submitAnswer(s, '16').session; // верно
+  assert.equal(correctStreak(s), 3);
+  s = goNext(s);
+  s = skipQuestion(s).session; // пропуск обрывает серию
+  assert.equal(correctStreak(s), 0);
 });

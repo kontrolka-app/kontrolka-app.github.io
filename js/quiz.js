@@ -137,6 +137,16 @@ export function goNext(session) {
   return { ...session, currentIndex: session.currentIndex + 1 };
 }
 
+/** Сколько верных ответов подряд, считая назад от текущего вопроса (пропуск и ошибка обрывают серию). */
+export function correctStreak(session) {
+  let n = 0;
+  for (let i = session.currentIndex; i >= 0; i--) {
+    if (session.answers[session.questions[i].id]?.status !== 'correct') break;
+    n++;
+  }
+  return n;
+}
+
 export function isLastQuestion(session) {
   return session.currentIndex >= session.questions.length - 1;
 }

@@ -2,7 +2,7 @@
 import { h, icon, button, confirmDialog, progressBar, emptyState, linkButton } from '../ui.js';
 import { href, navigate, setLeaveGuard } from '../router.js';
 import { getData } from '../state.js';
-import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion } from '../quiz.js';
+import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion, correctStreak } from '../quiz.js';
 import { correctAnswerText, optionFeedback } from '../results.js';
 import { saveActive, completeActive } from '../session.js';
 import { formatClock } from '../utils.js';
@@ -18,8 +18,18 @@ export function quizScreen() {
     );
   }
 
-  const root = h('div', { class: 'quiz' });
+  const root = h('div', { class: `quiz quiz--${session.settings.mode === 'control' ? 'control' : 'learning'}` });
   let hintShown = false;
+  let currentForm = null;
+
+  // Enter = «Ответить», потом Enter = «Дальше» — откуда бы ни нажали (кроме кнопок, ссылок и полей ввода — у них своё поведение).
+  root.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || !currentForm) return;
+    const t = e.target;
+    if (t.closest('dialog, button, a, textarea, select') || (t.tagName === 'INPUT' && t.type !== 'radio')) return;
+    e.preventDefault();
+    currentForm.requestSubmit();
+  });
 
   // Подтверждение при уходе со страницы тренировки (через меню или кнопку «Назад»).
   setLeaveGuard(() =>
@@ -53,11 +63,14 @@ export function quizScreen() {
     const answeredCount = Object.keys(session.answers).length;
     root.textContent = '';
 
-    const timer = h('span', { class: 'quiz__timer', 'aria-label': 'Время' }, icon('clock', { size: 16 }), h('span', {}, formatClock(Date.now() - session.startedAt)));
-    const tick = setInterval(() => {
-      if (!document.body.contains(timer)) return clearInterval(tick);
-      timer.lastChild.textContent = formatClock(Date.now() - session.startedAt);
-    }, 1000);
+    // Таймер — только на контрольной; в режиме с подсказками не подгоняем (время всё равно пишется в результат).
+    const timer = learning ? null : h('span', { class: 'quiz__timer', 'aria-label': 'Время' }, icon('clock', { size: 16 }), h('span', {}, formatClock(Date.now() - session.startedAt)));
+    if (timer) {
+      const tick = setInterval(() => {
+        if (!document.body.contains(timer)) return clearInterval(tick);
+        timer.lastChild.textContent = formatClock(Date.now() - session.startedAt);
+      }, 1000);
+    }
 
     root.appendChild(
       h(
@@ -71,7 +84,7 @@ export function quizScreen() {
           timer,
         ),
         progressBar(answeredCount, total, `Отвечено ${answeredCount} из ${total}`),
-        h('p', { class: 'small muted' }, learning ? '📖 Режим обучения' : '📝 Режим контрольной'),
+        h('p', {}, h('span', { class: `mode-badge mode-badge--${learning ? 'learning' : 'control'}` }, icon(learning ? 'bulb' : 'tests', { size: 16 }), h('span', {}, learning ? 'С подсказками' : 'Как на контрольной'))),
       ),
     );
 
@@ -109,7 +122,8 @@ export function quizScreen() {
       errorBox,
     );
 
-    if (showFeedback) form.appendChild(feedbackPanel(q, answer, session.settings.showExplanation));
+    currentForm = form;
+    if (showFeedback) form.appendChild(feedbackPanel(q, answer, session.settings.showExplanation, correctStreak(session)));
 
     if (!answered && learning && q.hint) {
       const hintBox = h('p', { class: 'hint', id: 'hint-text', hidden: !hintShown }, `💡 ${q.hint}`);
@@ -159,10 +173,11 @@ export function quizScreen() {
       root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце. Подсказок на контрольной нет 🤪'));
     }
 
-    // Фокус: после ответа — на кнопку «Дальше», при новом вопросе — на текст вопроса.
+    // Фокус: после ответа — на кнопку «Дальше», при новом вопросе — в поле ответа (его фокусирует answerControl),
+    // а если поля нет (выбор варианта) — на текст вопроса.
     requestAnimationFrame(() => {
       if (showFeedback) actions.querySelector('button')?.focus();
-      else if (focusQuestion) card.querySelector('#q-text')?.focus();
+      else if (focusQuestion && !card.querySelector('#answer-input:enabled')) card.querySelector('#q-text')?.focus();
     });
   }
 
@@ -239,13 +254,13 @@ function answerControl(q, given, locked, answerInfo) {
   return { control: wrap, read: () => input.value };
 }
 
-function feedbackPanel(q, answer, showExplanation) {
+function feedbackPanel(q, answer, showExplanation, streak = 0) {
   const ok = answer.status === 'correct';
   const fb = ok ? '' : optionFeedback(q, answer.given);
   return h(
     'div',
     { class: `feedback ${ok ? 'feedback--ok' : 'feedback--bad'}`, role: 'status' },
-    h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно')),
+    h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно'), ok && streak >= 3 ? h('span', { class: 'streak' }, icon('star', { size: 16 }), h('span', {}, `${streak} подряд!`)) : null),
     ok ? null : h('p', {}, h('strong', {}, 'Правильный ответ: '), correctAnswerText(q)),
     fb ? h('p', {}, fb) : null,
     showExplanation && q.explanation ? h('p', { class: 'feedback__explanation' }, h('strong', {}, 'Почему: '), q.explanation) : null,

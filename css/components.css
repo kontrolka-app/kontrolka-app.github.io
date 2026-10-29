@@ -443,3 +443,12 @@ details.card > .review-list { margin-top: 12px; }
 .topic-row--progress .topic-row__status { border-color: var(--skip); background: var(--progress-dot); }
 .topic-row--mastered .topic-row__status { border-color: var(--ok); background: var(--ok); color: var(--surface); }
 .topic-row--mastered .topic-row__status .icon { width: 14px; height: 14px; stroke-width: 3; }
+
+/* ---------- Тренировка: режим, серия ---------- */
+.mode-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; }
+.mode-badge--learning { background: var(--surface-2); color: var(--primary); }
+.mode-badge--control { background: var(--violet); color: #ffffff; }
+.quiz--control .quiz__top { background: color-mix(in srgb, var(--violet) 10%, var(--surface)); border: 2px solid color-mix(in srgb, var(--violet) 45%, var(--border)); border-radius: var(--radius); padding: 12px 14px; }
+.quiz--control .progress { background: var(--surface); }
+.quiz--control .progress__bar { background: var(--violet); }
+.streak { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; padding: 2px 10px; border-radius: 999px; background: var(--surface); color: var(--ok); font-size: 0.95rem; }
