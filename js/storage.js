@@ -34,6 +34,8 @@ export function defaultSettings() {
     showExplanation: true,
     introDone: false,
     dailyGoal: 10,
+    avatar: '', // id персонажа из js/avatars.js; пусто — не выбран
+    accessory: '',
   };
 }
 
@@ -66,6 +68,9 @@ function sanitizeSettings(raw) {
   if (Number.isInteger(raw.defaultCount) && raw.defaultCount >= 1 && raw.defaultCount <= 100) s.defaultCount = raw.defaultCount;
   if (typeof raw.showExplanation === 'boolean') s.showExplanation = raw.showExplanation;
   if (typeof raw.introDone === 'boolean') s.introDone = raw.introDone;
+  // Неизвестный или ещё закрытый вариант заменяется на «по умолчанию» при показе (resolveAvatar).
+  if (typeof raw.avatar === 'string') s.avatar = raw.avatar.slice(0, 40);
+  if (typeof raw.accessory === 'string') s.accessory = raw.accessory.slice(0, 40);
   return s;
 }
 

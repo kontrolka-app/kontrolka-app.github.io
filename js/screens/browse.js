@@ -2,7 +2,8 @@
 import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
-import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars } from '../components.js';
+import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarSvg } from '../components.js';
+import { resolveAvatar } from '../avatars.js';
 import { selectQuestions } from '../quiz.js';
 import { overallStats, dailyProgress, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
 import { startTraining } from '../session.js';
@@ -69,7 +70,11 @@ export function homeScreen() {
     h(
       'section',
       { class: 'hero' },
-      logo(),
+      // Выбранный персонаж вместо логотипа — его можно сменить в «Я».
+      (() => {
+        const me = resolveAvatar(s, data.badges);
+        return me.chosen ? h('a', { class: 'hero__logo', href: href('settings'), 'aria-label': `${me.avatar.name} — сменить в разделе «Я»` }, avatarSvg(me.avatar, me.accessory, { size: 72 })) : logo();
+      })(),
       h(
         'div',
         { class: 'hero__body' },

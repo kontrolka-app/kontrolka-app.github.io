@@ -40,6 +40,36 @@ export function favoriteButton(topicId, { onChange } = {}) {
   return btn;
 }
 
+/** Аватарка: фон-круг, персонаж и аксессуар — из данных js/avatars.js, через DOM (без innerHTML). */
+export function avatarSvg(avatar, accessory, { size = 64, label } = {}) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 100 100');
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
+  svg.setAttribute('class', 'avatar');
+  if (label) {
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', label);
+  } else svg.setAttribute('aria-hidden', 'true');
+  const add = ([tag, attrs, text]) => {
+    const el = document.createElementNS(ns, tag);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    if (text) el.textContent = text;
+    svg.appendChild(el);
+  };
+  add(['circle', { cx: 50, cy: 50, r: 50, fill: avatar.bg }]);
+  avatar.shapes.forEach(add);
+  accessory?.shapes.forEach(add);
+  return svg;
+}
+
+/** Подсказка, каким значком открывается персонаж или аксессуар. */
+export function unlockHint(badgeId) {
+  const b = BADGES.find((x) => x.id === badgeId);
+  return b ? `Откроется значком «${b.title}»` : '';
+}
+
 /** Сетка значков: полученные — цветные с датой, остальные — серые с подсказкой, как получить. */
 export function badgeGrid(badges, { only } = {}) {
   const list = only ? BADGES.filter((b) => only.includes(b.id)) : BADGES;

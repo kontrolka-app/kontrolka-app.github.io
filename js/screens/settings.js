@@ -5,10 +5,47 @@ import { getData, settings, update, replaceAll, resetAll, applyAppearance, conte
 import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
-import { badgeGrid } from '../components.js';
+import { badgeGrid, avatarSvg, unlockHint } from '../components.js';
+import { AVATARS, ACCESSORIES, resolveAvatar, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
 
 export const APP_VERSION = '1.0.0';
+
+/** Аватарка и выбор: персонажи и аксессуары; закрытые — серые, с подсказкой, каким значком открываются. */
+function avatarPicker(data) {
+  const me = resolveAvatar(data.settings, data.badges);
+  const choose = (key, value) => {
+    update((d) => ((d.settings[key] = value), d));
+    navigate('settings');
+  };
+  const tile = (item, selected, onPick, preview) => {
+    const open = isUnlocked(item, data.badges);
+    return h(
+      'button',
+      { type: 'button', class: `avatar-tile${selected ? ' is-selected' : ''}${open ? '' : ' is-locked'}`, 'aria-pressed': String(selected), disabled: !open, title: open ? item.name : unlockHint(item.unlock), onclick: onPick },
+      preview,
+      h('span', { class: 'avatar-tile__name small' }, open ? item.name : `🔒 ${unlockHint(item.unlock)}`),
+    );
+  };
+  return h(
+    'div',
+    { class: 'stack-sm' },
+    h('div', { class: 'avatar-me' }, avatarSvg(me.avatar, me.accessory, { size: 88, label: me.avatar.name }), h('p', { class: 'avatar-me__name' }, me.chosen ? me.avatar.name : 'Выбери себе персонажа')),
+    h(
+        'details',
+        { class: 'avatar-picker' },
+        h('summary', {}, 'Сменить персонажа'),
+        h('div', { class: 'avatar-grid' }, AVATARS.map((a) => tile(a, me.chosen && a.id === me.avatar.id, () => choose('avatar', a.id), avatarSvg(a, null, { size: 56 })))),
+        h('p', { class: 'field__label' }, 'Аксессуар'),
+        h(
+          'div',
+          { class: 'avatar-grid' },
+          tile({ id: '', name: 'без аксессуара' }, !me.accessory, () => choose('accessory', ''), avatarSvg(me.avatar, null, { size: 56 })),
+          ACCESSORIES.map((x) => tile(x, me.accessory?.id === x.id, () => choose('accessory', x.id), avatarSvg(me.avatar, x, { size: 56 }))),
+        ),
+      ),
+  );
+}
 
 /** «Мои достижения»: счётчики за всё время (не пропадают, когда старая история обрезается). */
 function achievementsBlock(data) {
@@ -18,6 +55,7 @@ function achievementsBlock(data) {
     'section',
     { class: 'card stack', id: 'achievements' },
     h('h2', { class: 'card__title' }, '🏆 Мои достижения'),
+    avatarPicker(data),
     h(
       'dl',
       { class: 'progress-facts progress-facts--wide' },
@@ -36,7 +74,8 @@ function achievementsBlock(data) {
       button(
         'Поделиться достижениями',
         async () => {
-          const ok = await copyText(shareAchievementsText({ nickname: data.settings.nickname, stats: data.stats, badges: data.badges }));
+          const me = resolveAvatar(data.settings, data.badges);
+          const ok = await copyText(shareAchievementsText({ nickname: data.settings.nickname, avatarName: me.chosen ? me.avatar.name : '', stats: data.stats, badges: data.badges }));
           toast(ok ? 'Скопировано — отправь другу или в чат класса.' : 'Не удалось скопировать.', ok ? 'info' : 'error');
         },
         { variant: 'secondary', iconName: 'copy' },
