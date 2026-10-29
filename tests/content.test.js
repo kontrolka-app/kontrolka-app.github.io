@@ -6,6 +6,7 @@ import { validateQuestion, validateContent, validateCustomTest, expressionsIn, e
 import { findAllOverlaps } from '../scripts/check-examples.js';
 import { parseTestFile, toShareFile, cleanTest, newTest, newQuestion, changeQuestionType } from '../js/customTests.js';
 import { checkAnswer } from '../js/quiz.js';
+import { perfectAnswer } from '../js/finderrors.js';
 import { Q } from './helpers.js';
 
 test('все файлы учебных данных проходят проверку', async () => {
@@ -26,7 +27,7 @@ test('у каждого вопроса учебных данных правил�
       for (const q of content.questions) {
         const answers = [q.correctAnswer, ...(q.acceptedAnswers || [])];
         for (const a of answers) {
-          const given = q.type === 'number' ? String(a) : a;
+          const given = q.type === 'number' ? String(a) : q.type === 'find-errors' ? perfectAnswer(q) : a;
           assert.equal(checkAnswer(q, given).status, 'correct', `${q.id}: ответ «${a}» не засчитан`);
         }
         if (q.type === 'single-choice') {

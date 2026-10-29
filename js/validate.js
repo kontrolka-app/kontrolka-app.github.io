@@ -1,8 +1,10 @@
 // Проверка учебных данных и пользовательских тестов.
 // Модуль без обращений к DOM — используется и в браузере, и в тестах Node.
 
+import { validateFindErrors } from './finderrors.js';
+
 export const DIFFICULTIES = ['easy', 'medium', 'hard'];
-export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare', 'digits'];
+export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare', 'digits', 'find-errors'];
 /** Знаки для заданий «поставь знак сравнения». */
 export const COMPARE_SIGNS = ['<', '=', '>'];
 export const MIN_GRADE = 1;
@@ -81,6 +83,9 @@ export function validateQuestion(q, ctx = {}) {
       if (!isStr(q.correctAnswer) || !/^\d+$/.test(q.correctAnswer)) errors.push(`${where}: для ответа цифрами правильный ответ — строка из цифр, например «3142»`);
       if (q.ordered !== undefined && typeof q.ordered !== 'boolean') errors.push(`${where}: ordered — true или false`);
       if (q.ordered === false && isStr(q.correctAnswer) && new Set(q.correctAnswer).size !== q.correctAnswer.length) errors.push(`${where}: при ordered: false цифры не должны повторяться`);
+      break;
+    case 'find-errors':
+      errors.push(...validateFindErrors(q, where));
       break;
     case 'compare':
       if (!COMPARE_SIGNS.includes(q.correctAnswer)) errors.push(`${where}: для сравнения правильный ответ — «<», «=» или «>»`);

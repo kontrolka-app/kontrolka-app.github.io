@@ -2,6 +2,7 @@
 import { normalizeText, parseNumber, shuffle, uid } from './utils.js';
 import { computeResult } from './results.js';
 import { COMPARE_SIGNS } from './validate.js';
+import { checkFindErrors } from './finderrors.js';
 
 /**
  * Проверяет ответ по данным вопроса.
@@ -41,6 +42,8 @@ export function checkAnswer(question, given) {
       const norm = (s) => (question.ordered === false ? [...s].sort().join('') : s);
       return { status: norm(answer) === norm(question.correctAnswer) ? 'correct' : 'wrong' };
     }
+    case 'find-errors':
+      return checkFindErrors(question, given);
     case 'compare': {
       if (!COMPARE_SIGNS.includes(given)) return { status: 'invalid', message: 'Выбери знак: <, = или >.' };
       return { status: given === question.correctAnswer ? 'correct' : 'wrong' };

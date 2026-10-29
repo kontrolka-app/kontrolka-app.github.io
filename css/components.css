@@ -566,3 +566,25 @@ details.card > .review-list { margin-top: 12px; }
 .passage--poem .passage__body { gap: 0; }
 .passage--poem .passage__body p { text-indent: 0; }
 .quiz__question-rest { display: block; margin-top: 8px; font-size: 1.05rem; font-weight: 500; line-height: 1.6; }
+
+/* ---------- «Найди ошибки в тексте» ---------- */
+.fe { display: flex; flex-direction: column; gap: 14px; }
+.fe-text { font-size: 1.15rem; line-height: 2.1; margin: 0; }
+.fe-word { font: inherit; color: inherit; background: none; border: none; padding: 2px; margin: 0 -2px; border-radius: 6px; cursor: pointer; min-height: 36px; }
+.fe-word:hover:not(:disabled) { background: var(--surface-2); }
+.fe-word[aria-pressed='true'] { background: var(--skip-bg); color: var(--skip); text-decoration: underline wavy var(--bad); text-underline-offset: 4px; font-weight: 700; }
+.fe-word:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.fe-fixes { display: flex; flex-direction: column; gap: 8px; }
+.fe-fix { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fe-fix__word { font-weight: 700; min-width: 7em; }
+.fe-fix .input { flex: 1 1 160px; }
+.fe-summary { font-weight: 800; font-size: 1.1rem; }
+.fe-r { padding: 1px 4px; border-radius: 5px; color: inherit; }
+.fe-r--found { background: var(--ok-bg); color: var(--ok); font-weight: 700; }
+.fe-r--wrongfix { background: var(--bad-bg); color: var(--bad); font-weight: 700; }
+.fe-r--missed { background: var(--skip-bg); color: var(--skip); font-weight: 700; outline: 2px dashed var(--skip); outline-offset: 1px; }
+.fe-r--extra { background: none; text-decoration: line-through; color: var(--text-muted); }
+.fe-legend { display: flex; flex-wrap: wrap; gap: 6px; line-height: 2; }
+.fe-rules { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.fe-rule--missed strong { color: var(--skip); }
+.fe-rule--wrongfix strong { color: var(--bad); }

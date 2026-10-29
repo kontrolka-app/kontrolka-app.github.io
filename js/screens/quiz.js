@@ -7,6 +7,7 @@ import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion, co
 import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.js';
 import { saveActive, completeActive } from '../session.js';
 import { reportControl } from './report.js';
+import { findErrorsControl } from './finderrors-ui.js';
 import { formatClock } from '../utils.js';
 
 export function quizScreen() {
@@ -232,6 +233,7 @@ function passageBlock(p, openState) {
 
 /** Поле ответа под тип задания. read() возвращает ответ в формате для checkAnswer. */
 function answerControl(q, given, locked, answerInfo) {
+  if (q.type === 'find-errors') return findErrorsControl(q, given, locked, Boolean(answerInfo));
   if (q.type === 'compare') {
     // Три крупные кнопки вместо поля ввода: знак не нужно искать на клавиатуре.
     const givenValue = given ?? null;
@@ -333,7 +335,8 @@ function feedbackPanel(q, answer, showExplanation, streak = 0) {
     'div',
     { class: `feedback ${ok ? 'feedback--ok' : 'feedback--bad'}`, role: 'status' },
     h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно'), ok && streak >= 3 ? h('span', { class: 'streak' }, icon('star', { size: 16 }), h('span', {}, `${streak} подряд!`)) : null),
-    ok ? null : h('p', {}, h('strong', {}, 'Правильный ответ: '), correctAnswerText(q)),
+    // У «Найди ошибки» правильное написание и правила уже показаны в разборе над этой плашкой.
+    ok || q.type === 'find-errors' ? null : h('p', {}, h('strong', {}, 'Правильный ответ: '), correctAnswerText(q)),
     fb ? h('p', {}, fb) : null,
     showExplanation && q.explanation ? h('p', { class: 'feedback__explanation' }, h('strong', {}, 'Почему: '), q.explanation) : null,
   );
