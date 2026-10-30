@@ -81,6 +81,8 @@ export const AVATARS = [
   },
   {
     id: 'lamb', name: 'Барашек Карандашик', bg: '#E3E9FF',
+    // Голова-барашек маленькая: аксессуары уменьшены к верху (шапка на шёрстке, шарф на ободке карандаша)
+    accessoryTransform: 'translate(50 0) scale(0.6) translate(-50 0)',
     shapes: [
       // Карандаш: корпус, заточка с грифелем, железный ободок — а вместо ластика барашек
       ['rect', { x: 38, y: 52, width: 24, height: 28, fill: '#f9c74f', ...s() }],
@@ -127,12 +129,16 @@ export const AVATARS = [
   {
     id: 'owl', name: 'Сова Умница', bg: '#EEE7FB', unlock: 'expert',
     shapes: [
-      ['path', { d: 'M24 34 L30 18 L40 30 M76 34 L70 18 L60 30', fill: '#9c7b5b', ...s() }],
+      ['path', { d: 'M24 42 Q16 18 40 28 Z M76 42 Q84 18 60 28 Z', fill: '#9c7b5b', ...s() }],
       ['ellipse', { cx: 50, cy: 56, rx: 30, ry: 30, fill: '#a98563', ...s() }],
       ['circle', { cx: 38, cy: 48, r: 11, fill: '#fff', ...s() }], ['circle', { cx: 62, cy: 48, r: 11, fill: '#fff', ...s() }],
-      ['circle', { cx: 38, cy: 48, r: 5, fill: INK }], ['circle', { cx: 62, cy: 48, r: 5, fill: INK }],
-      ['path', { d: 'M45 60 L55 60 L50 68 Z', fill: '#f4a261', ...s({ 'stroke-width': 2 }) }],
-      ['path', { d: 'M36 74 Q42 70 48 74 M52 74 Q58 70 64 74', fill: 'none', ...s({ 'stroke-width': 2 }) }],
+      ['ellipse', { cx: 50, cy: 74, rx: 16, ry: 10, fill: '#e6cfae' }],
+      ['circle', { cx: 38, cy: 47, r: 5, fill: INK }], ['circle', { cx: 62, cy: 47, r: 5, fill: INK }],
+      ['circle', { cx: 39.8, cy: 45.2, r: 1.6, fill: '#fff' }], ['circle', { cx: 63.8, cy: 45.2, r: 1.6, fill: '#fff' }],
+      ['ellipse', { cx: 30, cy: 62, rx: 4.5, ry: 2.8, fill: '#ffb3c1' }], ['ellipse', { cx: 70, cy: 62, rx: 4.5, ry: 2.8, fill: '#ffb3c1' }],
+      ['path', { d: 'M45 59 L55 59 L50 66 Z', fill: '#f4a261', ...s({ 'stroke-width': 2 }) }],
+      // Пёрышки на грудке — «улыбочками» вниз, а не домиком: домиком они читались как хмурый рот
+      ['path', { d: 'M42 72 Q45 75 48 72 M52 72 Q55 75 58 72 M47 78 Q50 81 53 78', fill: 'none', ...s({ 'stroke-width': 2 }) }],
     ],
   },
   {

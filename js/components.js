@@ -52,15 +52,20 @@ export function avatarSvg(avatar, accessory, { size = 64, label } = {}) {
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', label);
   } else svg.setAttribute('aria-hidden', 'true');
-  const add = ([tag, attrs, text]) => {
+  const add = ([tag, attrs, text], parent = svg) => {
     const el = document.createElementNS(ns, tag);
     for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
     if (text) el.textContent = text;
-    svg.appendChild(el);
+    parent.appendChild(el);
+    return el;
   };
   add(['circle', { cx: 50, cy: 50, r: 50, fill: avatar.bg }]);
-  avatar.shapes.forEach(add);
-  accessory?.shapes.forEach(add);
+  avatar.shapes.forEach((shape) => add(shape));
+  if (accessory) {
+    // У некоторых персонажей голова в другом месте — аксессуар сдвигается целиком
+    const g = add(['g', avatar.accessoryTransform ? { transform: avatar.accessoryTransform } : {}]);
+    accessory.shapes.forEach((shape) => add(shape, g));
+  }
   return svg;
 }
 
