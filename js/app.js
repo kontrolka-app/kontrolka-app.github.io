@@ -6,6 +6,9 @@ import { loadContent } from './data.js';
 import { availableGrades, resolveGrade, needsWelcome } from './catalog.js';
 import { catalogInfo, badgesFromHistory, badgesForTotals, award } from './achievements.js';
 import { gradeTopics } from './session.js';
+import { companionSay } from './screens/companion-ui.js';
+import { dayEvent } from './companion.js';
+import { dayKey } from './results.js';
 import { homeScreen, gradeScreen, subjectsScreen, topicsScreen, topicScreen, examScreen, favoritesScreen, notFound } from './screens/browse.js';
 import { quizScreen } from './screens/quiz.js';
 import { resultScreen, historyScreen } from './screens/results.js';
@@ -58,6 +61,16 @@ function buildNav() {
   );
 }
 
+/** Компаньон здоровается один раз в день (или «С возвращением!» после перерыва). Не в тренировке. */
+function greet(route) {
+  if (route.name === 'quiz' || needsWelcome(getData())) return;
+  const d = getData();
+  const ev = dayEvent(d.stats, d.companion.lastDay);
+  if (!ev) return;
+  update((x) => ((x.companion.lastDay = dayKey(Date.now())), x));
+  companionSay(ev);
+}
+
 function render(route) {
   const main = document.getElementById('main');
   if (route.name !== 'quiz' && route.name !== 'editor') setLeaveGuard(null);
@@ -80,6 +93,8 @@ function render(route) {
   });
 
   window.scrollTo(0, 0);
+  if (route.name === 'quiz') document.getElementById('companion')?.remove();
+  greet(route);
   // Перемещаем фокус к заголовку, чтобы клавиатура и экранные дикторы начинали с нового экрана.
   if (route.name !== 'quiz') main.querySelector('.page-title')?.focus({ preventScroll: true });
   document.title = route.name === 'home' ? 'Контролька' : route.name === 'quiz' ? 'Тренировка — Контролька' : `${main.querySelector('h1')?.textContent || ''} — Контролька`;

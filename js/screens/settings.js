@@ -6,6 +6,7 @@ import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
 import { pickWonder } from '../wonders.js';
+import { companionHide } from './companion-ui.js';
 import { badgeGrid, avatarSvg, unlockHint } from '../components.js';
 import { AVATARS, ACCESSORIES, resolveAvatar, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
@@ -196,6 +197,12 @@ export function settingsScreen() {
         { class: 'check' },
         h('input', { type: 'checkbox', checked: s.showExplanation, onchange: (e) => set('showExplanation', e.target.checked) }),
         h('span', {}, 'В режиме «С подсказками» сразу показывать объяснение'),
+      ),
+      h(
+        'label',
+        { class: 'check' },
+        h('input', { type: 'checkbox', checked: s.companion, onchange: (e) => (set('companion', e.target.checked), e.target.checked || companionHide()) }),
+        h('span', {}, 'Компаньон: персонаж в углу экрана подбадривает (подсказок к ответам не даёт)'),
       ),
     ),
     h(

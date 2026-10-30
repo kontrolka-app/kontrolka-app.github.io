@@ -630,3 +630,19 @@ details.card > .review-list { margin-top: 12px; }
 .avatar-tile.is-locked .avatar { filter: grayscale(1); opacity: 0.45; }
 .avatar-tile__name { text-align: center; line-height: 1.25; }
 .wonder { background: var(--surface-soft); border-radius: var(--radius-sm); padding: 10px 14px; font-weight: 700; }
+
+/* ---------- Компаньон ---------- */
+.companion { position: fixed; right: max(12px, env(safe-area-inset-right)); bottom: calc(72px + env(safe-area-inset-bottom)); z-index: 25; display: flex; align-items: flex-end; gap: 8px; max-width: min(320px, calc(100vw - 24px)); }
+@media (min-width: 1024px) { .companion { bottom: 20px; right: 24px; } }
+.companion__avatar { border: none; background: none; padding: 0; cursor: pointer; border-radius: 50%; box-shadow: var(--shadow); flex-shrink: 0; }
+.companion__avatar:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.companion .companion__bubble { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 4px 16px; box-shadow: var(--shadow); padding: 10px 32px 10px 12px; font-weight: 700; line-height: 1.35; animation: pop 0.25s ease-out; }
+.companion.is-collapsed .companion__bubble { display: none; }
+.companion__close { position: absolute; top: 2px; right: 4px; width: 28px; height: 28px; border: none; background: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; border-radius: 50%; }
+.companion--happy .companion__avatar, .companion-inline.companion--happy .avatar { animation: hop 0.6s ease-out 2; }
+.companion--think .companion__avatar, .companion-inline.companion--think .avatar { animation: tilt 1.2s ease-in-out 1; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
+@keyframes tilt { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-10deg); } 70% { transform: rotate(6deg); } }
+.companion-inline { display: flex; align-items: center; gap: 10px; }
+.companion-inline .companion__bubble { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 16px 4px; padding: 8px 12px; font-weight: 700; }
+body[data-route='quiz'] .companion { display: none; }

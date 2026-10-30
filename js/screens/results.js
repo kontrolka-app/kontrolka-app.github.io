@@ -11,6 +11,8 @@ import { nextTopic } from '../catalog.js';
 import { reportControl } from './report.js';
 import { badgeGrid } from '../components.js';
 import { crossedWonder } from '../wonders.js';
+import { companionSay } from './companion-ui.js';
+import { dailyProgress } from '../results.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -101,6 +103,15 @@ export function resultScreen(entryId) {
     .filter(([id, s]) => id !== '_custom' && percentOf(s.correct, s.total) < REVIEW_PERCENT)
     .map(([id]) => content.topicById.get(id))
     .filter(Boolean);
+
+  // Компаньон — только сразу после тренировки (не при каждом открытии старого результата).
+  if (data.history[0]?.id === entry.id && Date.now() - entry.finishedAt < 60000) {
+    const answered = entry.total - entry.skipped;
+    const day = dailyProgress(data.history, data.settings.dailyGoal);
+    const goalJustDone = day.done && day.today - answered < day.goal;
+    const ev = newBadges.length ? 'newBadge' : mastered ? 'mastered' : goalJustDone ? 'goalDone' : null;
+    setTimeout(() => companionSay(ev), 300);
+  }
 
   const root = h(
     'div',

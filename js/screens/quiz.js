@@ -8,6 +8,8 @@ import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.j
 import { saveActive, completeActive } from '../session.js';
 import { reportControl } from './report.js';
 import { findErrorsControl } from './finderrors-ui.js';
+import { companionSay } from './companion-ui.js';
+import { streakEvent, mistakeEvent } from '../companion.js';
 import { formatClock } from '../utils.js';
 
 export function quizScreen() {
@@ -25,6 +27,8 @@ export function quizScreen() {
   const root = h('div', { class: `quiz quiz--${session.settings.mode === 'control' ? 'control' : 'learning'}${subject ? ' subject-themed' : ''}`, style: subjectVars(subject) });
   let hintShown = false;
   let currentForm = null;
+  // Строка компаньона после ответа (только в режиме «С подсказками»; на контрольной он молчит).
+  let companionLine = null;
   // Текст к вопросам смыслового чтения: при первой встрече раскрыт, дальше — как оставил ребёнок.
   const passageOpen = new Map();
 
@@ -64,6 +68,7 @@ export function quizScreen() {
   }
 
   function next() {
+    companionLine = null;
     if (isLastQuestion(session)) return finish();
     session = goNext(session);
     hintShown = false;
@@ -141,8 +146,12 @@ export function quizScreen() {
           }
           session = res.session;
           saveActive(session);
-          if (learning) render();
-          else next();
+          if (learning) {
+            const wrongCount = Object.values(session.answers).filter((a) => a.status === 'wrong').length;
+            const ev = res.outcome.status === 'correct' ? streakEvent(correctStreak(session)) : mistakeEvent(wrongCount);
+            companionLine = companionSay(ev, { inline: true });
+            render();
+          } else next();
         },
       },
       control,
@@ -199,6 +208,7 @@ export function quizScreen() {
     }
     card.appendChild(form);
     root.appendChild(card);
+    if (showFeedback && companionLine) root.appendChild(companionLine);
 
     if (!learning && !answered) {
       root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце. Подсказок на контрольной нет 🤪'));

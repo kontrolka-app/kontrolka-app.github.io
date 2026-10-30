@@ -5,6 +5,7 @@ import { defaultPoems, sanitizePoems } from './poem.js';
 import { sanitizeSpeed } from './speed.js';
 import { emptyStats, sanitizeStats } from './stats.js';
 import { sanitizeBadges } from './achievements.js';
+import { sanitizeCompanion } from './companion.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -36,6 +37,7 @@ export function defaultSettings() {
     dailyGoal: 10,
     avatar: '', // id персонажа из js/avatars.js; пусто — не выбран
     accessory: '',
+    companion: true, // персонаж в углу экрана с короткими фразами; выключается в «Я»
   };
 }
 
@@ -52,6 +54,7 @@ export function defaultData() {
     speed: [], // тренажёр скорости чтения: результаты, новые сначала
     stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
     badges: {}, // значки: id → дата получения
+    companion: { lastDay: '', lastPhrase: '' }, // когда компаньон здоровался и что сказал последним
   };
 }
 
@@ -71,6 +74,7 @@ function sanitizeSettings(raw) {
   // Неизвестный или ещё закрытый вариант заменяется на «по умолчанию» при показе (resolveAvatar).
   if (typeof raw.avatar === 'string') s.avatar = raw.avatar.slice(0, 40);
   if (typeof raw.accessory === 'string') s.accessory = raw.accessory.slice(0, 40);
+  if (typeof raw.companion === 'boolean') s.companion = raw.companion;
   return s;
 }
 
@@ -136,6 +140,7 @@ export function sanitizeData(raw) {
   // Нет счётчиков (данные до этапа F) — считаем из истории, чтобы ничего не пропало.
   data.stats = sanitizeStats(raw.stats, data.history);
   data.badges = sanitizeBadges(raw.badges);
+  data.companion = sanitizeCompanion(raw.companion);
   return { data, dropped };
 }
 
