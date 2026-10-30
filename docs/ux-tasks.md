@@ -1,6 +1,6 @@
 # Контролька — задачи по UX и внешнему виду
 
-Задание для Claude Code. Репозиторий: `lexy4ka/kontrolka` (GitHub Pages, ванильный JS без сборки, ES-модули, `localStorage`).
+Задание для Claude Code. Репозиторий: `kontrolka-app/kontrolka-app.github.io` (GitHub Pages, ванильный JS без сборки, ES-модули, `localStorage`).
 
 Источник — разбор пути ученика (CJM) на десктопе 1366px и телефоне 390px. Макеты: холст «Контролька — CJM и редизайн» (главная при возвращении, список тем, страница темы).
 
