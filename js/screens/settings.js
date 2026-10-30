@@ -5,6 +5,7 @@ import { getData, settings, update, replaceAll, resetAll, applyAppearance, conte
 import { exportData, importData } from '../storage.js';
 import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
+import { pickWonder } from '../wonders.js';
 import { badgeGrid, avatarSvg, unlockHint } from '../components.js';
 import { AVATARS, ACCESSORIES, resolveAvatar, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
@@ -66,6 +67,10 @@ function achievementsBlock(data) {
       fact(st.correct, 'верных ответов'),
       fact(masteredCount(st), 'освоено тем'),
     ),
+    (() => {
+      const w = pickWonder(st, Object.keys(data.poems.learned).length);
+      return w ? h('p', { class: 'wonder' }, '✨ ', w.text) : null;
+    })(),
     h('h3', {}, `Значки: ${Object.keys(data.badges).length} из ${BADGES.length}`),
     badgeGrid(data.badges),
     h(

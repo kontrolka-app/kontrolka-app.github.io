@@ -629,3 +629,4 @@ details.card > .review-list { margin-top: 12px; }
 .avatar-tile.is-locked { cursor: not-allowed; }
 .avatar-tile.is-locked .avatar { filter: grayscale(1); opacity: 0.45; }
 .avatar-tile__name { text-align: center; line-height: 1.25; }
+.wonder { background: var(--surface-soft); border-radius: var(--radius-sm); padding: 10px 14px; font-weight: 700; }

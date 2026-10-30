@@ -10,6 +10,7 @@ import { theoryBlock, notFound } from './browse.js';
 import { nextTopic } from '../catalog.js';
 import { reportControl } from './report.js';
 import { badgeGrid } from '../components.js';
+import { crossedWonder } from '../wonders.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -125,6 +126,10 @@ export function resultScreen(entryId) {
           : null,
       ),
     ),
+    // Удивлялка — только сразу после тренировки, которая перешла рубеж (это последняя запись истории).
+    data.history[0]?.id === entry.id && crossedWonder(data.stats, entry.total - entry.skipped)
+      ? h('p', { class: 'card wonder' }, '✨ ', crossedWonder(data.stats, entry.total - entry.skipped).text)
+      : null,
     newBadges.length
       ? h('section', { class: 'card new-badges' }, h('h2', { class: 'card__title' }, newBadges.length > 1 ? '🎉 Новые значки!' : '🎉 Новый значок!'), badgeGrid(data.badges, { only: newBadges }), h('a', { href: href('settings') + '', class: 'small' }, 'Все значки — в разделе «Я»'))
       : null,
