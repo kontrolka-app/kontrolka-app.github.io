@@ -80,6 +80,45 @@ export const AVATARS = [
     ],
   },
   {
+    id: 'lamb', name: 'Барашек Карандашик', bg: '#E3E9FF',
+    shapes: [
+      ['path', { d: 'M30 54 Q14 50 14 60 Q20 66 32 60 Z M70 54 Q86 50 86 60 Q80 66 68 60 Z', fill: '#e8d2b6', ...s() }],
+      ['path', { d: 'M28 44 Q22 30 36 28 Q40 16 52 20 Q62 14 68 26 Q80 28 76 42 Q84 52 74 60 Q76 72 62 72 Q52 82 40 74 Q26 76 26 62 Q16 54 28 44 Z', fill: '#ffffff', ...s() }],
+      ['ellipse', { cx: 50, cy: 60, rx: 15, ry: 17, fill: '#f3dcc0', ...s() }],
+      ...eye(44, 56, 3), ...eye(56, 56, 3), smile('M45 70 Q50 74 55 70'),
+      // Карандаш за ухом: ластик, корпус, заточка и грифель, повёрнуты вместе
+      ['rect', { x: 48, y: 18, width: 7, height: 8, rx: 2, fill: '#ff8fb1', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
+      ['rect', { x: 55, y: 18, width: 23, height: 8, fill: '#f9c74f', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
+      ['path', { d: 'M78 18 L87 22 L78 26 Z', fill: '#f1d3a8', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
+      ['path', { d: 'M84 20.7 L87 22 L84 23.3 Z', fill: INK, transform: 'rotate(35 68 22)' }],
+    ],
+  },
+  {
+    id: 'notebook', name: 'Тетрадь в кружок', bg: '#FFF0C7',
+    shapes: [
+      ['path', { d: 'M50 34 Q34 26 14 32 L14 86 Q34 80 50 88 Q66 80 86 86 L86 32 Q66 26 50 34 Z', fill: '#4d7cfe', ...s() }],
+      ['path', { d: 'M50 30 Q34 22 16 28 L16 80 Q34 74 50 82 Q66 74 84 80 L84 28 Q66 22 50 30 Z', fill: '#ffffff', ...s() }],
+      // Кружочки вместо клеток — по краям страниц, чтобы не закрывать лицо
+      ...[22, 30, 70, 78].flatMap((x) => [38, 48, 58, 68].map((y) => ['circle', { cx: x, cy: y, r: 2.4, fill: 'none', stroke: '#8fa9f0', 'stroke-width': 1.2 }])),
+      ['path', { d: 'M50 30 L50 82', ...s({ 'stroke-width': 2 }) }],
+      ...eye(40, 46, 3.5), ...eye(60, 46, 3.5),
+      ['ellipse', { cx: 38, cy: 58, rx: 4, ry: 2.5, fill: '#ffb3c1' }], ['ellipse', { cx: 62, cy: 58, rx: 4, ry: 2.5, fill: '#ffb3c1' }],
+      smile('M42 60 Q50 68 58 60'),
+    ],
+  },
+  {
+    id: 'ruler', name: 'Линейка Ботаник', bg: '#DDF3E6',
+    shapes: [
+      ['rect', { x: 34, y: 12, width: 32, height: 80, rx: 4, fill: '#f9d56e', ...s() }],
+      ['path', { d: 'M34 72 L40 72 M34 77 L38 77 M34 82 L40 82 M34 87 L38 87 M66 72 L60 72 M66 77 L62 77 M66 82 L60 82 M66 87 L62 87', ...s({ 'stroke-width': 2 }) }],
+      ...eye(43, 36, 3), ...eye(57, 36, 3),
+      ['circle', { cx: 43, cy: 36, r: 7, fill: 'none', ...s({ 'stroke-width': 2.5 }) }], ['circle', { cx: 57, cy: 36, r: 7, fill: 'none', ...s({ 'stroke-width': 2.5 }) }],
+      ['path', { d: 'M49.5 36 L50.5 36', ...s({ 'stroke-width': 2.5 }) }],
+      smile('M45 49 Q50 53 55 49'),
+      ['path', { d: 'M50 61 L42 56 L42 66 Z M50 61 L58 56 L58 66 Z', fill: '#4d7cfe', ...s({ 'stroke-width': 2 }) }],
+    ],
+  },
+  {
     id: 'owl', name: 'Сова Умница', bg: '#EEE7FB', unlock: 'expert',
     shapes: [
       ['path', { d: 'M24 34 L30 18 L40 30 M76 34 L70 18 L60 30', fill: '#9c7b5b', ...s() }],

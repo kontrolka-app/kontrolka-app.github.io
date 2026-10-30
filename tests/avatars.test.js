@@ -4,8 +4,8 @@ import { AVATARS, ACCESSORIES, resolveAvatar, isUnlocked, DEFAULT_AVATAR } from 
 import { BADGE_IDS } from '../js/achievements.js';
 import { sanitizeData } from '../js/storage.js';
 
-test('10 персонажей и аксессуары; открываются только существующими значками', () => {
-  assert.equal(AVATARS.length, 10);
+test('13 персонажей и аксессуары; открываются только существующими значками', () => {
+  assert.equal(AVATARS.length, 13);
   assert.equal(new Set(AVATARS.map((a) => a.id)).size, AVATARS.length);
   for (const x of [...AVATARS, ...ACCESSORIES]) if (x.unlock) assert.ok(BADGE_IDS.has(x.unlock), x.id);
   assert.ok(ACCESSORIES.some((x) => x.id === 'scarf' && x.unlock === 'week'), 'Неделя → шарф');
