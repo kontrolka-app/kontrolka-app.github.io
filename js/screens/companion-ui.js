@@ -18,7 +18,7 @@ export function companionSay(event, { inline = false } = {}) {
   update((x) => ((x.companion.lastPhrase = phrase.key), x));
   const me = resolveCompanion(d.settings, d.badges);
   if (inline) {
-    return h('div', { class: `companion-inline companion--${phrase.mood}`, role: 'status' }, avatarSvg(me.avatar, me.accessory, { size: 40 }), h('p', { class: 'companion__bubble' }, phrase.text));
+    return h('div', { class: `companion-inline companion--${phrase.mood}`, role: 'status' }, avatarSvg(me.avatar, me.accessory, { size: 56 }), h('p', { class: 'companion__bubble' }, phrase.text));
   }
   showCorner(me, phrase);
   return null;
@@ -36,7 +36,7 @@ function showCorner(me, phrase) {
   const toggle = h(
     'button',
     { type: 'button', class: 'companion__avatar', 'aria-label': `${me.avatar.name}: показать, что он сказал`, 'aria-expanded': 'true', onclick: () => (box.classList.contains('is-collapsed') ? expand() : collapse(true)) },
-    avatarSvg(me.avatar, me.accessory, { size: 52 }),
+    avatarSvg(me.avatar, me.accessory, { size: 76 }),
   );
   const box = h('aside', { id: 'companion', class: `companion companion--${phrase.mood}`, 'aria-label': 'Компаньон' }, bubble, toggle);
   const collapse = () => {
