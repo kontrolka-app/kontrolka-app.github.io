@@ -7,7 +7,7 @@ import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
 import { pickWonder } from '../wonders.js';
 import { companionHide } from './companion-ui.js';
-import { badgeGrid, avatarSvg, unlockHint } from '../components.js';
+import { badgeGrid, avatarSvg, unlockHint, unlockShort } from '../components.js';
 import { AVATARS, ACCESSORIES, resolveAvatar, resolveCompanion, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
 
@@ -34,7 +34,7 @@ function avatarPicker(data) {
       'button',
       { type: 'button', class: `avatar-tile${selected ? ' is-selected' : ''}${open ? '' : ' is-locked'}`, 'aria-pressed': String(selected), disabled: !open, title: open ? item.name : unlockHint(item.unlock), onclick: onPick },
       preview,
-      h('span', { class: 'avatar-tile__name small' }, open ? item.name : `🔒 ${unlockHint(item.unlock)}`),
+      h('span', { class: 'avatar-tile__name small' }, open ? item.name : `🔒 ${unlockShort(item.unlock)}`),
     );
   };
   return h(

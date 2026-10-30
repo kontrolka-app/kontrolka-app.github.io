@@ -69,6 +69,22 @@ export function avatarSvg(avatar, accessory, { size = 64, label } = {}) {
   return svg;
 }
 
+/** Короткая подпись на закрытой плитке: «значок «Неделя»» — полная подсказка уходит во всплывашку. */
+export function unlockShort(badgeId) {
+  const b = BADGES.find((x) => x.id === badgeId);
+  return b ? `значок «${softHyphens(b.title)}»` : '';
+}
+
+/** Мягкий перенос в длинных словах (после гласной ближе к середине): «Путеше-ственник» вместо обрыва на любой букве. */
+const SOFT_HYPHEN = String.fromCharCode(0xad);
+function softHyphens(text) {
+  return text.replace(/[А-Яа-яЁё]{11,}/g, (w) => {
+    let i = Math.floor(w.length / 2);
+    while (i > 2 && !/[аеёиоуыэюя]/i.test(w[i - 1])) i--;
+    return `${w.slice(0, i)}${SOFT_HYPHEN}${w.slice(i)}`;
+  });
+}
+
 /** Подсказка, каким значком открывается персонаж или аксессуар. */
 export function unlockHint(badgeId) {
   const b = BADGES.find((x) => x.id === badgeId);
