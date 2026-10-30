@@ -1,9 +1,9 @@
-// Компаньон на экране: выбранный персонаж-аватарка с облачком текста.
+// Компаньон на экране: свой выбранный персонаж (или аватарка ребёнка) с облачком текста.
 // В углу экрана (сворачивается сам) или строкой под заданием в тренировке — чтобы ничего не закрывать.
 import { h } from '../ui.js';
 import { getData, update } from '../state.js';
 import { avatarSvg } from '../components.js';
-import { resolveAvatar } from '../avatars.js';
+import { resolveCompanion } from '../avatars.js';
 import { pickPhrase } from '../companion.js';
 
 const COLLAPSE_MS = 7000;
@@ -16,7 +16,7 @@ export function companionSay(event, { inline = false } = {}) {
   const phrase = pickPhrase(event, { last: d.companion.lastPhrase, name: d.settings.nickname, goal: d.settings.dailyGoal });
   if (!phrase) return null;
   update((x) => ((x.companion.lastPhrase = phrase.key), x));
-  const me = resolveAvatar(d.settings, d.badges);
+  const me = resolveCompanion(d.settings, d.badges);
   if (inline) {
     return h('div', { class: `companion-inline companion--${phrase.mood}`, role: 'status' }, avatarSvg(me.avatar, me.accessory, { size: 40 }), h('p', { class: 'companion__bubble' }, phrase.text));
   }

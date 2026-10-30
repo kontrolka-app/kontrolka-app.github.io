@@ -38,6 +38,7 @@ export function defaultSettings() {
     avatar: '', // id персонажа из js/avatars.js; пусто — не выбран
     accessory: '',
     companion: true, // персонаж в углу экрана с короткими фразами; выключается в «Я»
+    companionId: '', // свой персонаж-компаньон; пусто — как аватарка
   };
 }
 
@@ -75,6 +76,7 @@ function sanitizeSettings(raw) {
   if (typeof raw.avatar === 'string') s.avatar = raw.avatar.slice(0, 40);
   if (typeof raw.accessory === 'string') s.accessory = raw.accessory.slice(0, 40);
   if (typeof raw.companion === 'boolean') s.companion = raw.companion;
+  if (typeof raw.companionId === 'string') s.companionId = raw.companionId.slice(0, 40);
   return s;
 }
 

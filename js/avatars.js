@@ -135,6 +135,17 @@ export const DEFAULT_AVATAR = 'raccoon';
 
 export const isUnlocked = (item, badges) => !item.unlock || Boolean(badges[item.unlock]);
 
+/**
+ * Кто компаньон: свой персонаж (settings.companionId), если он есть и открыт; иначе — как аватарка ребёнка
+ * (вместе с её аксессуаром). Пустой companionId — «как моя аватарка».
+ */
+export function resolveCompanion(settings, badges) {
+  const own = AVATARS.find((a) => a.id === settings.companionId && isUnlocked(a, badges));
+  if (own) return { avatar: own, accessory: null, sameAsAvatar: false };
+  const me = resolveAvatar(settings, badges);
+  return { avatar: me.avatar, accessory: me.accessory, sameAsAvatar: true };
+}
+
 /** Что показать: выбранное, если оно есть и открыто; иначе — енот без аксессуара. */
 export function resolveAvatar(settings, badges) {
   const avatar = AVATARS.find((a) => a.id === settings.avatar && isUnlocked(a, badges)) || AVATARS.find((a) => a.id === DEFAULT_AVATAR);

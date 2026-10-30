@@ -646,3 +646,4 @@ details.card > .review-list { margin-top: 12px; }
 .companion-inline { display: flex; align-items: center; gap: 10px; }
 .companion-inline .companion__bubble { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 16px 4px; padding: 8px 12px; font-weight: 700; }
 body[data-route='quiz'] .companion { display: none; }
+.avatar-tile__off { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--surface-2); font-size: 1.6rem; }

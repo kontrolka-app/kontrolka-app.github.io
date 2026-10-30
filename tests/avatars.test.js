@@ -23,3 +23,15 @@ test('выбор: закрытое или неизвестное — енот б
   assert.equal(sanitizeData({ schemaVersion: 1, settings: { avatar: 5 } }).data.settings.avatar, '');
   assert.equal(sanitizeData({ schemaVersion: 1, settings: { avatar: 'cat' } }).data.settings.avatar, 'cat');
 });
+
+test('компаньон: свой персонаж или как аватарка', async () => {
+  const { resolveCompanion } = await import('../js/avatars.js');
+  assert.equal(resolveCompanion({ avatar: 'cat', accessory: 'bow', companionId: '' }, { perfect: 1 }).avatar.id, 'cat', 'пусто — как аватарка');
+  assert.equal(resolveCompanion({ avatar: 'cat', accessory: 'bow', companionId: '' }, { perfect: 1 }).accessory.id, 'bow');
+  const own = resolveCompanion({ avatar: 'cat', companionId: 'penguin' }, {});
+  assert.equal(own.avatar.id, 'penguin');
+  assert.equal(own.sameAsAvatar, false);
+  assert.equal(resolveCompanion({ avatar: 'cat', companionId: 'owl' }, {}).avatar.id, 'cat', 'закрытый — как аватарка');
+  assert.equal(sanitizeData({ schemaVersion: 1, settings: { companionId: 'dino' } }).data.settings.companionId, 'dino');
+  assert.equal(sanitizeData({ schemaVersion: 1 }).data.settings.companionId, '');
+});

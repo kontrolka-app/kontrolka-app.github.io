@@ -8,7 +8,7 @@ import { masteredCount } from '../stats.js';
 import { pickWonder } from '../wonders.js';
 import { companionHide } from './companion-ui.js';
 import { badgeGrid, avatarSvg, unlockHint } from '../components.js';
-import { AVATARS, ACCESSORIES, resolveAvatar, isUnlocked } from '../avatars.js';
+import { AVATARS, ACCESSORIES, resolveAvatar, resolveCompanion, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
 
 export const APP_VERSION = '1.0.0';
@@ -20,6 +20,14 @@ function avatarPicker(data) {
     update((d) => ((d.settings[key] = value), d));
     navigate('settings');
   };
+  // Компаньон: свой персонаж, «как моя аватарка» (companionId = '') или выключен (companion = false).
+  const buddy = resolveCompanion(data.settings, data.badges);
+  const chooseBuddy = (id, on = true) => {
+    update((d) => ((d.settings.companionId = id), (d.settings.companion = on), d));
+    if (!on) companionHide();
+    navigate('settings');
+  };
+  const buddyOn = data.settings.companion;
   const tile = (item, selected, onPick, preview) => {
     const open = isUnlocked(item, data.badges);
     return h(
@@ -46,6 +54,19 @@ function avatarPicker(data) {
           ACCESSORIES.map((x) => tile(x, me.accessory?.id === x.id, () => choose('accessory', x.id), avatarSvg(me.avatar, x, { size: 56 }))),
         ),
       ),
+    h(
+      'details',
+      { class: 'avatar-picker' },
+      h('summary', {}, buddyOn ? `Компаньон: ${buddy.sameAsAvatar ? 'как моя аватарка' : buddy.avatar.name} — сменить` : 'Компаньон выключен — выбрать'),
+      h('p', { class: 'small muted' }, 'Компаньон подбадривает в углу экрана и под заданием. Подсказок к ответам не даёт, на контрольной молчит.'),
+      h(
+        'div',
+        { class: 'avatar-grid' },
+        tile({ name: 'как моя аватарка' }, buddyOn && buddy.sameAsAvatar, () => chooseBuddy(''), avatarSvg(me.avatar, me.accessory, { size: 56 })),
+        tile({ name: 'без компаньона' }, !buddyOn, () => chooseBuddy(data.settings.companionId, false), h('span', { class: 'avatar-tile__off', 'aria-hidden': 'true' }, '🔕')),
+        AVATARS.map((a) => tile(a, buddyOn && !buddy.sameAsAvatar && a.id === buddy.avatar.id, () => chooseBuddy(a.id), avatarSvg(a, null, { size: 56 }))),
+      ),
+    ),
   );
 }
 
