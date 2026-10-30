@@ -82,20 +82,26 @@ export const AVATARS = [
   {
     id: 'lamb', name: 'Барашек Карандашик', bg: '#E3E9FF',
     shapes: [
-      ['path', { d: 'M30 54 Q14 50 14 60 Q20 66 32 60 Z M70 54 Q86 50 86 60 Q80 66 68 60 Z', fill: '#e8d2b6', ...s() }],
-      ['path', { d: 'M28 44 Q22 30 36 28 Q40 16 52 20 Q62 14 68 26 Q80 28 76 42 Q84 52 74 60 Q76 72 62 72 Q52 82 40 74 Q26 76 26 62 Q16 54 28 44 Z', fill: '#ffffff', ...s() }],
-      ['ellipse', { cx: 50, cy: 60, rx: 15, ry: 17, fill: '#f3dcc0', ...s() }],
-      ...eye(44, 56, 3), ...eye(56, 56, 3), smile('M45 70 Q50 74 55 70'),
-      // Карандаш за ухом: ластик, корпус, заточка и грифель, повёрнуты вместе
-      ['rect', { x: 48, y: 18, width: 7, height: 8, rx: 2, fill: '#ff8fb1', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
-      ['rect', { x: 55, y: 18, width: 23, height: 8, fill: '#f9c74f', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
-      ['path', { d: 'M78 18 L87 22 L78 26 Z', fill: '#f1d3a8', transform: 'rotate(35 68 22)', ...s({ 'stroke-width': 2 }) }],
-      ['path', { d: 'M84 20.7 L87 22 L84 23.3 Z', fill: INK, transform: 'rotate(35 68 22)' }],
+      // Карандаш: корпус, заточка с грифелем, железный ободок — а вместо ластика барашек
+      ['rect', { x: 38, y: 52, width: 24, height: 28, fill: '#f9c74f', ...s() }],
+      ['path', { d: 'M46 54 L46 78 M54 54 L54 78', fill: 'none', ...s({ 'stroke-width': 1.5, stroke: '#d9a52b' }) }],
+      ['path', { d: 'M38 80 L62 80 L50 96 Z', fill: '#f1d3a8', ...s() }],
+      ['path', { d: 'M46.6 91.5 L53.4 91.5 L50 96 Z', fill: INK }],
+      ['rect', { x: 37, y: 46, width: 26, height: 8, rx: 2, fill: '#c9d1e3', ...s({ 'stroke-width': 2.5 }) }],
+      ['path', { d: 'M34 30 Q20 26 20 35 Q25 40 34 36 Z M66 30 Q80 26 80 35 Q75 40 66 36 Z', fill: '#e8d2b6', ...s({ 'stroke-width': 2.5 }) }],
+      ['path', { d: 'M32 24 Q28 12 40 12 Q44 4 52 7 Q60 3 64 12 Q74 12 72 22 Q79 30 71 37 Q73 48 60 46 Q52 52 44 46 Q29 48 30 37 Q23 30 32 24 Z', fill: '#ffffff', ...s() }],
+      ['ellipse', { cx: 50, cy: 32, rx: 12, ry: 11, fill: '#f3dcc0', ...s({ 'stroke-width': 2.5 }) }],
+      ...[45, 55].flatMap((cx) => [['circle', { cx, cy: 30, r: 3.6, fill: '#fff', ...s({ 'stroke-width': 1.5 }) }], ['circle', { cx, cy: 30, r: 1.8, fill: INK }]]),
+      smile('M46.5 36.5 Q50 39.5 53.5 36.5'),
     ],
   },
   {
     id: 'notebook', name: 'Тетрадь в кружок', bg: '#FFF0C7',
     shapes: [
+      // Ручки и ножки — позади тетради
+      ['path', { d: 'M17 56 Q8 52 7 43 M83 56 Q92 52 93 43 M40 86 L38 95 M60 86 L62 95', fill: 'none', ...s() }],
+      ['circle', { cx: 7, cy: 41, r: 3.5, fill: '#fff', ...s({ 'stroke-width': 2 }) }], ['circle', { cx: 93, cy: 41, r: 3.5, fill: '#fff', ...s({ 'stroke-width': 2 }) }],
+      ['ellipse', { cx: 35, cy: 95.5, rx: 5, ry: 2.5, fill: INK }], ['ellipse', { cx: 65, cy: 95.5, rx: 5, ry: 2.5, fill: INK }],
       ['path', { d: 'M50 34 Q34 26 14 32 L14 86 Q34 80 50 88 Q66 80 86 86 L86 32 Q66 26 50 34 Z', fill: '#4d7cfe', ...s() }],
       ['path', { d: 'M50 30 Q34 22 16 28 L16 80 Q34 74 50 82 Q66 74 84 80 L84 28 Q66 22 50 30 Z', fill: '#ffffff', ...s() }],
       // Кружочки вместо клеток — по краям страниц, чтобы не закрывать лицо
