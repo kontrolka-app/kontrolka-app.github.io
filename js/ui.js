@@ -29,6 +29,22 @@ export function h(tag, attrs = {}, ...children) {
   return el;
 }
 
+/** Подсказка и счётчик имени; значение поля и правила сохранения не меняются. */
+export function nameFieldDetails(input) {
+  const hintId = `${input.id}-hint`;
+  const counterId = `${input.id}-counter`;
+  const describedBy = input.getAttribute('aria-describedby');
+  input.setAttribute('aria-describedby', [describedBy, hintId, counterId].filter(Boolean).join(' '));
+  const counter = h('p', { class: 'field__hint', id: counterId, 'aria-live': 'polite', 'aria-atomic': 'true' }, `${input.value.length} / 40`);
+  input.addEventListener('input', () => {
+    counter.textContent = `${input.value.length} / 40`;
+  });
+  return [
+    h('p', { class: 'field__hint', id: hintId }, 'Имя необязательно. Можно использовать псевдоним'),
+    counter,
+  ];
+}
+
 function appendChildren(el, children) {
   for (const c of children) {
     if (c === null || c === undefined || c === false) continue;

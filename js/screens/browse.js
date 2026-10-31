@@ -1,5 +1,5 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar } from '../ui.js';
+import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar, nameFieldDetails } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarSvg } from '../components.js';
@@ -271,7 +271,7 @@ export function welcomeScreen() {
           finish(typedName());
         },
       },
-      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-name' }, 'Как тебя зовут?'), name, h('p', { class: 'field__hint' }, 'Можно не писать. Имя останется только в этом браузере.')),
+      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-name' }, 'Как тебя зовут?'), name, nameFieldDetails(name), h('p', { class: 'field__hint' }, 'Имя останется только в этом браузере.')),
       gradeSelect
         ? h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'welcome-grade' }, 'В каком ты классе?'), gradeSelect)
         : current

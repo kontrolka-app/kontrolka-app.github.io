@@ -1,5 +1,5 @@
 // Настройки, экспорт/импорт и сброс.
-import { h, pageHeader, button, confirmDialog, toast, downloadJson, readFileText, icon, copyText } from '../ui.js';
+import { h, pageHeader, button, confirmDialog, toast, downloadJson, readFileText, icon, copyText, nameFieldDetails } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { getData, settings, update, replaceAll, resetAll, applyAppearance, content } from '../state.js';
 import { exportData, importData } from '../storage.js';
@@ -208,6 +208,7 @@ export function settingsScreen() {
         { class: 'field' },
         h('label', { class: 'field__label', for: 'nickname' }, 'Как тебя называть'),
         nickname,
+        nameFieldDetails(nickname),
         h('p', { class: 'field__hint' }, 'Только имя или прозвище — без фамилии. Оно видно в приветствии и в скопированном результате.'),
       ),
       select('def-count', 'Вопросов в тренировке по умолчанию', s.defaultCount, [5, 10, 15, 20, 30].map((n) => [n, String(n)]), (v) => set('defaultCount', Number(v))),
