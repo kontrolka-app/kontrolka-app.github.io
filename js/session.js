@@ -7,6 +7,7 @@ import { getData, update, content } from './state.js';
 import { confirmDialog, toast } from './ui.js';
 import { navigate } from './router.js';
 import { MODE_LABELS } from './utils.js';
+import { countEvent } from './analytics.js';
 
 /** Запускает тренировку. Если есть незавершённая — спрашивает, можно ли её заменить. */
 export async function startTraining({ questions, source, settings }) {
@@ -65,6 +66,7 @@ export function completeActive(session) {
     }
     return d;
   });
+  countEvent('training-finished');
   return entry.id;
 }
 

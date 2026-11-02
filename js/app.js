@@ -9,6 +9,7 @@ import { gradeTopics } from './session.js';
 import { companionSay } from './screens/companion-ui.js';
 import { dayEvent } from './companion.js';
 import { dayKey } from './results.js';
+import { countRoute } from './analytics.js';
 import { homeScreen, gradeScreen, subjectsScreen, topicsScreen, topicScreen, examScreen, favoritesScreen, notFound } from './screens/browse.js';
 import { quizScreen } from './screens/quiz.js';
 import { resultScreen, historyScreen } from './screens/results.js';
@@ -85,6 +86,7 @@ function render(route) {
   main.textContent = '';
   main.appendChild(view);
   document.body.dataset.route = route.name;
+  countRoute(route.name);
 
   const section = NAV_SECTION[route.name];
   document.querySelectorAll('.nav__link').forEach((a) => {
