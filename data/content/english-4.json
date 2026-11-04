@@ -250,6 +250,168 @@
         "She told me a story.",
         "Did you bring your book? — Yes, I did."
       ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m1",
+      "section": "Spotlight 4",
+      "title": "Module 1. Present Continuous. Предлоги места",
+      "description": "Что происходит сейчас: am / is / are + -ing. Где находится: in, on, under, behind, next to, in front of, opposite, between.",
+      "theory": [
+        "Где? in — в, on — на, under — под, behind — за, next to — рядом с, in front of — перед, opposite — напротив, between — между.",
+        "Present Continuous — то, что происходит сейчас: am / is / are + глагол с -ing. I'm playing. She is reading. They are swimming.",
+        "Отрицание: am not / isn't / aren't + -ing: He isn't sleeping. Вопрос: Are they playing? — Yes, they are. / No, they aren't.",
+        "Как добавить -ing: play — playing; e в конце убираем: write — writing; короткое слово на «гласная + согласная» удваивает букву: swim — swimming."
+      ],
+      "examples": [
+        "The ball is under the chair.",
+        "The bank is opposite the park.",
+        "Look! Dad is cooking.",
+        "Is she skating? — No, she isn't."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m2",
+      "section": "Spotlight 4",
+      "title": "Module 2. Present Simple. always, never. have to",
+      "description": "Что бывает регулярно: he works, does she…? Как часто: always, usually, sometimes, never. Нужно: have to.",
+      "theory": [
+        "Present Simple — о том, что бывает регулярно: I get up at 7 every day. Слова-подсказки: every day, on Monday, twice a week.",
+        "С he, she, it к глаголу добавляем -s: I work — he works. После s, sh, ch, x, o — -es: she watches, he goes. Согласная + y → ies: study — studies. После гласной y остаётся: play — plays.",
+        "Вопрос: Do you…? Does he…? После does глагол без -s: Does she like milk? — Yes, she does. / No, she doesn't.",
+        "Как часто: always — всегда, usually — обычно, often — часто, sometimes — иногда, never — никогда. Стоят перед глаголом: I usually walk to school. Но после am / is / are: He is always kind.",
+        "have to — нужно, приходится: I have to feed my cat. С he / she / it — has to. Не нужно: don't have to / doesn't have to."
+      ],
+      "examples": [
+        "My uncle fixes cars.",
+        "Does your sister like ice cream? — No, she doesn't.",
+        "I sometimes play hockey.",
+        "He has to wake up at 7."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m3",
+      "section": "Spotlight 4",
+      "title": "Module 3. much, many, a lot of. May I…?",
+      "description": "Много: much, many, a lot of. Сколько: how much, how many. Вежливая просьба: May I…?",
+      "theory": [
+        "Исчисляемые — то, что можно посчитать: apples, eggs, bottles. Неисчисляемые — то, что посчитать нельзя: milk, sugar, flour, butter.",
+        "many — много — с исчисляемыми в вопросах и отрицаниях: Are there many eggs? There aren't many apples.",
+        "much — много — с неисчисляемыми в вопросах и отрицаниях: Is there much milk? There isn't much sugar.",
+        "a lot of — много — в утвердительных предложениях, с любыми: There are a lot of lemons. There is a lot of juice.",
+        "How many? — Сколько (штук)? How much? — Сколько (воды, муки)?",
+        "May I…? — Можно мне…? (вежливо спросить разрешения). Ответ: Of course you may. / Sorry, no."
+      ],
+      "examples": [
+        "There isn't much cheese.",
+        "Are there many cherries? — Yes, a lot.",
+        "How much juice do you want?",
+        "May I open the window?"
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m4",
+      "section": "Spotlight 4",
+      "title": "Module 4. Simple или Continuous. Сравнение с more. must",
+      "description": "Обычно или сейчас: Present Simple и Present Continuous. Сравнение: -er и more. must и mustn't.",
+      "theory": [
+        "Present Simple — то, что бывает обычно: She works every day. Present Continuous — то, что происходит сейчас: She is working now.",
+        "Подсказки: every day, usually, on Sundays — Simple; now, at the moment, Look! — Continuous.",
+        "Сравнение: короткие слова + er: small — smaller, big — bigger, busy — busier. Длинные слова — с more: beautiful — more beautiful, interesting — more interesting. После них — than.",
+        "Особые слова: good — better, bad — worse.",
+        "must — обязательно надо: You must be kind to animals. mustn't — нельзя: You mustn't feed the animals."
+      ],
+      "examples": [
+        "Look! The seal is swimming.",
+        "Seals eat fish.",
+        "This film is more interesting than that one.",
+        "You mustn't run here."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m5",
+      "section": "Spotlight 4",
+      "title": "Module 5. was / were. Порядковые числительные",
+      "description": "Глагол be в прошедшем времени. Слова-подсказки прошлого. first, second, third…",
+      "theory": [
+        "was — с I, he, she, it; were — с you, we, they. Отрицание: wasn't, weren't. Вопрос: Were you…? Was it…?",
+        "Подсказки прошлого: yesterday, last week, last month, last year, two days ago, in 2015.",
+        "Порядковые числительные (какой по счёту): first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth… twentieth, twenty-first.",
+        "Дата: the fifth of May, the twenty-second of October."
+      ],
+      "examples": [
+        "I was bored yesterday.",
+        "Were they at the zoo? — Yes, they were.",
+        "My birthday is on the ninth of March."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m6",
+      "section": "Spotlight 4",
+      "title": "Module 6. Прошедшее время: -ed",
+      "description": "Правильные глаголы в прошедшем времени и как их писать: danced, studied, travelled, planned.",
+      "theory": [
+        "Правильный глагол в прошедшем времени получает -ed: work — worked, open — opened, want — wanted.",
+        "Правила написания: глагол на -e — только -d (dance — danced); согласная + y → ied (study — studied); на -l — l удваиваем (travel — travelled); короткий глагол «согласная + гласная + согласная» — последнюю букву удваиваем (plan — planned).",
+        "Вопрос и отрицание — с did и didn't, глагол без -ed: Did you go? I didn't go.",
+        "Окончание -ed читается по-разному: [t] — washed, [d] — played, [ɪd] — wanted, visited."
+      ],
+      "examples": [
+        "We watched a cartoon last night.",
+        "She studied English.",
+        "Did they enjoy the trip? — Yes, they did."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m7",
+      "section": "Spotlight 4",
+      "title": "Module 7. Неправильные глаголы. Самый-самый",
+      "description": "Прошедшее время неправильных глаголов: went, saw, made, had. Превосходная степень: the tallest, the most interesting, the best.",
+      "theory": [
+        "Неправильные глаголы запоминаем: go — went, see — saw, make — made, have — had, eat — ate, swim — swam, ride — rode, come — came.",
+        "Вопрос и отрицание — с did и начальной формой: Did he go…? He didn't see…",
+        "Самый-самый: the + -est: tall — the tallest, nice — the nicest, happy — the happiest, big — the biggest.",
+        "Длинные слова — the most: interesting — the most interesting.",
+        "Особые: good — better — the best, bad — worse — the worst.",
+        "the … of all — самый из всех; the … in the class — самый в классе."
+      ],
+      "examples": [
+        "We went to the funfair last Sunday.",
+        "Did you swim in the sea? — Yes, I did.",
+        "This is the funniest clown of all."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-sp4-m8",
+      "section": "Spotlight 4",
+      "title": "Module 8. going to, will. Вопросительные слова",
+      "description": "Планы: be going to. Будущее: will и won't. Вопросы: who, what, where, when, why, how.",
+      "theory": [
+        "be going to — собираюсь (план уже есть): I'm going to go camping. Are you going to swim?",
+        "will — будет (предсказание или решение прямо сейчас): It will be sunny tomorrow. I'll help you. won't = will not.",
+        "Вопрос: Will you…? — Yes, I will. / No, I won't. Подсказки: tomorrow, next week, next year, soon.",
+        "Вопросительные слова: who — кто, what — что, where — где, куда, when — когда, why — почему, how — как."
+      ],
+      "examples": [
+        "We are going to go to the seaside.",
+        "Will it be cloudy tomorrow? — No, it won't.",
+        "Where are you going to go in summer?"
+      ]
     }
   ],
   "questions": [
@@ -3379,6 +3541,2204 @@
       "correctAnswer": "a",
       "explanation": "put — put: форма та же.",
       "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Кошка под кроватью. Вставь: The cat is ___ the bed.",
+      "options": [
+        {
+          "id": "a",
+          "text": "under"
+        },
+        {
+          "id": "b",
+          "text": "on"
+        },
+        {
+          "id": "c",
+          "text": "behind"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Под — under.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Шкаф рядом с дверью. Вставь: The cupboard is ___ the door.",
+      "options": [
+        {
+          "id": "a",
+          "text": "next to"
+        },
+        {
+          "id": "b",
+          "text": "opposite"
+        },
+        {
+          "id": "c",
+          "text": "in"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Рядом с — next to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Почта между банком и кафе. Вставь: The post office is ___ the bank and the café.",
+      "options": [
+        {
+          "id": "a",
+          "text": "between"
+        },
+        {
+          "id": "b",
+          "text": "behind"
+        },
+        {
+          "id": "c",
+          "text": "in front of"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Между — between.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Мальчик стоит перед домом. Вставь: The boy is ___ the house.",
+      "options": [
+        {
+          "id": "a",
+          "text": "in front of"
+        },
+        {
+          "id": "b",
+          "text": "behind"
+        },
+        {
+          "id": "c",
+          "text": "under"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Перед — in front of.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Магазин напротив школы. Вставь: The shop is ___ the school.",
+      "options": [
+        {
+          "id": "a",
+          "text": "opposite"
+        },
+        {
+          "id": "b",
+          "text": "on"
+        },
+        {
+          "id": "c",
+          "text": "between"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Напротив — opposite.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Look! The girls ___ dancing.",
+      "options": [
+        {
+          "id": "a",
+          "text": "are"
+        },
+        {
+          "id": "b",
+          "text": "is"
+        },
+        {
+          "id": "c",
+          "text": "am"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "The girls — they, поэтому are dancing.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: I ___ reading a comic now.",
+      "options": [
+        {
+          "id": "a",
+          "text": "am"
+        },
+        {
+          "id": "b",
+          "text": "is"
+        },
+        {
+          "id": "c",
+          "text": "are"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С I — am: I am reading.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Is your brother sleeping? — No, he ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "isn't"
+        },
+        {
+          "id": "b",
+          "text": "aren't"
+        },
+        {
+          "id": "c",
+          "text": "doesn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Спросили с is — отвечаем isn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Are you playing a game?"
+        },
+        {
+          "id": "b",
+          "text": "Do you playing a game?"
+        },
+        {
+          "id": "c",
+          "text": "Are you play a game?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Are + you + playing.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Добавь окончание -ing: swim → …",
+      "correctAnswer": "swimming",
+      "explanation": "Короткое слово на «гласная + согласная»: m удваиваем — swimming.",
+      "hint": "Одна буква удваивается.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Добавь окончание -ing: write → …",
+      "correctAnswer": "writing",
+      "explanation": "Буква e в конце убирается: writing.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m1-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m1",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "They aren't watching TV now."
+        },
+        {
+          "id": "b",
+          "text": "They not watching TV now."
+        },
+        {
+          "id": "c",
+          "text": "They aren't watch TV now."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нужны и aren't, и -ing: aren't watching.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Как будет с he / she / it? work → he …",
+      "correctAnswer": "works",
+      "explanation": "he, she, it + s: works.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Как будет с he / she / it? watch → she …",
+      "correctAnswer": "watches",
+      "explanation": "После ch добавляем -es: watches.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Как будет с he / she / it? study → he …",
+      "correctAnswer": "studies",
+      "explanation": "Согласная + y → ies: studies.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Как будет с he / she / it? play → she …",
+      "correctAnswer": "plays",
+      "explanation": "После гласной y остаётся: plays.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: My mum ___ in a hospital.",
+      "options": [
+        {
+          "id": "a",
+          "text": "works"
+        },
+        {
+          "id": "b",
+          "text": "work"
+        },
+        {
+          "id": "c",
+          "text": "working"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "My mum — she, добавляем -s: works.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ your dad like football? — Yes, he does.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Does"
+        },
+        {
+          "id": "b",
+          "text": "Do"
+        },
+        {
+          "id": "c",
+          "text": "Is"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С he — Does.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Do you ride a bike every day? — No, I ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "don't"
+        },
+        {
+          "id": "b",
+          "text": "doesn't"
+        },
+        {
+          "id": "c",
+          "text": "am not"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с do — ответ don't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She doesn't ___ tea.",
+      "options": [
+        {
+          "id": "a",
+          "text": "drink"
+        },
+        {
+          "id": "b",
+          "text": "drinks"
+        },
+        {
+          "id": "c",
+          "text": "drinking"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После doesn't глагол без -s: drink.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Как сказать «Я никогда не опаздываю»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "I am never late."
+        },
+        {
+          "id": "b",
+          "text": "I never am late."
+        },
+        {
+          "id": "c",
+          "text": "I am late never."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После am наречие never стоит после глагола: I am never late.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Куда поставить usually? «I walk to school.»",
+      "options": [
+        {
+          "id": "a",
+          "text": "I usually walk to school."
+        },
+        {
+          "id": "b",
+          "text": "I walk usually to school."
+        },
+        {
+          "id": "c",
+          "text": "I walk to usually school."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "usually ставим перед глаголом walk.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: He ___ to wear a uniform at school.",
+      "options": [
+        {
+          "id": "a",
+          "text": "has"
+        },
+        {
+          "id": "b",
+          "text": "have"
+        },
+        {
+          "id": "c",
+          "text": "having"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С he — has to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m2-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m2",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Завтра воскресенье, рано вставать не нужно. Вставь: I ___ get up early tomorrow.",
+      "options": [
+        {
+          "id": "a",
+          "text": "don't have to"
+        },
+        {
+          "id": "b",
+          "text": "doesn't have to"
+        },
+        {
+          "id": "c",
+          "text": "have to"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Не нужно — don't have to (с I — don't).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Is there ___ milk in the fridge?",
+      "options": [
+        {
+          "id": "a",
+          "text": "much"
+        },
+        {
+          "id": "b",
+          "text": "many"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Milk не посчитаешь — much.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Are there ___ tomatoes in the basket?",
+      "options": [
+        {
+          "id": "a",
+          "text": "many"
+        },
+        {
+          "id": "b",
+          "text": "much"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Помидоры можно посчитать — many.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There isn't ___ flour.",
+      "options": [
+        {
+          "id": "a",
+          "text": "much"
+        },
+        {
+          "id": "b",
+          "text": "many"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Flour (мука) — неисчисляемое: much.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There aren't ___ eggs.",
+      "options": [
+        {
+          "id": "a",
+          "text": "many"
+        },
+        {
+          "id": "b",
+          "text": "much"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Яйца можно посчитать — many.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She's got ___ friends.",
+      "options": [
+        {
+          "id": "a",
+          "text": "a lot of"
+        },
+        {
+          "id": "b",
+          "text": "much"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Утвердительное предложение — a lot of.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ sugar do you want?",
+      "options": [
+        {
+          "id": "a",
+          "text": "How much"
+        },
+        {
+          "id": "b",
+          "text": "How many"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Сахар — неисчисляемое: How much.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ apples are there?",
+      "options": [
+        {
+          "id": "a",
+          "text": "How many"
+        },
+        {
+          "id": "b",
+          "text": "How much"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Яблоки считаются — How many.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Какое слово неисчисляемое?",
+      "options": [
+        {
+          "id": "a",
+          "text": "butter"
+        },
+        {
+          "id": "b",
+          "text": "lemon"
+        },
+        {
+          "id": "c",
+          "text": "tomato"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Масло нельзя посчитать штуками — butter неисчисляемое.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как вежливо спросить «Можно мне выйти?»",
+      "options": [
+        {
+          "id": "a",
+          "text": "May I go out?"
+        },
+        {
+          "id": "b",
+          "text": "May I to go out?"
+        },
+        {
+          "id": "c",
+          "text": "I may go out?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "May I + глагол без to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "May I take a cookie? — …",
+      "options": [
+        {
+          "id": "a",
+          "text": "Of course you may."
+        },
+        {
+          "id": "b",
+          "text": "Of course I may."
+        },
+        {
+          "id": "c",
+          "text": "Yes, I may."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Разрешаем другому: Of course you may.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Вставь much или many: How ___ bottles of water have we got?",
+      "correctAnswer": "many",
+      "explanation": "Бутылки можно посчитать — many.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m3-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m3",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Вставь much или many: How ___ olive oil do we need?",
+      "correctAnswer": "much",
+      "explanation": "Масло — неисчисляемое: much.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Look! The monkey ___ a banana.",
+      "options": [
+        {
+          "id": "a",
+          "text": "is eating"
+        },
+        {
+          "id": "b",
+          "text": "eats"
+        },
+        {
+          "id": "c",
+          "text": "eat"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Look! — происходит сейчас: is eating.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Pandas usually ___ bamboo.",
+      "options": [
+        {
+          "id": "a",
+          "text": "eat"
+        },
+        {
+          "id": "b",
+          "text": "are eating"
+        },
+        {
+          "id": "c",
+          "text": "eats"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "usually — обычно: Present Simple, pandas — they: eat.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: My dad ___ the car at the moment.",
+      "options": [
+        {
+          "id": "a",
+          "text": "is washing"
+        },
+        {
+          "id": "b",
+          "text": "washes"
+        },
+        {
+          "id": "c",
+          "text": "wash"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "at the moment — сейчас: is washing.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She ___ to the zoo every Sunday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "goes"
+        },
+        {
+          "id": "b",
+          "text": "is going"
+        },
+        {
+          "id": "c",
+          "text": "go"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "every Sunday — регулярно: goes.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши сравнительную степень: thin → …",
+      "correctAnswer": "thinner",
+      "explanation": "n удваиваем: thinner.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши сравнительную степень: funny → …",
+      "correctAnswer": "funnier",
+      "explanation": "Согласная + y → ier: funnier.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: A giraffe is ___ than a zebra.",
+      "options": [
+        {
+          "id": "a",
+          "text": "taller"
+        },
+        {
+          "id": "b",
+          "text": "more tall"
+        },
+        {
+          "id": "c",
+          "text": "tallest"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Короткое слово: taller than.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: This book is ___ than that one.",
+      "options": [
+        {
+          "id": "a",
+          "text": "more interesting"
+        },
+        {
+          "id": "b",
+          "text": "interestinger"
+        },
+        {
+          "id": "c",
+          "text": "most interesting"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Длинное слово — more interesting.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Сравнительная степень от good — это…",
+      "options": [
+        {
+          "id": "a",
+          "text": "better"
+        },
+        {
+          "id": "b",
+          "text": "gooder"
+        },
+        {
+          "id": "c",
+          "text": "best"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Особое слово: good — better.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "В зоопарке нельзя кормить животных. Вставь: You ___ feed the animals.",
+      "options": [
+        {
+          "id": "a",
+          "text": "mustn't"
+        },
+        {
+          "id": "b",
+          "text": "must"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нельзя — mustn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "С животными надо обращаться хорошо. Вставь: You ___ be kind to animals.",
+      "options": [
+        {
+          "id": "a",
+          "text": "must"
+        },
+        {
+          "id": "b",
+          "text": "mustn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Обязательно надо — must.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m4-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m4",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Elephants are bigger than seals."
+        },
+        {
+          "id": "b",
+          "text": "Elephants are more big than seals."
+        },
+        {
+          "id": "c",
+          "text": "Elephants are biggest than seals."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Короткое слово: bigger than.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: I ___ at the funfair yesterday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С I — was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: We ___ tired after the game.",
+      "options": [
+        {
+          "id": "a",
+          "text": "were"
+        },
+        {
+          "id": "b",
+          "text": "was"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С we — were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Were you scared? — Yes, I ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        },
+        {
+          "id": "c",
+          "text": "did"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Отвечаем о себе — I was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Was it cold last week? — No, it ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "wasn't"
+        },
+        {
+          "id": "b",
+          "text": "weren't"
+        },
+        {
+          "id": "c",
+          "text": "didn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С it — wasn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Какие слова подсказывают прошедшее время?",
+      "options": [
+        {
+          "id": "a",
+          "text": "yesterday, last year"
+        },
+        {
+          "id": "b",
+          "text": "every day, usually"
+        },
+        {
+          "id": "c",
+          "text": "now, at the moment"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "yesterday и last year — о прошлом.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши порядковое числительное: 1 → …",
+      "correctAnswer": "first",
+      "explanation": "1 — first.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши порядковое числительное: 3 → …",
+      "correctAnswer": "third",
+      "explanation": "3 — third.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши порядковое числительное: 5 → …",
+      "correctAnswer": "fifth",
+      "explanation": "5 — fifth (ve меняется на f).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши порядковое числительное: 12 → …",
+      "correctAnswer": "twelfth",
+      "explanation": "12 — twelfth.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как сказать «22 октября»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "the twenty-second of October"
+        },
+        {
+          "id": "b",
+          "text": "the twenty-two of October"
+        },
+        {
+          "id": "c",
+          "text": "the twentieth-second of October"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "22-й — twenty-second.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как сказать «два дня назад»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "two days ago"
+        },
+        {
+          "id": "b",
+          "text": "two days last"
+        },
+        {
+          "id": "c",
+          "text": "before two days"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Назад — ago после слов: two days ago.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m5-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m5",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "My friends were at the party."
+        },
+        {
+          "id": "b",
+          "text": "My friends was at the party."
+        },
+        {
+          "id": "c",
+          "text": "My friends were at the party tomorrow."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "friends — они: were. tomorrow — это завтра, с прошлым не сочетается.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: dance → …",
+      "correctAnswer": "danced",
+      "explanation": "Глагол на -e — добавляем только -d.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: open → …",
+      "correctAnswer": "opened",
+      "explanation": "open + ed = opened.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: want → …",
+      "correctAnswer": "wanted",
+      "explanation": "want + ed = wanted.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: study → …",
+      "correctAnswer": "studied",
+      "explanation": "Согласная + y → ied: studied.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: travel → …",
+      "correctAnswer": "travelled",
+      "acceptedAnswers": [
+        "traveled"
+      ],
+      "explanation": "В британском английском l удваивается: travelled. В американском пишут traveled — тоже засчитаем.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: plan → …",
+      "correctAnswer": "planned",
+      "explanation": "n удваиваем: planned.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Yesterday the hare ___ under a tree.",
+      "options": [
+        {
+          "id": "a",
+          "text": "stopped"
+        },
+        {
+          "id": "b",
+          "text": "stop"
+        },
+        {
+          "id": "c",
+          "text": "stops"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Yesterday — прошлое: stopped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did the tortoise win? — Yes, it ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "did"
+        },
+        {
+          "id": "b",
+          "text": "won"
+        },
+        {
+          "id": "c",
+          "text": "was"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с Did — ответ did.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери отрицание к предложению «We watched a play.»",
+      "options": [
+        {
+          "id": "a",
+          "text": "We didn't watch a play."
+        },
+        {
+          "id": "b",
+          "text": "We didn't watched a play."
+        },
+        {
+          "id": "c",
+          "text": "We wasn't watch a play."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "didn't + watch (без -ed).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did you visit your grandma?"
+        },
+        {
+          "id": "b",
+          "text": "Did you visited your grandma?"
+        },
+        {
+          "id": "c",
+          "text": "Do you visited your grandma?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Did + you + visit.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как по-английски «Они путешествовали по Шотландии»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They travelled around Scotland."
+        },
+        {
+          "id": "b",
+          "text": "They travel around Scotland."
+        },
+        {
+          "id": "c",
+          "text": "They travelling around Scotland."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Путешествовали — прошлое: travelled.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m6-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m6",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "В каком слове ошибка?",
+      "options": [
+        {
+          "id": "a",
+          "text": "studied"
+        },
+        {
+          "id": "b",
+          "text": "planned"
+        },
+        {
+          "id": "c",
+          "text": "danceed"
+        },
+        {
+          "id": "d",
+          "text": "played"
+        }
+      ],
+      "correctAnswer": "c",
+      "explanation": "Правильно danced: к глаголу на -e добавляем только -d.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: make → …",
+      "correctAnswer": "made",
+      "explanation": "make — made.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: eat → …",
+      "correctAnswer": "ate",
+      "explanation": "eat — ate.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: swim → …",
+      "correctAnswer": "swam",
+      "explanation": "swim — swam.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: ride → …",
+      "correctAnswer": "rode",
+      "explanation": "ride — rode.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: We ___ ice cream at the funfair yesterday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "ate"
+        },
+        {
+          "id": "b",
+          "text": "eated"
+        },
+        {
+          "id": "c",
+          "text": "eat"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "eat — неправильный: ate.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did he see the camel? — No, he ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "didn't"
+        },
+        {
+          "id": "b",
+          "text": "wasn't"
+        },
+        {
+          "id": "c",
+          "text": "saw"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с Did — ответ didn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She didn't ___ a cake.",
+      "options": [
+        {
+          "id": "a",
+          "text": "make"
+        },
+        {
+          "id": "b",
+          "text": "made"
+        },
+        {
+          "id": "c",
+          "text": "makes"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После didn't — начальная форма make.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): happy → …",
+      "correctAnswer": "happiest",
+      "acceptedAnswers": [
+        "the happiest"
+      ],
+      "explanation": "Согласная + y → iest: happiest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): nice → …",
+      "correctAnswer": "nicest",
+      "acceptedAnswers": [
+        "the nicest"
+      ],
+      "explanation": "Слово на -e — добавляем -st: nicest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: That was the ___ day of my life!",
+      "options": [
+        {
+          "id": "a",
+          "text": "best"
+        },
+        {
+          "id": "b",
+          "text": "goodest"
+        },
+        {
+          "id": "c",
+          "text": "better"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "good — better — the best.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: This is the ___ film of all.",
+      "options": [
+        {
+          "id": "a",
+          "text": "most interesting"
+        },
+        {
+          "id": "b",
+          "text": "interestingest"
+        },
+        {
+          "id": "c",
+          "text": "more interesting"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Длинное слово — the most interesting.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m7-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m7",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Том — самый невысокий в классе. Вставь: Tom is the ___ in the class.",
+      "options": [
+        {
+          "id": "a",
+          "text": "shortest"
+        },
+        {
+          "id": "b",
+          "text": "shorter"
+        },
+        {
+          "id": "c",
+          "text": "most short"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Самый — the shortest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: We are going ___ camp in the mountains.",
+      "options": [
+        {
+          "id": "a",
+          "text": "to"
+        },
+        {
+          "id": "b",
+          "text": "for"
+        },
+        {
+          "id": "c",
+          "text": "at"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "going to + глагол.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: What ___ you going to do in summer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "are"
+        },
+        {
+          "id": "b",
+          "text": "do"
+        },
+        {
+          "id": "c",
+          "text": "is"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "What + are + you + going to…",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Tomorrow it ___ be rainy.",
+      "options": [
+        {
+          "id": "a",
+          "text": "will"
+        },
+        {
+          "id": "b",
+          "text": "is"
+        },
+        {
+          "id": "c",
+          "text": "does"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Предсказание на завтра — will be.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Will you come to my party? — Yes, I ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "will"
+        },
+        {
+          "id": "b",
+          "text": "do"
+        },
+        {
+          "id": "c",
+          "text": "am"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с Will — ответ will.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "won't — это сокращение от…",
+      "options": [
+        {
+          "id": "a",
+          "text": "will not"
+        },
+        {
+          "id": "b",
+          "text": "want not"
+        },
+        {
+          "id": "c",
+          "text": "was not"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "won't = will not.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Завтра воскресенье. Вставь: He ___ go to school tomorrow.",
+      "options": [
+        {
+          "id": "a",
+          "text": "won't"
+        },
+        {
+          "id": "b",
+          "text": "will"
+        },
+        {
+          "id": "c",
+          "text": "doesn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Не пойдёт (в будущем) — won't go.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "___ is your sister? — She's at the seaside.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Where"
+        },
+        {
+          "id": "b",
+          "text": "When"
+        },
+        {
+          "id": "c",
+          "text": "Who"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ о месте — Where.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "___ did you go to the lake? — Last summer.",
+      "options": [
+        {
+          "id": "a",
+          "text": "When"
+        },
+        {
+          "id": "b",
+          "text": "Where"
+        },
+        {
+          "id": "c",
+          "text": "Why"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ о времени — When.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "___ did you buy? — A swimsuit.",
+      "options": [
+        {
+          "id": "a",
+          "text": "What"
+        },
+        {
+          "id": "b",
+          "text": "Who"
+        },
+        {
+          "id": "c",
+          "text": "How"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ «что» — What.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "___ is that girl? — She's my cousin.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Who"
+        },
+        {
+          "id": "b",
+          "text": "What"
+        },
+        {
+          "id": "c",
+          "text": "Where"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ о человеке — Who.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "___ are you sad? — Because it's rainy.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Why"
+        },
+        {
+          "id": "b",
+          "text": "How"
+        },
+        {
+          "id": "c",
+          "text": "When"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ с because — вопрос Why.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
+      "verified": false
+    },
+    {
+      "id": "e4-sp4-m8-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-sp4-m8",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "She is going to visit her granny."
+        },
+        {
+          "id": "b",
+          "text": "She going to visit her granny."
+        },
+        {
+          "id": "c",
+          "text": "She is going visit her granny."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нужны все части: is + going to + visit.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика Spotlight 4)",
       "verified": false
     }
   ]

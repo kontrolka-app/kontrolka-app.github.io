@@ -68,7 +68,7 @@ export function englishScreen() {
       { class: 'stack' },
       pageHeader('🔤 Английский язык', { back: href('subjects'), subtitle: 'English World 3 и Spotlight 4' }),
       linkCard(href('words'), '📒', 'Слова по юнитам', 'Слова из словарей учебников: карточки, перевод, написание'),
-      linkCard(href('topics', 'english'), '🧩', 'Грамматика', 'Правила и задания по юнитам English World 3'),
+      linkCard(href('topics', 'english'), '🧩', 'Грамматика', 'Правила и задания: юниты English World 3 и модули Spotlight 4'),
       linkCard(href('etopics'), '📸', 'Учим топики', 'Загрузи свой топик и расскажи наизусть'),
     ),
   );
