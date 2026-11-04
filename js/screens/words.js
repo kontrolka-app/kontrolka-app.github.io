@@ -1,0 +1,291 @@
+// Английский: страница предмета и «Слова по юнитам» — карточки, выбор перевода, написание слова.
+import { h, button, linkButton, pageHeader, emptyState, icon } from '../ui.js';
+import { href } from '../router.js';
+import { getData, update, content } from '../state.js';
+import { loadWordList } from '../data.js';
+import { subjectVars } from '../components.js';
+import { unitWords, chooseOptions, checkSpelling, createRound, answerRound, roundDone, roundScore, recordResult, shuffle } from '../words.js';
+import { plural } from '../utils.js';
+
+const MODES = {
+  cards: { title: 'Карточки', emoji: '🃏', text: 'Смотришь слово, вспоминаешь перевод и переворачиваешь карточку' },
+  choose: { title: 'Выбери перевод', emoji: '👆', text: 'Английское слово и четыре варианта перевода' },
+  write: { title: 'Напиши по-английски', emoji: '✍️', text: 'Русский перевод — пишешь слово сам' },
+};
+
+/** Цвет предмета «Английский язык» — как у страниц других предметов. */
+function themed(el) {
+  el.classList.add('subject-themed', 'etopics-page');
+  for (const [k, v] of Object.entries(subjectVars(content.subjectById.get('english')) || {})) el.style.setProperty(k, v);
+  return el;
+}
+
+const linkCard = (to, emoji, title, text, extra = null) =>
+  h('a', { class: 'card poems-link', href: to }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, emoji), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, title), h('span', { class: 'small muted' }, text), extra), icon('arrow'));
+
+/** Список грузится асинхронно: сначала заглушка, потом экран. */
+function later(build) {
+  const slot = h('div', { class: 'stack' }, h('p', { class: 'muted', role: 'status' }, 'Загружаем слова…'));
+  loadWordList().then((list) => {
+    if (list.error) {
+      slot.replaceChildren(h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Слова не загрузились', text: 'Обнови страницу.', action: linkButton(href('english'), 'Назад') })));
+      return;
+    }
+    const view = build(list);
+    slot.replaceChildren(view);
+    const title = view.querySelector('.page-title');
+    if (title) document.title = `${title.textContent.replace(/^[^\p{L}«]+/u, '')} — Контролька`;
+    title?.focus({ preventScroll: true });
+  });
+  return slot;
+}
+
+/** Озвучка слова голосом браузера (если он умеет). */
+function sayButton(text) {
+  if (!('speechSynthesis' in window)) return null;
+  return h(
+    'button',
+    {
+      type: 'button',
+      class: 'btn btn--ghost btn--icon word-say',
+      'aria-label': `Послушать: ${text}`,
+      onclick: () => {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-GB';
+        u.rate = 0.85;
+        speechSynthesis.speak(u);
+      },
+    },
+    '🔊',
+  );
+}
+
+export function englishScreen() {
+  return themed(
+    h(
+      'div',
+      { class: 'stack' },
+      pageHeader('🔤 Английский язык', { back: href('subjects'), subtitle: 'English World 3' }),
+      linkCard(href('words'), '📒', 'Слова по юнитам', 'Слова из словаря в конце учебника: карточки, перевод, написание'),
+      linkCard(href('etopics'), '📸', 'Учим топики', 'Загрузи свой топик и расскажи наизусть'),
+    ),
+  );
+}
+
+const resultText = (r) => (r ? `${r.best}%` : '—');
+
+export function wordsScreen() {
+  return later((list) => {
+    const results = getData().words.results;
+    return themed(
+      h(
+        'div',
+        { class: 'stack' },
+        pageHeader('📒 Слова по юнитам', { back: href('english'), subtitle: 'English World 3: словарь в конце учебника (Word list). Выбери юнит.' }),
+        h(
+          'div',
+          { class: 'grid grid--2' },
+          list.units.map((u) => {
+            const n = unitWords(list, u.n).length;
+            const best = Math.max(results[`${u.n}:choose`]?.best ?? -1, results[`${u.n}:write`]?.best ?? -1);
+            return h(
+              'a',
+              { class: `card poem-card${results[`${u.n}:write`]?.best === 100 ? ' poem-card--learned' : ''}`, href: href('words-unit', u.n) },
+              h('span', { class: 'poem-card__title' }, `Unit ${u.n}. ${u.title}`),
+              h('span', { class: 'small muted' }, `${u.ru} · ${n} ${plural(n, ['слово', 'слова', 'слов'])}`),
+              best >= 0 ? h('span', { class: 'small muted' }, `Перевод: ${resultText(results[`${u.n}:choose`])} · Написание: ${resultText(results[`${u.n}:write`])}`) : null,
+            );
+          }),
+        ),
+        h('p', { class: 'small muted' }, 'Переводы составлены для «Контрольки» и ещё не проверены учителем. Нашёл ошибку — скажи взрослому.'),
+      ),
+    );
+  });
+}
+
+export function wordsUnitScreen(n) {
+  return later((list) => {
+    const unit = list.units.find((u) => u.n === Number(n));
+    if (!unit) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Такого юнита нет', action: linkButton(href('words'), 'К юнитам') }));
+    const words = unitWords(list, unit.n);
+    const results = getData().words.results;
+    return themed(
+      h(
+        'div',
+        { class: 'stack' },
+        pageHeader(`Unit ${unit.n}. ${unit.title}`, { back: href('words'), subtitle: `${unit.ru} · ${words.length} ${plural(words.length, ['слово', 'слова', 'слов'])}` }),
+        ...Object.entries(MODES).map(([mode, m]) => {
+          const r = results[`${unit.n}:${mode}`];
+          return linkCard(href('words-train', unit.n, mode), m.emoji, m.title, m.text, r ? h('span', { class: 'small' }, `Лучший результат: ${r.best}% · последний: ${r.last}%`) : null);
+        }),
+        h(
+          'details',
+          { class: 'card' },
+          h('summary', { class: 'word-list__summary' }, 'Все слова юнита'),
+          h('ul', { class: 'word-list' }, words.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru)))),
+        ),
+      ),
+    );
+  });
+}
+
+export function wordsTrainScreen(n, mode) {
+  return later((list) => {
+    const unit = list.units.find((u) => u.n === Number(n));
+    if (!unit || !MODES[mode]) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('words'), 'К юнитам') }));
+    const words = unitWords(list, unit.n);
+    const header = pageHeader(MODES[mode].title, { back: href('words-unit', unit.n), subtitle: `Unit ${unit.n}. ${unit.title}` });
+    const body = h('div', { class: 'stack' });
+    const view = themed(h('div', { class: 'stack words-page' }, header, body));
+    if (mode === 'cards') cards(body, words, unit);
+    else quiz(body, words, list, unit, mode);
+    return view;
+  });
+}
+
+const progress = (done, total) =>
+  h('div', { class: 'stack stack--tight' }, h('p', { class: 'small muted' }, `${Math.min(done + 1, total)} из ${total}`), h('div', { class: 'progress' }, h('div', { class: 'progress__bar', style: { width: `${Math.round((done / total) * 100)}%` } })));
+
+/** Карточки: без оценки. «Ещё учу» — карточка вернётся в конец. */
+function cards(body, words, unit) {
+  let ruFirst = false;
+  let queue = shuffle(words).map((w) => w.id);
+  let pos = 0;
+  let learnedCount = 0;
+  const byId = new Map(words.map((w) => [w.id, w]));
+  const toggle = h(
+    'label',
+    { class: 'row small word-toggle' },
+    h('input', { type: 'checkbox', onchange: (e) => ((ruFirst = e.target.checked), show()) }),
+    h('span', {}, 'Сначала русское слово'),
+  );
+  const show = () => {
+    if (pos >= queue.length) {
+      body.replaceChildren(
+        h('div', { class: 'card' }, emptyState({ emoji: '🎉', title: 'Все карточки пройдены!', text: 'Теперь проверь себя: выбери перевод или напиши слова.', action: linkButton(href('words-train', unit.n, 'choose'), 'Выбери перевод') })),
+        button('Ещё раз', () => ((queue = shuffle(words).map((w) => w.id)), (pos = 0), (learnedCount = 0), show()), { variant: 'secondary' }),
+      );
+      return;
+    }
+    const w = byId.get(queue[pos]);
+    const front = ruFirst ? h('p', { class: 'word-card__ru' }, w.ru) : h('p', { class: 'word-card__en', lang: 'en' }, w.en);
+    const back = ruFirst ? h('p', { class: 'word-card__en', lang: 'en' }, w.en) : h('p', { class: 'word-card__ru' }, w.ru);
+    const actions = h('div', { class: 'poem-controls' });
+    const card = h('div', { class: 'card word-card', 'aria-live': 'polite' }, front, ruFirst ? null : sayButton(w.en));
+    const flip = button('Перевернуть', () => {
+      card.append(...[h('hr', { class: 'word-card__line' }), back, ruFirst ? sayButton(w.en) : null].filter(Boolean)); // append пишет null как текст
+      actions.replaceChildren(
+        button('Знаю', () => ((learnedCount += 1), (pos += 1), show()), { iconName: 'check', size: 'lg' }),
+        button('Ещё учу', () => (queue.push(w.id), (pos += 1), show()), { variant: 'secondary', size: 'lg' }),
+      );
+    }, { size: 'lg' });
+    actions.append(flip);
+    body.replaceChildren(toggle, progress(learnedCount, words.length), card, actions);
+    flip.focus({ preventScroll: true });
+  };
+  show();
+}
+
+/** «Выбери перевод» и «Напиши по-английски»: ошибка — слово ещё раз в конце, счёт по первой попытке. */
+function quiz(body, words, list, unit, mode) {
+  let round = createRound(words);
+  const byId = new Map(words.map((w) => [w.id, w]));
+
+  const next = () => {
+    if (roundDone(round)) return finish();
+    const w = byId.get(round.queue[round.pos]);
+    const feedback = h('div', { class: 'stack', 'aria-live': 'polite' });
+    const nextBtn = button('Дальше', () => next(), { iconName: 'arrow', size: 'lg' });
+    const answered = (ok, shownAnswer) => {
+      round = answerRound(round, w.id, ok);
+      feedback.replaceChildren(
+        h(
+          'div',
+          { class: `feedback ${ok ? 'feedback--ok' : 'feedback--bad'}`, role: 'status' },
+          h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно')),
+          ok ? null : h('p', {}, 'Правильно: ', h('strong', { lang: mode === 'write' ? 'en' : null }, shownAnswer), mode === 'write' ? sayButton(w.en) : null),
+          ok ? null : h('p', { class: 'small muted' }, 'Это слово будет ещё раз в конце.'),
+        ),
+        nextBtn,
+      );
+      nextBtn.focus({ preventScroll: true });
+    };
+
+    let task;
+    if (mode === 'choose') {
+      const opts = chooseOptions(w, words, list.words);
+      const buttons = opts.map((o, i) =>
+        h(
+          'button',
+          {
+            type: 'button',
+            class: 'option word-option',
+            onclick: () => {
+              buttons.forEach((b, j) => {
+                b.disabled = true;
+                if (opts[j].id === w.id) b.classList.add('is-correct');
+              });
+              if (o.id !== w.id) buttons[i].classList.add('is-wrong');
+              answered(o.id === w.id, w.ru);
+            },
+          },
+          h('span', { class: 'option__key', 'aria-hidden': 'true' }, String.fromCharCode(1040 + i)),
+          h('span', { class: 'option__text' }, o.ru),
+        ),
+      );
+      task = h(
+        'div',
+        { class: 'stack' },
+        h('div', { class: 'card word-card' }, h('p', { class: 'word-card__en', lang: 'en' }, w.en), sayButton(w.en)),
+        h('div', { class: 'options' }, buttons),
+      );
+    } else {
+      const input = h('input', { class: 'input word-input', id: 'word-answer', lang: 'en', autocomplete: 'off', autocapitalize: 'none', spellcheck: false, autocorrect: 'off', maxLength: 60 });
+      const error = h('p', { class: 'field__error', role: 'alert' });
+      const form = h(
+        'form',
+        {
+          class: 'stack',
+          onsubmit: (e) => {
+            e.preventDefault();
+            if (input.disabled) return;
+            if (!input.value.trim()) return (error.textContent = 'Напиши слово.');
+            error.textContent = '';
+            input.disabled = true;
+            check.disabled = true;
+            answered(checkSpelling(w, input.value), w.en);
+          },
+        },
+        h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'word-answer' }, 'Как это по-английски?'), input, error),
+      );
+      const check = button('Проверить', null, { type: 'submit', iconName: 'check', size: 'lg' });
+      form.append(check);
+      task = h('div', { class: 'stack' }, h('div', { class: 'card word-card' }, h('p', { class: 'word-card__ru' }, w.ru)), form);
+      setTimeout(() => input.focus({ preventScroll: true }), 0);
+    }
+    body.replaceChildren(progress(round.pos, round.queue.length), task, feedback);
+  };
+
+  const finish = () => {
+    const score = roundScore(round);
+    update((d) => ((d.words = recordResult(d.words, unit.n, mode, score)), d));
+    const missed = round.wrong.map((id) => byId.get(id));
+    body.replaceChildren(
+      h(
+        'div',
+        { class: 'card' },
+        emptyState({
+          emoji: score.correct === score.total ? '🏆' : '💪',
+          title: `С первого раза: ${score.correct} из ${score.total}`,
+          text: score.correct === score.total ? 'Ни одной ошибки!' : 'Слова с ошибками — ниже. Повтори их и попробуй ещё раз.',
+        }),
+      ),
+      missed.length
+        ? h('section', { class: 'card' }, h('h2', { class: 'card__title' }, 'Повтори'), h('ul', { class: 'word-list' }, missed.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru)))))
+        : null,
+      h('div', { class: 'row wrap' }, button('Ещё раз', () => ((round = createRound(words)), next()), { iconName: 'arrow', size: 'lg' }), linkButton(href('words-unit', unit.n), 'К юниту', { variant: 'secondary' })),
+    );
+  };
+  next();
+}

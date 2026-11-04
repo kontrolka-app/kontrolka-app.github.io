@@ -172,7 +172,7 @@ export function subjectVars(subject) {
   return { '--s-bg': c.bg, '--s-text': c.text, '--s-bg-dark': c.darkBg || c.bg, '--s-text-dark': c.darkText || c.text };
 }
 
-const TOOL_SUBTITLES = { etopics: 'Учим топики: загрузи текст и расскажи наизусть' };
+const TOOL_SUBTITLES = { english: 'Слова по юнитам и топики наизусть' };
 
 export function subjectCard(subject, grade, { hrefTo } = {}) {
   if (subject.tool) {

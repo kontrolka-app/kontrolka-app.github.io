@@ -21,7 +21,7 @@ export function etopicsScreen() {
   return themed(h(
     'div',
     { class: 'stack' },
-    pageHeader('🔤 Учим топики', { back: href('subjects'), subtitle: 'Английский язык. Загрузи свой топик, проверь текст — и учи по предложениям.' }),
+    pageHeader('🔤 Учим топики', { back: href('english'), subtitle: 'Английский язык. Загрузи свой топик, проверь текст — и учи по предложениям.' }),
     h(
       'section',
       { class: 'stack' },

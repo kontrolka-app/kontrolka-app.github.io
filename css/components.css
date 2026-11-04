@@ -655,3 +655,18 @@ body[data-route='quiz'] .companion { display: none; }
 .etopic-source:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .etopic-image summary { cursor: pointer; font-weight: 700; }
 .etopic-image img { display: block; max-width: 100%; height: auto; margin-top: 10px; border-radius: 8px; }
+.word-card { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: 24px 16px; }
+.word-card__en { margin: 0; font-size: 2rem; font-weight: 800; color: var(--s-text-cur); overflow-wrap: anywhere; }
+.word-card__ru { margin: 0; font-size: 1.4rem; font-weight: 700; }
+.word-card__line { width: 60%; border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+.word-say { font-size: 1.3rem; }
+button.word-option { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+button.word-option:disabled { cursor: default; opacity: 1; }
+.option.is-wrong { border-color: var(--bad); background: var(--bad-bg, transparent); }
+.word-input { font-size: 1.3rem; }
+.word-toggle { gap: 8px; align-items: center; }
+.word-list { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.word-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+.word-list__en { font-weight: 800; }
+.word-list .word-say { min-height: 32px; min-width: 32px; padding: 0; }
+.word-list__summary { cursor: pointer; font-weight: 700; }

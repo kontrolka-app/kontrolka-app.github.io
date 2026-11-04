@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { validateContent } from '../js/validate.js';
 import { validatePoemCatalog } from '../js/poem.js';
+import { validateWordList } from '../js/words.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -46,6 +47,13 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const poems = JSON.parse(await readFile(path.join(root, 'data', 'poems-4.json'), 'utf8'));
   console.log(`poems-4.json: стихов ${poems.poems.length}, с текстом ${poems.poems.filter((p) => !p.pasteOnly).length}`);
   for (const e of validatePoemCatalog(poems)) {
+    failed = true;
+    console.log('  ОШИБКА:', e);
+  }
+  // «Слова по юнитам» (английский).
+  const words = JSON.parse(await readFile(path.join(root, 'data', 'english-words-4.json'), 'utf8'));
+  console.log(`english-words-4.json: слов ${words.words.length}, юнитов ${words.units.length}`);
+  for (const e of validateWordList(words)) {
     failed = true;
     console.log('  ОШИБКА:', e);
   }

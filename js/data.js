@@ -2,6 +2,7 @@
 import { validateContent, validateQuestion, validateTopic, validatePassage } from './validate.js';
 import { content } from './state.js';
 import { validatePoemCatalog } from './poem.js';
+import { validateWordList } from './words.js';
 
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-cache' });
@@ -98,3 +99,16 @@ export async function loadPoemCatalog() {
   return poemCatalog;
 }
 
+
+let wordList = null;
+/** Слова по юнитам (английский). Загружаются при первом заходе; с ошибками в данных — пустой список. */
+export async function loadWordList() {
+  if (wordList) return wordList;
+  try {
+    const list = await fetchJson('data/english-words-4.json');
+    wordList = validateWordList(list).length ? { units: [], words: [], error: true } : list;
+  } catch {
+    wordList = { units: [], words: [], error: true };
+  }
+  return wordList;
+}
