@@ -52,6 +52,7 @@ export function defaultData() {
     activeSession: null,
     reports: [], // «Нашёл ошибку?»: какие задания ученик уже отметил
     poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
+    topics: defaultPoems(), // «Учим топики» (английский): тот же вид — свои тексты и отметки
     speed: [], // тренажёр скорости чтения: результаты, новые сначала
     stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
     badges: {}, // значки: id → дата получения
@@ -138,6 +139,7 @@ export function sanitizeData(raw) {
   }
   data.reports = sanitizeReports(raw.reports);
   data.poems = sanitizePoems(raw.poems);
+  data.topics = sanitizePoems(raw.topics);
   data.speed = sanitizeSpeed(raw.speed);
   // Нет счётчиков (данные до этапа F) — считаем из истории, чтобы ничего не пропало.
   data.stats = sanitizeStats(raw.stats, data.history);

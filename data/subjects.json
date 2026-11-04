@@ -94,5 +94,21 @@
         "url": "https://xn--h1aafgkbnx.xn--p1ai/"
       }
     ]
+  },
+  {
+    "id": "english",
+    "name": "Английский язык",
+    "icon": "🔤",
+    "color": {
+      "bg": "#EDE4FA",
+      "text": "#5B2A9E",
+      "darkBg": "#33224D",
+      "darkText": "#D9C4F7"
+    },
+    "grades": [
+      4
+    ],
+    "files": [],
+    "tool": "etopics"
   }
 ]

@@ -172,7 +172,18 @@ export function subjectVars(subject) {
   return { '--s-bg': c.bg, '--s-text': c.text, '--s-bg-dark': c.darkBg || c.bg, '--s-text-dark': c.darkText || c.text };
 }
 
+const TOOL_SUBTITLES = { etopics: 'Учим топики: загрузи текст и расскажи наизусть' };
+
 export function subjectCard(subject, grade, { hrefTo } = {}) {
+  if (subject.tool) {
+    return h(
+      'a',
+      { class: 'card subject-card subject-themed', style: subjectVars(subject), href: href(subject.tool) },
+      h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, subject.icon || '📘'),
+      h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, subject.name), h('span', { class: 'small muted' }, TOOL_SUBTITLES[subject.tool] || '')),
+      icon('arrow'),
+    );
+  }
   const topics = content.topics.filter((t) => t.subjectId === subject.id && t.grade === grade);
   const last = lastTopicResults(getData().history);
   const mastered = topics.filter((t) => topicStatus(last.get(t.id)) === 'mastered').length;

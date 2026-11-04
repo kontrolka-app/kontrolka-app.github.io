@@ -17,6 +17,7 @@ const TYPES = {
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
   '.md': 'text/plain; charset=utf-8',
+  '.gz': 'application/octet-stream', // словарь Tesseract: распаковывает сам, без Content-Encoding
 };
 
 http

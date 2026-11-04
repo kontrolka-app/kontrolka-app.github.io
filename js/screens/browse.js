@@ -363,6 +363,10 @@ export function topicsScreen(subjectId) {
   const subject = content.subjectById.get(subjectId);
   const grade = settings().grade;
   if (!subject) return notFound('Такого предмета нет');
+  if (subject.tool) {
+    location.replace(href(subject.tool)); // у предмета нет тем — сразу его тренажёр, без лишнего шага в «Назад»
+    return h('div');
+  }
   if (!grade) {
     navigate('grade');
     return h('div');

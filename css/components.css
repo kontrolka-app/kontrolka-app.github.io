@@ -554,6 +554,7 @@ details.card > .review-list { margin-top: 12px; }
 .poem-controls { display: flex; flex-wrap: wrap; gap: 10px; }
 .poem-controls .btn--lg { flex: 1 1 220px; }
 .poem-done { display: flex; flex-wrap: wrap; gap: 10px; }
+.poem-done[hidden] { display: none; } /* иначе display: flex показывает кнопки раньше, чем всё закрыто */
 .poem-input { font-size: 1.05rem; line-height: 1.6; }
 .status-pill > span:only-child { padding-left: 6px; }
 
@@ -647,3 +648,10 @@ details.card > .review-list { margin-top: 12px; }
 .companion-inline .companion__bubble { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 16px 4px; padding: 8px 12px; font-weight: 700; }
 body[data-route='quiz'] .companion { display: none; }
 .avatar-tile__off { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--surface-2); font-size: 1.6rem; }
+
+/* ---------- Английский: «Учим топики» ---------- */
+.subject-themed.etopics-page .poems-link__emoji { background: var(--s-bg-cur); } /* та же сила, что у тёмной темы выше, — побеждает как более позднее */
+.etopic-source { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.etopic-source:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.etopic-image summary { cursor: pointer; font-weight: 700; }
+.etopic-image img { display: block; max-width: 100%; height: auto; margin-top: 10px; border-radius: 8px; }

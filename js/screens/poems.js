@@ -107,7 +107,11 @@ export function poemScreen(id) {
   });
 }
 
-function trainer(poem, header) {
+/**
+ * Тренажёр: закрывать по слову с конца каждой строки. Его же берут «Учим топики» (английский):
+ * store — где отметки «Рассказал без подсказок», части — строфы или абзацы.
+ */
+export function trainer(poem, header, { store = 'poems', whole = 'Всё стихотворение', partLabel = (n) => `${n}-я строфа` } = {}) {
   const stanzas = parsePoem(poem.text);
   let part = 'all'; // 'all' или номер строфы
   let step = 0;
@@ -151,7 +155,7 @@ function trainer(poem, header) {
     renderText();
   };
 
-  const partOptions = [['all', 'Всё стихотворение'], ...stanzas.map((_, i) => [i, `${i + 1}-я строфа`])];
+  const partOptions = [['all', whole], ...stanzas.map((_, i) => [i, partLabel(i + 1)])];
   const parts =
     stanzas.length > 6
       ? // Много строф (как в «Руси») — выпадающий список вместо ряда кнопок.
@@ -186,12 +190,12 @@ function trainer(poem, header) {
 
   doneBox.append(
     button('Рассказал без подсказок', () => {
-      update((d) => ((d.poems.learned[poem.id] = Date.now()), d));
+      update((d) => ((d[store].learned[poem.id] = Date.now()), d));
       toast('Отлично! Отметка сохранена 🎉');
     }, { iconName: 'check', size: 'lg' }),
     button('Начать сначала', () => go(0), { variant: 'ghost' }),
   );
-  const learnedAt = getData().poems.learned[poem.id];
+  const learnedAt = getData()[store].learned[poem.id];
   renderText();
   return h(
     'div',

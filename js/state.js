@@ -100,8 +100,9 @@ export function applyAppearance() {
   root.setAttribute('data-font', s.fontSize);
 }
 
+// Предмет без заданий, но с тренажёром (tool — маршрут, например английский → «Учим топики»), тоже показываем.
 export function subjectsForGrade(grade) {
-  return content.subjects.filter((s) => content.topics.some((t) => t.subjectId === s.id && t.grade === grade));
+  return content.subjects.filter((s) => (s.tool && s.grades?.includes(grade)) || content.topics.some((t) => t.subjectId === s.id && t.grade === grade));
 }
 
 export function topicsFor(subjectId, grade) {
