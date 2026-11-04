@@ -52,7 +52,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   }
   // «Слова по юнитам» (английский).
   const words = JSON.parse(await readFile(path.join(root, 'data', 'english-words-4.json'), 'utf8'));
-  console.log(`english-words-4.json: слов ${words.words.length}, юнитов ${words.units.length}`);
+  console.log(`english-words-4.json: слов ${words.words.length}`, Object.fromEntries(words.books.map((b) => [b.title, words.words.filter((w) => w.book === b.id).length])));
   for (const e of validateWordList(words)) {
     failed = true;
     console.log('  ОШИБКА:', e);

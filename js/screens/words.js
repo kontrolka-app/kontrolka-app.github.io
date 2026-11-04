@@ -4,7 +4,7 @@ import { href } from '../router.js';
 import { getData, update, content } from '../state.js';
 import { loadWordList } from '../data.js';
 import { subjectVars } from '../components.js';
-import { unitWords, chooseOptions, checkSpelling, createRound, answerRound, roundDone, roundScore, recordResult, shuffle } from '../words.js';
+import { findBook, bookWords, unitWords, unitName, resultKey, chooseOptions, checkSpelling, createRound, answerRound, roundDone, roundScore, recordResult, shuffle } from '../words.js';
 import { plural } from '../utils.js';
 
 const MODES = {
@@ -66,14 +66,23 @@ export function englishScreen() {
     h(
       'div',
       { class: 'stack' },
-      pageHeader('🔤 Английский язык', { back: href('subjects'), subtitle: 'English World 3' }),
-      linkCard(href('words'), '📒', 'Слова по юнитам', 'Слова из словаря в конце учебника: карточки, перевод, написание'),
+      pageHeader('🔤 Английский язык', { back: href('subjects'), subtitle: 'English World 3 и Spotlight 4' }),
+      linkCard(href('words'), '📒', 'Слова по юнитам', 'Слова из словарей учебников: карточки, перевод, написание'),
       linkCard(href('etopics'), '📸', 'Учим топики', 'Загрузи свой топик и расскажи наизусть'),
     ),
   );
 }
 
 const resultText = (r) => (r ? `${r.best}%` : '—');
+const wordsCount = (n) => `${n} ${plural(n, ['слово', 'слова', 'слов'])}`;
+const BOOK_NOTES = { ew3: 'основной учебник', sp4: 'задания из него иногда даёт учитель' };
+
+/** Юнит (модуль) и слова по адресу; null — нет такого. */
+function findUnit(list, bookId, n) {
+  const book = findBook(list, bookId);
+  const unit = book?.units.find((u) => u.n === Number(n));
+  return unit ? { book, unit, words: unitWords(list, book.id, unit.n) } : null;
+}
 
 export function wordsScreen() {
   return later((list) => {
@@ -82,21 +91,27 @@ export function wordsScreen() {
       h(
         'div',
         { class: 'stack' },
-        pageHeader('📒 Слова по юнитам', { back: href('english'), subtitle: 'English World 3: словарь в конце учебника (Word list). Выбери юнит.' }),
-        h(
-          'div',
-          { class: 'grid grid--2' },
-          list.units.map((u) => {
-            const n = unitWords(list, u.n).length;
-            const best = Math.max(results[`${u.n}:choose`]?.best ?? -1, results[`${u.n}:write`]?.best ?? -1);
-            return h(
-              'a',
-              { class: `card poem-card${results[`${u.n}:write`]?.best === 100 ? ' poem-card--learned' : ''}`, href: href('words-unit', u.n) },
-              h('span', { class: 'poem-card__title' }, `Unit ${u.n}. ${u.title}`),
-              h('span', { class: 'small muted' }, `${u.ru} · ${n} ${plural(n, ['слово', 'слова', 'слов'])}`),
-              best >= 0 ? h('span', { class: 'small muted' }, `Перевод: ${resultText(results[`${u.n}:choose`])} · Написание: ${resultText(results[`${u.n}:write`])}`) : null,
-            );
-          }),
+        pageHeader('📒 Слова по юнитам', { back: href('english'), subtitle: 'Слова из словарей в конце учебников (Word list). Выбери юнит или модуль.' }),
+        ...list.books.map((book) =>
+          h(
+            'section',
+            { class: 'stack' },
+            h('h2', {}, book.title, BOOK_NOTES[book.id] ? h('span', { class: 'small muted' }, ` · ${BOOK_NOTES[book.id]}`) : null),
+            h(
+              'div',
+              { class: 'grid grid--2' },
+              book.units.map((u) => {
+                const r = (mode) => results[resultKey(book.id, u.n, mode)];
+                return h(
+                  'a',
+                  { class: `card poem-card${r('write')?.best === 100 ? ' poem-card--learned' : ''}`, href: href('words-unit', book.id, u.n) },
+                  h('span', { class: 'poem-card__title' }, unitName(book, u)),
+                  h('span', { class: 'small muted' }, `${u.ru} · ${wordsCount(unitWords(list, book.id, u.n).length)}`),
+                  r('choose') || r('write') ? h('span', { class: 'small muted' }, `Перевод: ${resultText(r('choose'))} · Написание: ${resultText(r('write'))}`) : null,
+                );
+              }),
+            ),
+          ),
         ),
         h('p', { class: 'small muted' }, 'Переводы составлены для «Контрольки» и ещё не проверены учителем. Нашёл ошибку — скажи взрослому.'),
       ),
@@ -104,42 +119,48 @@ export function wordsScreen() {
   });
 }
 
-export function wordsUnitScreen(n) {
+export function wordsUnitScreen(bookId, n) {
   return later((list) => {
-    const unit = list.units.find((u) => u.n === Number(n));
-    if (!unit) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Такого юнита нет', action: linkButton(href('words'), 'К юнитам') }));
-    const words = unitWords(list, unit.n);
+    const found = findUnit(list, bookId, n);
+    if (!found) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Такого юнита нет', action: linkButton(href('words'), 'К юнитам') }));
+    const { book, unit, words } = found;
     const results = getData().words.results;
+    const hasPassive = words.some((w) => w.passive);
     return themed(
       h(
         'div',
         { class: 'stack' },
-        pageHeader(`Unit ${unit.n}. ${unit.title}`, { back: href('words'), subtitle: `${unit.ru} · ${words.length} ${plural(words.length, ['слово', 'слова', 'слов'])}` }),
+        pageHeader(unitName(book, unit), { back: href('words'), subtitle: `${book.title} · ${unit.ru} · ${wordsCount(words.length)}` }),
         ...Object.entries(MODES).map(([mode, m]) => {
-          const r = results[`${unit.n}:${mode}`];
-          return linkCard(href('words-train', unit.n, mode), m.emoji, m.title, m.text, r ? h('span', { class: 'small' }, `Лучший результат: ${r.best}% · последний: ${r.last}%`) : null);
+          const r = results[resultKey(book.id, unit.n, mode)];
+          return linkCard(href('words-train', book.id, unit.n, mode), m.emoji, m.title, m.text, r ? h('span', { class: 'small' }, `Лучший результат: ${r.best}% · последний: ${r.last}%`) : null);
         }),
         h(
           'details',
           { class: 'card' },
-          h('summary', { class: 'word-list__summary' }, 'Все слова юнита'),
-          h('ul', { class: 'word-list' }, words.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru)))),
+          h('summary', { class: 'word-list__summary' }, 'Все слова'),
+          hasPassive ? h('p', { class: 'small muted' }, '«узнавать» — в учебнике слово выделено цветом: его нужно понимать, а писать самому не обязательно.') : null,
+          h(
+            'ul',
+            { class: 'word-list' },
+            words.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru), w.passive ? h('span', { class: 'chip' }, 'узнавать') : null)),
+          ),
         ),
       ),
     );
   });
 }
 
-export function wordsTrainScreen(n, mode) {
+export function wordsTrainScreen(bookId, n, mode) {
   return later((list) => {
-    const unit = list.units.find((u) => u.n === Number(n));
-    if (!unit || !MODES[mode]) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('words'), 'К юнитам') }));
-    const words = unitWords(list, unit.n);
-    const header = pageHeader(MODES[mode].title, { back: href('words-unit', unit.n), subtitle: `Unit ${unit.n}. ${unit.title}` });
+    const found = findUnit(list, bookId, n);
+    if (!found || !MODES[mode]) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('words'), 'К юнитам') }));
+    const { book, unit, words } = found;
+    const header = pageHeader(MODES[mode].title, { back: href('words-unit', book.id, unit.n), subtitle: `${book.title} · ${unitName(book, unit)}` });
     const body = h('div', { class: 'stack' });
     const view = themed(h('div', { class: 'stack words-page' }, header, body));
-    if (mode === 'cards') cards(body, words, unit);
-    else quiz(body, words, list, unit, mode);
+    if (mode === 'cards') cards(body, words, book, unit);
+    else quiz(body, words, bookWords(list, book.id), book, unit, mode);
     return view;
   });
 }
@@ -148,7 +169,7 @@ const progress = (done, total) =>
   h('div', { class: 'stack stack--tight' }, h('p', { class: 'small muted' }, `${Math.min(done + 1, total)} из ${total}`), h('div', { class: 'progress' }, h('div', { class: 'progress__bar', style: { width: `${Math.round((done / total) * 100)}%` } })));
 
 /** Карточки: без оценки. «Ещё учу» — карточка вернётся в конец. */
-function cards(body, words, unit) {
+function cards(body, words, book, unit) {
   let ruFirst = false;
   let queue = shuffle(words).map((w) => w.id);
   let pos = 0;
@@ -163,7 +184,7 @@ function cards(body, words, unit) {
   const show = () => {
     if (pos >= queue.length) {
       body.replaceChildren(
-        h('div', { class: 'card' }, emptyState({ emoji: '🎉', title: 'Все карточки пройдены!', text: 'Теперь проверь себя: выбери перевод или напиши слова.', action: linkButton(href('words-train', unit.n, 'choose'), 'Выбери перевод') })),
+        h('div', { class: 'card' }, emptyState({ emoji: '🎉', title: 'Все карточки пройдены!', text: 'Теперь проверь себя: выбери перевод или напиши слова.', action: linkButton(href('words-train', book.id, unit.n, 'choose'), 'Выбери перевод') })),
         button('Ещё раз', () => ((queue = shuffle(words).map((w) => w.id)), (pos = 0), (learnedCount = 0), show()), { variant: 'secondary' }),
       );
       return;
@@ -188,7 +209,7 @@ function cards(body, words, unit) {
 }
 
 /** «Выбери перевод» и «Напиши по-английски»: ошибка — слово ещё раз в конце, счёт по первой попытке. */
-function quiz(body, words, list, unit, mode) {
+function quiz(body, words, bookAll, book, unit, mode) {
   let round = createRound(words);
   const byId = new Map(words.map((w) => [w.id, w]));
 
@@ -214,7 +235,7 @@ function quiz(body, words, list, unit, mode) {
 
     let task;
     if (mode === 'choose') {
-      const opts = chooseOptions(w, words, list.words);
+      const opts = chooseOptions(w, words, bookAll);
       const buttons = opts.map((o, i) =>
         h(
           'button',
@@ -269,7 +290,7 @@ function quiz(body, words, list, unit, mode) {
 
   const finish = () => {
     const score = roundScore(round);
-    update((d) => ((d.words = recordResult(d.words, unit.n, mode, score)), d));
+    update((d) => ((d.words = recordResult(d.words, book.id, unit.n, mode, score)), d));
     const missed = round.wrong.map((id) => byId.get(id));
     body.replaceChildren(
       h(
@@ -284,7 +305,7 @@ function quiz(body, words, list, unit, mode) {
       missed.length
         ? h('section', { class: 'card' }, h('h2', { class: 'card__title' }, 'Повтори'), h('ul', { class: 'word-list' }, missed.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru)))))
         : null,
-      h('div', { class: 'row wrap' }, button('Ещё раз', () => ((round = createRound(words)), next()), { iconName: 'arrow', size: 'lg' }), linkButton(href('words-unit', unit.n), 'К юниту', { variant: 'secondary' })),
+      h('div', { class: 'row wrap' }, button('Ещё раз', () => ((round = createRound(words)), next()), { iconName: 'arrow', size: 'lg' }), linkButton(href('words-unit', book.id, unit.n), 'Назад к словам', { variant: 'secondary' })),
     );
   };
   next();
