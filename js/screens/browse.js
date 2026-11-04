@@ -363,7 +363,7 @@ export function topicsScreen(subjectId) {
   const subject = content.subjectById.get(subjectId);
   const grade = settings().grade;
   if (!subject) return notFound('Такого предмета нет');
-  if (subject.tool) {
+  if (subject.tool && !content.topics.some((t) => t.subjectId === subject.id)) {
     location.replace(href(subject.tool)); // у предмета нет тем — сразу его тренажёр, без лишнего шага в «Назад»
     return h('div');
   }
@@ -442,7 +442,7 @@ export function topicsScreen(subjectId) {
   return h(
     'div',
     { class: 'stack topics-page subject-themed', style: subjectVars(subject) },
-    pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href('subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
+    pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href(subject.tool || 'subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
     reviewBlock,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,

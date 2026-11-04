@@ -1,0 +1,3385 @@
+{
+  "subjectId": "english",
+  "grade": 4,
+  "topics": [
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u01",
+      "section": "English World 3",
+      "title": "Unit 1. was / were и время",
+      "description": "Глагол be в прошедшем времени: was и were. Который час: quarter past, quarter to.",
+      "theory": [
+        "Глагол be в прошедшем времени: was — с I, he, she, it и с одним предметом; were — с you, we, they и с несколькими.",
+        "Вопрос: was или were ставим в начало. Краткий ответ: Yes, it was. / No, it wasn't. Yes, they were. / No, they weren't.",
+        "Отрицание: wasn't = was not, weren't = were not.",
+        "Который час? — What's the time now? quarter past — четверть после: 7:15 — It's quarter past seven. quarter to — без четверти: 6:45 — It's quarter to seven."
+      ],
+      "examples": [
+        "It was windy on Monday.",
+        "We were in the park.",
+        "Was Tom at home? — No, he wasn't.",
+        "7:15 — It's quarter past seven."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u02",
+      "section": "English World 3",
+      "title": "Unit 2. Прошедшее время: -ed и did",
+      "description": "Правильные глаголы в прошедшем времени и вопросы с did.",
+      "theory": [
+        "Чтобы рассказать о прошлом, к правильному глаголу добавляем -ed: look — looked, play — played, visit — visited.",
+        "Если глагол кончается на -e, добавляем только -d: live — lived, like — liked.",
+        "Вопрос: Did + кто + глагол без -ed: Did the hens live in the barn? Ответ: Yes, they did. / No, they didn't.",
+        "После did и didn't окончание -ed не пишем: Did she visit…? She didn't visit…"
+      ],
+      "examples": [
+        "The farmer looked at the sheep.",
+        "We visited my grandma.",
+        "Did you like the film? — Yes, I did."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u03",
+      "section": "English World 3",
+      "title": "Unit 3. Сравнение: -er и than",
+      "description": "Сравнительная степень прилагательных: fast — faster, big — bigger.",
+      "theory": [
+        "Когда сравниваем два предмета, к короткому прилагательному добавляем -er, а после него ставим than (чем): The plane is faster than the car.",
+        "Прилагательное на -e получает только -r: wide — wider, nice — nicer.",
+        "Короткое слово на «гласная + согласная» удваивает последнюю букву: big — bigger, hot — hotter.",
+        "Согласная + y: y меняется на i: heavy — heavier, tiny — tinier.",
+        "How long is…? — Какой длины…? How wide is…? — Какой ширины…? How high is…? — Какой высоты…?"
+      ],
+      "examples": [
+        "A train is longer than a car.",
+        "My room is wider than your room.",
+        "This box is heavier than that box."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u04",
+      "section": "English World 3",
+      "title": "Unit 4. did и didn't, написание -ed",
+      "description": "Вопросы и отрицания в прошедшем времени. Как пишется hopped, waved.",
+      "theory": [
+        "Отрицание в прошедшем времени: didn't + глагол в начальной форме: We didn't watch TV.",
+        "Вопрос: Did + кто + глагол: Did the women cook? — Yes, they did. / No, they didn't.",
+        "Короткий глагол на «гласная + согласная» удваивает последнюю букву: hop — hopped, skip — skipped, stop — stopped.",
+        "Глагол на -e получает только -d: wave — waved, dance — danced."
+      ],
+      "examples": [
+        "We didn't watch TV.",
+        "Did you skip with a rope? — Yes, I did.",
+        "stop — stopped, dance — danced"
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u05",
+      "section": "English World 3",
+      "title": "Unit 5. There was / There were",
+      "description": "Был, была, были: there was, there were. Сколько стоит?",
+      "theory": [
+        "There was — был, была, было (один предмет): There was a radio on the table.",
+        "There were — были (несколько): There were two CDs in my bag.",
+        "Вопрос: Was there…? / Were there…? Ответ: Yes, there was. / No, there wasn't. Yes, there were. / No, there weren't.",
+        "В магазине: Can I help you? — Чем могу помочь? How much does it cost? — Сколько это стоит? It costs £10. — Это стоит 10 фунтов."
+      ],
+      "examples": [
+        "There was a radio on the table.",
+        "There were two CDs in my bag.",
+        "Were there any cameras in the shop? — Yes, there were."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u06",
+      "section": "English World 3",
+      "title": "Unit 6. Неправильные глаголы: went, won. Наречия",
+      "description": "Прошедшее время неправильных глаголов и вопросы с did. Наречия на -ly.",
+      "theory": [
+        "Неправильные глаголы образуют прошедшее время не по правилу — их запоминают: go — went, win — won, see — saw, have — had.",
+        "В вопросе и отрицании после did — снова начальная форма: Did they win? They didn't go.",
+        "Наречие отвечает на вопрос «как?» и чаще всего образуется с -ly: slow — slowly, quick — quickly, careful — carefully. Исключения: good — well, fast — fast."
+      ],
+      "examples": [
+        "We went to the stadium on Sunday.",
+        "Did your team win? — No, it didn't.",
+        "She skates slowly and carefully."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u07",
+      "section": "English World 3",
+      "title": "Unit 7. had, must и mustn't",
+      "description": "Глагол have в прошедшем времени. Что нужно и что нельзя делать: must, mustn't.",
+      "theory": [
+        "have / has в прошедшем времени — had для всех: Dad had the tickets.",
+        "В вопросе снова have: Did Grandma have a book? — Yes, she did.",
+        "must — нужно, обязательно: You must wear a helmet. mustn't — нельзя: You mustn't run on the platform.",
+        "После must и mustn't глагол без to и без -s: She must be polite.",
+        "Где? under — под, on — на, in — в, next to — рядом с, behind — за, between — между."
+      ],
+      "examples": [
+        "Dad had a big suitcase.",
+        "Passengers must have tickets.",
+        "You mustn't shout in the library."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u08",
+      "section": "English World 3",
+      "title": "Unit 8. saw, came, bought. carry — carried",
+      "description": "Ещё неправильные глаголы. Как пишется carried, cried.",
+      "theory": [
+        "Ещё неправильные глаголы: see — saw, come — came, buy — bought.",
+        "Вопрос: Did the thief come back? — Yes, he did. / No, he didn't.",
+        "Глагол на «согласная + y»: y меняется на i и добавляется -ed: carry — carried, cry — cried, hurry — hurried. После гласной y остаётся: play — played.",
+        "В магазине: What did you buy? — Что ты купил? I bought… — Я купил…"
+      ],
+      "examples": [
+        "We saw a clown in the mall.",
+        "Did your friend come back? — Yes, he did.",
+        "She hurried to the shop."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u09",
+      "section": "English World 3",
+      "title": "Unit 9. Самый-самый: the -est. Что ты делаешь?",
+      "description": "Превосходная степень: the fastest. Present Continuous: What are you doing?",
+      "theory": [
+        "Когда из трёх и больше выбираем самого-самого, добавляем -est и ставим the: fast — faster — the fastest.",
+        "Правила написания те же, что для -er: big — the biggest, wide — the widest, funny — the funniest.",
+        "Что делаешь сейчас: am / is / are + глагол с -ing. What are you doing? — I'm watching a film.",
+        "Why? — Почему? Because… — Потому что…"
+      ],
+      "examples": [
+        "This is the tallest tower in the city.",
+        "What is he doing? — He's juggling.",
+        "Why are you happy? — Because it's my birthday."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u10",
+      "section": "English World 3",
+      "title": "Unit 10. going to. Would you like…?",
+      "description": "Что собираешься сделать: going to. Вежливые предложения и просьбы.",
+      "theory": [
+        "Чтобы сказать, что собираешься сделать: am / is / are + going to + глагол. I'm going to visit London. The bus is going to stop.",
+        "Вопрос: What are you going to do? Is she going to…?",
+        "Предложить: Would you like a sandwich? — Yes, please. / No, thanks.",
+        "Попросить: I'd like a salad. (I'd like = I would like) Can I have some water, please?"
+      ],
+      "examples": [
+        "We are going to see Big Ben.",
+        "What is she going to buy? — A postcard.",
+        "Would you like an apple? — Yes, please."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u11",
+      "section": "English World 3",
+      "title": "Unit 11. some и any",
+      "description": "Немного, несколько: some и any.",
+      "theory": [
+        "some — немного, несколько — в утвердительных предложениях: There is some milk. There are some apples.",
+        "any — в вопросах и отрицаниях: Is there any bread? There aren't any bananas.",
+        "I've got some biscuits. Have you got any lemonade? I haven't got any money."
+      ],
+      "examples": [
+        "There is some milk in the fridge.",
+        "Are there any lanterns? — Yes, there are.",
+        "We haven't got any homework today."
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-u12",
+      "section": "English World 3",
+      "title": "Unit 12. mine, yours, his. Даты. Множественное число",
+      "description": "Чей? mine, yours, his, hers, ours, theirs. Какое число? Множественное число: boys, dishes, babies.",
+      "theory": [
+        "Чей? Если после слова нет существительного: mine — мой, yours — твой, his — его, hers — её, ours — наш, theirs — их. This bag is mine. (= my bag)",
+        "Сравни: my hat — The hat is mine. her shoes — The shoes are hers.",
+        "Какое сегодня число? — What's the date today? It's the first of May. Порядковые: first, second, third, fourth, fifth… twelfth… twentieth.",
+        "Множественное число: обычно + s (boy — boys); после s, sh, ch, x — + es (dish — dishes, box — boxes); согласная + y → ies (baby — babies)."
+      ],
+      "examples": [
+        "This scarf is mine.",
+        "It's the second of June.",
+        "one bus — two buses, one city — two cities"
+      ]
+    },
+    {
+      "subjectId": "english",
+      "grade": 4,
+      "id": "e4-ew3-verbs",
+      "section": "English World 3",
+      "title": "Неправильные глаголы",
+      "description": "Прошедшее время неправильных глаголов из словаря English World 3: go — went, buy — bought…",
+      "theory": [
+        "Неправильные глаголы не получают -ed — их прошедшее время надо запомнить.",
+        "go — went, see — saw, buy — bought, come — came, have — had, win — won, catch — caught, find — found, lose — lost, tell — told.",
+        "sell — sold, send — sent, speak — spoke, take — took, bring — brought, choose — chose, grow — grew, hear — heard, keep — kept, know — knew.",
+        "leave — left, pay — paid, put — put, say — said, spend — spent, fall — fell, do — did, get — got.",
+        "В вопросе и отрицании после did — начальная форма: Did you find it? I didn't lose it."
+      ],
+      "examples": [
+        "I found a coin in the street.",
+        "She told me a story.",
+        "Did you bring your book? — Yes, I did."
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "e4-ew3-u01-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: The weather ___ cold yesterday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "The weather — одно, поэтому was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: My aunt and uncle ___ at the farm last week.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Тётя и дядя — двое (they), поэтому were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: I ___ late for school on Monday.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С I в прошедшем времени — was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ you at the library yesterday?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Was"
+        },
+        {
+          "id": "b",
+          "text": "Were"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "С you — всегда were: Were you…?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Was your sister at home? — No, she ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "wasn't"
+        },
+        {
+          "id": "b",
+          "text": "weren't"
+        },
+        {
+          "id": "c",
+          "text": "didn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Спросили с was — отвечаем wasn't: No, she wasn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери вопрос к ответу «Yes, they were.»",
+      "options": [
+        {
+          "id": "a",
+          "text": "Were the lessons interesting?"
+        },
+        {
+          "id": "b",
+          "text": "Was the lessons interesting?"
+        },
+        {
+          "id": "c",
+          "text": "Did the lessons interesting?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Lessons — много, they → were. Ответ Yes, they were подходит к вопросу с were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши короткую форму: were not → …",
+      "correctAnswer": "weren't",
+      "acceptedAnswers": [
+        "weren’t"
+      ],
+      "explanation": "were not сокращается до weren't.",
+      "hint": "Буква o заменяется апострофом.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как сказать по-английски «без четверти девять» (8:45)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It's quarter to nine."
+        },
+        {
+          "id": "b",
+          "text": "It's quarter past nine."
+        },
+        {
+          "id": "c",
+          "text": "It's quarter past eight."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Без четверти девять — до девяти осталась четверть часа: quarter to nine.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Часы показывают 10:15. Как это сказать?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It's quarter past ten."
+        },
+        {
+          "id": "b",
+          "text": "It's quarter to ten."
+        },
+        {
+          "id": "c",
+          "text": "It's quarter to eleven."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После десяти прошла четверть часа: quarter past ten.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u01-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u01",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "The children was in the garden."
+        },
+        {
+          "id": "b",
+          "text": "The children were in the garden."
+        },
+        {
+          "id": "c",
+          "text": "The children is in the garden yesterday."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Children — много детей, в прошлом — were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: play → …",
+      "correctAnswer": "played",
+      "explanation": "Правильный глагол: play + ed = played.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: like → …",
+      "correctAnswer": "liked",
+      "explanation": "Глагол кончается на -e, добавляем только -d: liked.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: visit → …",
+      "correctAnswer": "visited",
+      "explanation": "visit + ed = visited.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: help → …",
+      "correctAnswer": "helped",
+      "explanation": "help + ed = helped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Yesterday Tom ___ his grandma.",
+      "options": [
+        {
+          "id": "a",
+          "text": "visits"
+        },
+        {
+          "id": "b",
+          "text": "visited"
+        },
+        {
+          "id": "c",
+          "text": "visit"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Yesterday — вчера, нужен глагол в прошедшем времени: visited.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ the farmer feed the goats? — Yes, he did.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did"
+        },
+        {
+          "id": "b",
+          "text": "Was"
+        },
+        {
+          "id": "c",
+          "text": "Does"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ «Yes, he did» — значит, и вопрос с Did.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did you enjoy the party? — No, I ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "didn't"
+        },
+        {
+          "id": "b",
+          "text": "wasn't"
+        },
+        {
+          "id": "c",
+          "text": "don't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "На вопрос с Did отвечаем did или didn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did the children play football?"
+        },
+        {
+          "id": "b",
+          "text": "Did the children played football?"
+        },
+        {
+          "id": "c",
+          "text": "Were the children play football?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После Did глагол без -ed: play.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She didn't ___ the dog.",
+      "options": [
+        {
+          "id": "a",
+          "text": "walk"
+        },
+        {
+          "id": "b",
+          "text": "walked"
+        },
+        {
+          "id": "c",
+          "text": "walks"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После didn't глагол в начальной форме: walk.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u02-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u02",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как по-английски «Они жили на ферме»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "They lived on a farm."
+        },
+        {
+          "id": "b",
+          "text": "They live on a farm."
+        },
+        {
+          "id": "c",
+          "text": "They living on a farm."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Жили — прошедшее время: live → lived.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши сравнительную степень: fast → …",
+      "correctAnswer": "faster",
+      "explanation": "fast + er = faster.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши сравнительную степень: tall → …",
+      "correctAnswer": "taller",
+      "explanation": "tall + er = taller.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши сравнительную степень: big → …",
+      "correctAnswer": "bigger",
+      "explanation": "big кончается на «гласная + согласная», g удваиваем: bigger.",
+      "hint": "Одну букву нужно удвоить.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши сравнительную степень: wide → …",
+      "correctAnswer": "wider",
+      "explanation": "wide кончается на -e, добавляем только -r: wider.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши сравнительную степень: hot → …",
+      "correctAnswer": "hotter",
+      "explanation": "t удваиваем: hotter.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши сравнительную степень: heavy → …",
+      "correctAnswer": "heavier",
+      "explanation": "y после согласной меняется на i: heavier.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: An elephant is ___ than a dog.",
+      "options": [
+        {
+          "id": "a",
+          "text": "big"
+        },
+        {
+          "id": "b",
+          "text": "bigger"
+        },
+        {
+          "id": "c",
+          "text": "biggest"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Сравниваем двоих и есть than — нужна форма с -er: bigger.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: My bag is heavier ___ your bag.",
+      "options": [
+        {
+          "id": "a",
+          "text": "than"
+        },
+        {
+          "id": "b",
+          "text": "then"
+        },
+        {
+          "id": "c",
+          "text": "that"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После сравнительной степени — than (чем).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как спросить «Какой длины этот мост?»",
+      "options": [
+        {
+          "id": "a",
+          "text": "How long is the bridge?"
+        },
+        {
+          "id": "b",
+          "text": "How old is the bridge?"
+        },
+        {
+          "id": "c",
+          "text": "How much is the bridge?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Какой длины — How long.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u03-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u03",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "A helicopter is more fast than a car."
+        },
+        {
+          "id": "b",
+          "text": "A helicopter is faster than a car."
+        },
+        {
+          "id": "c",
+          "text": "A helicopter is fastest than a car."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Короткое слово fast — faster than, без more.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: skip → …",
+      "correctAnswer": "skipped",
+      "explanation": "p удваиваем: skipped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: hop → …",
+      "correctAnswer": "hopped",
+      "explanation": "p удваиваем: hopped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: wave → …",
+      "correctAnswer": "waved",
+      "explanation": "wave кончается на -e, добавляем -d: waved.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: stop → …",
+      "correctAnswer": "stopped",
+      "explanation": "p удваиваем: stopped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: clap → …",
+      "correctAnswer": "clapped",
+      "explanation": "Короткий глагол на «гласная + согласная»: p удваиваем — clapped.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: The boys didn't ___ the water.",
+      "options": [
+        {
+          "id": "a",
+          "text": "carry"
+        },
+        {
+          "id": "b",
+          "text": "carried"
+        },
+        {
+          "id": "c",
+          "text": "carries"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После didn't — начальная форма: carry.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did the pioneers travel by car? — No, they ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "didn't"
+        },
+        {
+          "id": "b",
+          "text": "weren't"
+        },
+        {
+          "id": "c",
+          "text": "don't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с Did — ответ с didn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери отрицание к предложению «We cooked dinner.»",
+      "options": [
+        {
+          "id": "a",
+          "text": "We didn't cook dinner."
+        },
+        {
+          "id": "b",
+          "text": "We didn't cooked dinner."
+        },
+        {
+          "id": "c",
+          "text": "We not cooked dinner."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "didn't + cook (без -ed).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери вопрос к предложению «She fetched some water.»",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did she fetch some water?"
+        },
+        {
+          "id": "b",
+          "text": "Did she fetched some water?"
+        },
+        {
+          "id": "c",
+          "text": "Was she fetch some water?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Did + she + fetch (без -ed).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u04-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u04",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "В каком слове ошибка?",
+      "options": [
+        {
+          "id": "a",
+          "text": "hopped"
+        },
+        {
+          "id": "b",
+          "text": "waved"
+        },
+        {
+          "id": "c",
+          "text": "skiped"
+        },
+        {
+          "id": "d",
+          "text": "stopped"
+        }
+      ],
+      "correctAnswer": "c",
+      "explanation": "Правильно skipped — с двумя p.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There ___ a gramophone in the room.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Один граммофон — there was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There ___ five cows in the field.",
+      "options": [
+        {
+          "id": "a",
+          "text": "was"
+        },
+        {
+          "id": "b",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Пять коров — много, there were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: ___ there a cinema in the town? — Yes, there was.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Was"
+        },
+        {
+          "id": "b",
+          "text": "Were"
+        },
+        {
+          "id": "c",
+          "text": "Did"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Один кинотеатр и ответ «there was» — вопрос Was there…?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Were there many people at the concert? — No, there ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "weren't"
+        },
+        {
+          "id": "b",
+          "text": "wasn't"
+        },
+        {
+          "id": "c",
+          "text": "didn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Спросили Were there — отвечаем weren't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Вставь was или were: There ___ two old phones in the box.",
+      "correctAnswer": "were",
+      "explanation": "Два телефона — there were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Вставь was или were: There ___ a video camera on the desk.",
+      "correctAnswer": "was",
+      "explanation": "Одна видеокамера — there was.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как спросить, сколько стоит фотоаппарат?",
+      "options": [
+        {
+          "id": "a",
+          "text": "How much does the camera cost?"
+        },
+        {
+          "id": "b",
+          "text": "How many does the camera cost?"
+        },
+        {
+          "id": "c",
+          "text": "How much the camera costs?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "О цене спрашивают How much does … cost?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: The CD player ___ £20.",
+      "options": [
+        {
+          "id": "a",
+          "text": "costs"
+        },
+        {
+          "id": "b",
+          "text": "cost"
+        },
+        {
+          "id": "c",
+          "text": "costing"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Плеер — один (it), в настоящем времени добавляем -s: costs.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Продавец говорит покупателю «Чем могу помочь?». Как это по-английски?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Can I help you?"
+        },
+        {
+          "id": "b",
+          "text": "Can you help me?"
+        },
+        {
+          "id": "c",
+          "text": "How are you?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Can I help you? — так спрашивает продавец.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u05-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u05",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "There was three CD players."
+        },
+        {
+          "id": "b",
+          "text": "There were three CD players."
+        },
+        {
+          "id": "c",
+          "text": "There were a CD player."
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Три плеера — there were.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: go → …",
+      "correctAnswer": "went",
+      "explanation": "go — неправильный глагол: went.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: win → …",
+      "correctAnswer": "won",
+      "explanation": "win — неправильный глагол: won.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Last Saturday we ___ to the stadium.",
+      "options": [
+        {
+          "id": "a",
+          "text": "go"
+        },
+        {
+          "id": "b",
+          "text": "went"
+        },
+        {
+          "id": "c",
+          "text": "goed"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Прошедшее время от go — went (goed не бывает).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did they win the cup? — Yes, they ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "did"
+        },
+        {
+          "id": "b",
+          "text": "won"
+        },
+        {
+          "id": "c",
+          "text": "were"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "На вопрос с Did краткий ответ: Yes, they did.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did she go to the sports centre?"
+        },
+        {
+          "id": "b",
+          "text": "Did she went to the sports centre?"
+        },
+        {
+          "id": "c",
+          "text": "Was she go to the sports centre?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После Did — начальная форма go.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: They didn't ___ a medal.",
+      "options": [
+        {
+          "id": "a",
+          "text": "win"
+        },
+        {
+          "id": "b",
+          "text": "won"
+        },
+        {
+          "id": "c",
+          "text": "wins"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После didn't — начальная форма win.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Сделай наречие: slow → …",
+      "correctAnswer": "slowly",
+      "explanation": "slow + ly = slowly.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Сделай наречие: quick → …",
+      "correctAnswer": "quickly",
+      "explanation": "quick + ly = quickly.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: The girl swam very ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "quick"
+        },
+        {
+          "id": "b",
+          "text": "quickly"
+        },
+        {
+          "id": "c",
+          "text": "quicker"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Как плыла? — наречие quickly.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u06-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u06",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как по-английски «Мы не пошли в парк»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "We didn't go to the park."
+        },
+        {
+          "id": "b",
+          "text": "We didn't went to the park."
+        },
+        {
+          "id": "c",
+          "text": "We not go to the park."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "didn't + go.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Yesterday Mum ___ a red umbrella.",
+      "options": [
+        {
+          "id": "a",
+          "text": "has"
+        },
+        {
+          "id": "b",
+          "text": "had"
+        },
+        {
+          "id": "c",
+          "text": "have"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Yesterday — прошлое: had.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: have → …",
+      "correctAnswer": "had",
+      "explanation": "have — неправильный глагол: had.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did you have a ticket? — Yes, I ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "did"
+        },
+        {
+          "id": "b",
+          "text": "had"
+        },
+        {
+          "id": "c",
+          "text": "have"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "На вопрос с Did — ответ did.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Did your grandpa ___ a dog?",
+      "options": [
+        {
+          "id": "a",
+          "text": "have"
+        },
+        {
+          "id": "b",
+          "text": "had"
+        },
+        {
+          "id": "c",
+          "text": "has"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После Did — начальная форма have.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "На платформе бегать нельзя. Вставь: You ___ run on the platform.",
+      "options": [
+        {
+          "id": "a",
+          "text": "mustn't"
+        },
+        {
+          "id": "b",
+          "text": "must"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нельзя — mustn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Без билета в поезд не пускают. Вставь: Passengers ___ have a ticket.",
+      "options": [
+        {
+          "id": "a",
+          "text": "must"
+        },
+        {
+          "id": "b",
+          "text": "mustn't"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Обязательно — must.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильное предложение.",
+      "options": [
+        {
+          "id": "a",
+          "text": "You must be polite."
+        },
+        {
+          "id": "b",
+          "text": "You must to be polite."
+        },
+        {
+          "id": "c",
+          "text": "You must are polite."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После must — глагол без to: must be.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как сказать «В поезде нельзя кричать»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "You mustn't shout on the train."
+        },
+        {
+          "id": "b",
+          "text": "You must shout on the train."
+        },
+        {
+          "id": "c",
+          "text": "You mustn't to shout on the train."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нельзя — mustn't + глагол без to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Мяч под столом. Вставь: The ball is ___ the table.",
+      "options": [
+        {
+          "id": "a",
+          "text": "under"
+        },
+        {
+          "id": "b",
+          "text": "on"
+        },
+        {
+          "id": "c",
+          "text": "in"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Под — under.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u07-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u07",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: She mustn't ___ late.",
+      "options": [
+        {
+          "id": "a",
+          "text": "be"
+        },
+        {
+          "id": "b",
+          "text": "is"
+        },
+        {
+          "id": "c",
+          "text": "to be"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После mustn't — начальная форма без to: be.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: see → …",
+      "correctAnswer": "saw",
+      "explanation": "see — неправильный глагол: saw.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: buy → …",
+      "correctAnswer": "bought",
+      "explanation": "buy — неправильный глагол: bought.",
+      "hint": "Начинается на bou…",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: come → …",
+      "correctAnswer": "came",
+      "explanation": "come — неправильный глагол: came.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: carry → …",
+      "correctAnswer": "carried",
+      "explanation": "Согласная + y: y меняется на i — carried.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: cry → …",
+      "correctAnswer": "cried",
+      "explanation": "Согласная + y: cry — cried.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Yesterday I ___ a scarf in the mall.",
+      "options": [
+        {
+          "id": "a",
+          "text": "buy"
+        },
+        {
+          "id": "b",
+          "text": "bought"
+        },
+        {
+          "id": "c",
+          "text": "buyed"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Прошедшее время от buy — bought.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "What did you buy? — I ___ some jeans.",
+      "options": [
+        {
+          "id": "a",
+          "text": "bought"
+        },
+        {
+          "id": "b",
+          "text": "buy"
+        },
+        {
+          "id": "c",
+          "text": "buyed"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Рассказываем о прошлом: bought.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Did the girl see the earring? — No, she ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "didn't"
+        },
+        {
+          "id": "b",
+          "text": "wasn't"
+        },
+        {
+          "id": "c",
+          "text": "saw"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос с Did — ответ didn't.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Did they come back?"
+        },
+        {
+          "id": "b",
+          "text": "Did they came back?"
+        },
+        {
+          "id": "c",
+          "text": "Do they came back?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "После Did — начальная форма come.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u08-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u08",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "В каком слове ошибка?",
+      "options": [
+        {
+          "id": "a",
+          "text": "carried"
+        },
+        {
+          "id": "b",
+          "text": "played"
+        },
+        {
+          "id": "c",
+          "text": "hurryed"
+        },
+        {
+          "id": "d",
+          "text": "cried"
+        }
+      ],
+      "correctAnswer": "c",
+      "explanation": "Правильно hurried: y после согласной меняется на i.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): tall → …",
+      "correctAnswer": "tallest",
+      "acceptedAnswers": [
+        "the tallest"
+      ],
+      "explanation": "tall + est = tallest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): big → …",
+      "correctAnswer": "biggest",
+      "acceptedAnswers": [
+        "the biggest"
+      ],
+      "explanation": "g удваиваем: biggest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): funny → …",
+      "correctAnswer": "funniest",
+      "acceptedAnswers": [
+        "the funniest"
+      ],
+      "explanation": "y после согласной меняется на i: funniest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши превосходную степень (без the): wide → …",
+      "correctAnswer": "widest",
+      "acceptedAnswers": [
+        "the widest"
+      ],
+      "explanation": "wide кончается на -e: widest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: The giraffe is the ___ animal in the zoo.",
+      "options": [
+        {
+          "id": "a",
+          "text": "taller"
+        },
+        {
+          "id": "b",
+          "text": "tallest"
+        },
+        {
+          "id": "c",
+          "text": "tall"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Перед словом стоит the — самый: tallest.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: This is ___ fastest car.",
+      "options": [
+        {
+          "id": "a",
+          "text": "the"
+        },
+        {
+          "id": "b",
+          "text": "a"
+        },
+        {
+          "id": "c",
+          "text": "than"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Перед превосходной степенью — the.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "What are you doing? — …",
+      "options": [
+        {
+          "id": "a",
+          "text": "I'm reading a book."
+        },
+        {
+          "id": "b",
+          "text": "I reading a book."
+        },
+        {
+          "id": "c",
+          "text": "I am read a book."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "am + глагол с -ing: I'm reading.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как спросить «Что ты делаешь?»",
+      "options": [
+        {
+          "id": "a",
+          "text": "What are you doing?"
+        },
+        {
+          "id": "b",
+          "text": "What do you doing?"
+        },
+        {
+          "id": "c",
+          "text": "What you are doing?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "What + are + you + doing?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Why do you like the juggler? — ___ he is funny.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Because"
+        },
+        {
+          "id": "b",
+          "text": "Why"
+        },
+        {
+          "id": "c",
+          "text": "But"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Потому что — because.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u09-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u09",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Выбери верный ряд.",
+      "options": [
+        {
+          "id": "a",
+          "text": "fast — faster — the fastest"
+        },
+        {
+          "id": "b",
+          "text": "fast — more fast — the most fast"
+        },
+        {
+          "id": "c",
+          "text": "fast — fastest — the faster"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Короткое слово: -er, затем the -est.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: I'm ___ to visit the Tower of London.",
+      "options": [
+        {
+          "id": "a",
+          "text": "going"
+        },
+        {
+          "id": "b",
+          "text": "go"
+        },
+        {
+          "id": "c",
+          "text": "went"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Собираюсь — am going to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: They ___ going to take a bus.",
+      "options": [
+        {
+          "id": "a",
+          "text": "are"
+        },
+        {
+          "id": "b",
+          "text": "is"
+        },
+        {
+          "id": "c",
+          "text": "am"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С they — are going to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: My sister ___ going to buy a postcard.",
+      "options": [
+        {
+          "id": "a",
+          "text": "is"
+        },
+        {
+          "id": "b",
+          "text": "are"
+        },
+        {
+          "id": "c",
+          "text": "am"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "С she (my sister) — is going to.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Выбери правильный вопрос.",
+      "options": [
+        {
+          "id": "a",
+          "text": "What are you going to do?"
+        },
+        {
+          "id": "b",
+          "text": "What you are going to do?"
+        },
+        {
+          "id": "c",
+          "text": "What are you going do?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "What + are + you + going to + do.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как вежливо предложить сок?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Would you like some juice?"
+        },
+        {
+          "id": "b",
+          "text": "You like juice?"
+        },
+        {
+          "id": "c",
+          "text": "Do you juice?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Предлагаем: Would you like…?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Как вежливо отказаться?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No, thanks."
+        },
+        {
+          "id": "b",
+          "text": "No, I don't want!"
+        },
+        {
+          "id": "c",
+          "text": "Not, please."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вежливый отказ — No, thanks.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "I'd like — это сокращение от…",
+      "options": [
+        {
+          "id": "a",
+          "text": "I would like"
+        },
+        {
+          "id": "b",
+          "text": "I did like"
+        },
+        {
+          "id": "c",
+          "text": "I do like"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "I'd like = I would like — я бы хотел.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как попросить «Можно мне стакан воды?»",
+      "options": [
+        {
+          "id": "a",
+          "text": "Can I have a glass of water?"
+        },
+        {
+          "id": "b",
+          "text": "Can I a glass of water?"
+        },
+        {
+          "id": "c",
+          "text": "I can have a glass of water?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Просьба: Can I have…?",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Вставь одно слово: We are going ___ visit the museum.",
+      "correctAnswer": "to",
+      "explanation": "going to + глагол.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u10-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u10",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "Найди предложение без ошибки.",
+      "options": [
+        {
+          "id": "a",
+          "text": "He is going to watch the parade."
+        },
+        {
+          "id": "b",
+          "text": "He going to watch the parade."
+        },
+        {
+          "id": "c",
+          "text": "He is going watch the parade."
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Нужны все части: is + going to + watch.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There is ___ milk in the jar.",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Утвердительное предложение — some.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Are there ___ lanterns in the street?",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Вопрос — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There aren't ___ fireworks today.",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Отрицание — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: I've got ___ sweets for you.",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Утвердительное — some.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: Have you got ___ tickets?",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Вопрос — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: We haven't got ___ bread.",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "Отрицание — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Вставь пропущенное слово: There are ___ flowers in the garden.",
+      "options": [
+        {
+          "id": "a",
+          "text": "some"
+        },
+        {
+          "id": "b",
+          "text": "any"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Утвердительное — some.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Is there ___ water in the bottle? — No, there isn't.",
+      "options": [
+        {
+          "id": "a",
+          "text": "any"
+        },
+        {
+          "id": "b",
+          "text": "some"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Вопрос — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Вставь some или any: There aren't ___ dragons in the park.",
+      "correctAnswer": "any",
+      "explanation": "Отрицание — any.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u11-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u11",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Вставь some или any: There are ___ musicians in the square.",
+      "correctAnswer": "some",
+      "explanation": "Утвердительное — some.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "This is my scarf. The scarf is ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "mine"
+        },
+        {
+          "id": "b",
+          "text": "my"
+        },
+        {
+          "id": "c",
+          "text": "me"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Без существительного после — mine.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "This is her umbrella. It's ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "hers"
+        },
+        {
+          "id": "b",
+          "text": "her"
+        },
+        {
+          "id": "c",
+          "text": "she"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Без существительного — hers.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "These are our boots. They are ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "ours"
+        },
+        {
+          "id": "b",
+          "text": "our"
+        },
+        {
+          "id": "c",
+          "text": "us"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Без существительного — ours.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "That's their car. It's ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "theirs"
+        },
+        {
+          "id": "b",
+          "text": "their"
+        },
+        {
+          "id": "c",
+          "text": "them"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Без существительного — theirs.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Is this your pen? — Yes, it's ___.",
+      "options": [
+        {
+          "id": "a",
+          "text": "mine"
+        },
+        {
+          "id": "b",
+          "text": "yours"
+        },
+        {
+          "id": "c",
+          "text": "my"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Ответ о себе — mine.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "easy",
+      "type": "text",
+      "question": "Напиши множественное число: boy → …",
+      "correctAnswer": "boys",
+      "explanation": "После гласной y остаётся: boys.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши множественное число: dish → …",
+      "correctAnswer": "dishes",
+      "explanation": "После sh добавляем -es: dishes.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши множественное число: baby → …",
+      "correctAnswer": "babies",
+      "explanation": "Согласная + y → ies: babies.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши множественное число: city → …",
+      "correctAnswer": "cities",
+      "explanation": "Согласная + y → ies: cities.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Как сказать дату «15 мая»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "the fifteenth of May"
+        },
+        {
+          "id": "b",
+          "text": "the fifty of May"
+        },
+        {
+          "id": "c",
+          "text": "the fiveteenth of May"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "15-й — fifteenth.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-u12-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-u12",
+      "difficulty": "easy",
+      "type": "single-choice",
+      "question": "Как спросить «Какое сегодня число?»",
+      "options": [
+        {
+          "id": "a",
+          "text": "What's the date today?"
+        },
+        {
+          "id": "b",
+          "text": "What's the time now?"
+        },
+        {
+          "id": "c",
+          "text": "How old are you?"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "Число — the date.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-001",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: go (идти, ехать) → …",
+      "correctAnswer": "went",
+      "explanation": "go — неправильный глагол: went.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-002",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: see (видеть) → …",
+      "correctAnswer": "saw",
+      "explanation": "see — неправильный глагол: saw.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-003",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: buy (покупать) → …",
+      "correctAnswer": "bought",
+      "explanation": "buy — неправильный глагол: bought.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-004",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: come (приходить) → …",
+      "correctAnswer": "came",
+      "explanation": "come — неправильный глагол: came.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-005",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: have (иметь) → …",
+      "correctAnswer": "had",
+      "explanation": "have — неправильный глагол: had.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-006",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: win (побеждать) → …",
+      "correctAnswer": "won",
+      "explanation": "win — неправильный глагол: won.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-007",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: catch (ловить) → …",
+      "correctAnswer": "caught",
+      "explanation": "catch — неправильный глагол: caught.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-008",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: find (находить) → …",
+      "correctAnswer": "found",
+      "explanation": "find — неправильный глагол: found.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-009",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: lose (терять) → …",
+      "correctAnswer": "lost",
+      "explanation": "lose — неправильный глагол: lost.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-010",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: tell (рассказывать) → …",
+      "correctAnswer": "told",
+      "explanation": "tell — неправильный глагол: told.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-011",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: sell (продавать) → …",
+      "correctAnswer": "sold",
+      "explanation": "sell — неправильный глагол: sold.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-012",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: send (посылать) → …",
+      "correctAnswer": "sent",
+      "explanation": "send — неправильный глагол: sent.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-013",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: speak (говорить) → …",
+      "correctAnswer": "spoke",
+      "explanation": "speak — неправильный глагол: spoke.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-014",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: take (брать) → …",
+      "correctAnswer": "took",
+      "explanation": "take — неправильный глагол: took.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-015",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: bring (приносить) → …",
+      "correctAnswer": "brought",
+      "explanation": "bring — неправильный глагол: brought.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-016",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: choose (выбирать) → …",
+      "correctAnswer": "chose",
+      "explanation": "choose — неправильный глагол: chose.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-017",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: grow (расти) → …",
+      "correctAnswer": "grew",
+      "explanation": "grow — неправильный глагол: grew.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-018",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: hear (слышать) → …",
+      "correctAnswer": "heard",
+      "explanation": "hear — неправильный глагол: heard.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-019",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: keep (хранить) → …",
+      "correctAnswer": "kept",
+      "explanation": "keep — неправильный глагол: kept.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-020",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: know (знать) → …",
+      "correctAnswer": "knew",
+      "explanation": "know — неправильный глагол: knew.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-021",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: leave (уходить, оставлять) → …",
+      "correctAnswer": "left",
+      "explanation": "leave — неправильный глагол: left.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-022",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: pay (платить) → …",
+      "correctAnswer": "paid",
+      "explanation": "pay — неправильный глагол: paid.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-023",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: put (класть) → …",
+      "correctAnswer": "put",
+      "explanation": "put — неправильный глагол: put.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-024",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: say (сказать) → …",
+      "correctAnswer": "said",
+      "explanation": "say — неправильный глагол: said.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-025",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: spend (тратить) → …",
+      "correctAnswer": "spent",
+      "explanation": "spend — неправильный глагол: spent.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-026",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: fall (падать) → …",
+      "correctAnswer": "fell",
+      "explanation": "fall — неправильный глагол: fell.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-027",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: do (делать) → …",
+      "correctAnswer": "did",
+      "explanation": "do — неправильный глагол: did.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-028",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "text",
+      "question": "Напиши глагол в прошедшем времени: get (получать) → …",
+      "correctAnswer": "got",
+      "explanation": "get — неправильный глагол: got.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-029",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "bought — прошедшее время какого глагола?",
+      "options": [
+        {
+          "id": "a",
+          "text": "buy"
+        },
+        {
+          "id": "b",
+          "text": "bring"
+        },
+        {
+          "id": "c",
+          "text": "catch"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "buy — bought (покупать). Не путай: bring — brought, catch — caught.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-030",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "hard",
+      "type": "single-choice",
+      "question": "brought — прошедшее время какого глагола?",
+      "options": [
+        {
+          "id": "a",
+          "text": "buy"
+        },
+        {
+          "id": "b",
+          "text": "bring"
+        },
+        {
+          "id": "c",
+          "text": "bright"
+        }
+      ],
+      "correctAnswer": "b",
+      "explanation": "bring — brought (приносить).",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    },
+    {
+      "id": "e4-ew3-verbs-031",
+      "grade": 4,
+      "subjectId": "english",
+      "topicId": "e4-ew3-verbs",
+      "difficulty": "medium",
+      "type": "single-choice",
+      "question": "Какой глагол не меняется в прошедшем времени?",
+      "options": [
+        {
+          "id": "a",
+          "text": "put"
+        },
+        {
+          "id": "b",
+          "text": "pay"
+        },
+        {
+          "id": "c",
+          "text": "keep"
+        }
+      ],
+      "correctAnswer": "a",
+      "explanation": "put — put: форма та же.",
+      "source": "Оригинальное задание проекта «Контролька» (грамматика English World 3)",
+      "verified": false
+    }
+  ]
+}

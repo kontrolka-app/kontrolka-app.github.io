@@ -108,7 +108,10 @@
     "grades": [
       4
     ],
-    "files": [],
-    "tool": "english"
+    "files": [
+      "content/english-4.json"
+    ],
+    "tool": "english",
+    "searchExample": "some"
   }
 ]
