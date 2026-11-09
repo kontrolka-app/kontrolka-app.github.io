@@ -119,6 +119,9 @@ export function verdict(percent) {
 /** Запись в историю: компактный снимок завершённой сессии. */
 export function buildHistoryEntry(session) {
   const r = session.result;
+  // Диагностика (по 2 задания на тему) не меняет «последний результат» тем и «освоено тем»:
+  // её результаты по темам лежат отдельно, в diagStats, и нужны только карте знаний.
+  const diagnostic = session.source?.kind === 'diagnostic';
   return {
     id: session.id,
     finishedAt: session.finishedAt,
@@ -131,7 +134,8 @@ export function buildHistoryEntry(session) {
     skipped: r.skipped,
     percent: r.percent,
     durationMs: r.durationMs,
-    topicStats: r.topicStats,
+    topicStats: diagnostic ? {} : r.topicStats,
+    ...(diagnostic ? { diagStats: r.topicStats } : {}),
     review: r.review,
   };
 }

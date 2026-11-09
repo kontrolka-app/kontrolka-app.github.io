@@ -42,6 +42,7 @@ export function defaultSettings() {
     accessory: '',
     companion: true, // персонаж в углу экрана с короткими фразами; выключается в «Я»
     companionId: '', // свой персонаж-компаньон; пусто — как аватарка
+    quarterCardClosed: '', // «2026-11» — карточку «Новая четверть» на главной закрыли в эту четверть
   };
 }
 
@@ -84,6 +85,7 @@ function sanitizeSettings(raw) {
   if (typeof raw.accessory === 'string') s.accessory = raw.accessory.slice(0, 40);
   if (typeof raw.companion === 'boolean') s.companion = raw.companion;
   if (typeof raw.companionId === 'string') s.companionId = raw.companionId.slice(0, 40);
+  if (typeof raw.quarterCardClosed === 'string' && /^\d{4}-\d{2}$/.test(raw.quarterCardClosed)) s.quarterCardClosed = raw.quarterCardClosed;
   return s;
 }
 
