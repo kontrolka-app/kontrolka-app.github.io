@@ -25,6 +25,19 @@ test('у каждого вопроса учебных данных правил�
     for (const f of s.files) {
       const content = JSON.parse(await readFile(new URL(`../data/${f}`, import.meta.url), 'utf8'));
       for (const q of content.questions) {
+        // Новые типы: правильный ответ задан не correctAnswer, а самими данными вопроса.
+        if (q.type === 'multi-choice') {
+          assert.equal(checkAnswer(q, q.correctAnswers).status, 'correct', `${q.id}: верный набор не засчитан`);
+          assert.equal(checkAnswer(q, q.options.map((o) => o.id)).status, 'wrong', `${q.id}: «отметить всё» не должно засчитываться`);
+          continue;
+        }
+        if (q.type === 'match' || q.type === 'order') {
+          const n = (q.pairs || q.items).length;
+          const perfect = Array.from({ length: n }, (_, i) => i);
+          assert.equal(checkAnswer(q, perfect).status, 'correct', `${q.id}: правильный ответ не засчитан`);
+          assert.equal(checkAnswer(q, perfect.slice().reverse()).status, 'wrong', `${q.id}: обратный порядок не должен засчитываться`);
+          continue;
+        }
         const answers = [q.correctAnswer, ...(q.acceptedAnswers || [])];
         for (const a of answers) {
           const given = q.type === 'number' ? String(a) : q.type === 'find-errors' ? perfectAnswer(q) : a;
