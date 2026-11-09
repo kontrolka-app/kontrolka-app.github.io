@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   validateWordList, unitWords, bookWords, unitLabel, unitName, findBook, confusable, chooseOptions, normalizeEnglish, checkSpelling,
-  createRound, answerRound, roundDone, roundScore, recordResult, sanitizeWords, defaultWords,
+  createRound, answerRound, roundDone, roundScore, recordResult, sanitizeWords, defaultWords, wordsForMode,
 } from '../js/words.js';
 
 const list = JSON.parse(await readFile(new URL('../data/english-words-4.json', import.meta.url), 'utf8'));
@@ -79,4 +79,15 @@ test('результаты: лучший и последний, повреждё
   const clean = sanitizeWords({ results: { 'sp4-3:write': d.results['sp4-3:write'], 'ew3-1:cards': { best: 1, last: 1, at: 1 }, 'ew3-2:choose': { best: 200, last: 1, at: 1 }, '3:write': { best: 1, last: 1, at: 1 } } });
   assert.deepEqual(Object.keys(clean.results), ['sp4-3:write']);
   assert.deepEqual(sanitizeWords(null), { results: {} });
+});
+
+test('диктант и «напиши»: без слов «узнавать», результат диктанта сохраняется', () => {
+  const unit = unitWords(list, 'sp4', 1);
+  const active = wordsForMode(unit, 'listen');
+  assert.ok(active.length > 0 && active.length < unit.length);
+  assert.ok(active.every((w) => !w.passive));
+  assert.deepEqual(wordsForMode(unit, 'write'), active);
+  assert.equal(wordsForMode(unit, 'choose').length, unit.length);
+  const d = recordResult(defaultWords(), 'ew3', 7, 'listen', { correct: 3, total: 4 }, 1);
+  assert.deepEqual(sanitizeWords(d).results, { 'ew3-7:listen': { best: 75, last: 75, at: 1 } });
 });

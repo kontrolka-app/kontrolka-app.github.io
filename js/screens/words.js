@@ -4,14 +4,17 @@ import { href } from '../router.js';
 import { getData, update, content } from '../state.js';
 import { loadWordList } from '../data.js';
 import { subjectVars } from '../components.js';
-import { findBook, bookWords, unitWords, unitName, resultKey, chooseOptions, checkSpelling, createRound, answerRound, roundDone, roundScore, recordResult, shuffle } from '../words.js';
+import { findBook, bookWords, unitWords, unitName, resultKey, wordsForMode, WRITE_MODES, chooseOptions, checkSpelling, createRound, answerRound, roundDone, roundScore, recordResult, shuffle } from '../words.js';
 import { plural } from '../utils.js';
 
 const MODES = {
   cards: { title: 'Карточки', emoji: '🃏', text: 'Смотришь слово, вспоминаешь перевод и переворачиваешь карточку' },
   choose: { title: 'Выбери перевод', emoji: '👆', text: 'Английское слово и четыре варианта перевода' },
   write: { title: 'Напиши по-английски', emoji: '✍️', text: 'Русский перевод — пишешь слово сам' },
+  listen: { title: 'Диктант на слух', emoji: '🎧', text: 'Слушаешь слово и пишешь его по-английски', voice: true },
 };
+
+const canSpeak = () => 'speechSynthesis' in window;
 
 /** Цвет предмета «Английский язык» — как у страниц других предметов. */
 function themed(el) {
@@ -40,25 +43,22 @@ function later(build) {
   return slot;
 }
 
-/** Озвучка слова голосом браузера (если он умеет). */
+/** Произнести слово голосом браузера: британский голос, если есть, иначе любой английский. Вызывать из нажатия. */
+function speak(text) {
+  if (!canSpeak()) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const voices = speechSynthesis.getVoices();
+  u.voice = voices.find((v) => v.lang.replace('_', '-') === 'en-GB') || voices.find((v) => v.lang.startsWith('en')) || null;
+  u.lang = u.voice?.lang || 'en-GB';
+  u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+
+/** Кнопка «послушать» рядом со словом (если браузер умеет говорить). */
 function sayButton(text) {
-  if (!('speechSynthesis' in window)) return null;
-  return h(
-    'button',
-    {
-      type: 'button',
-      class: 'btn btn--ghost btn--icon word-say',
-      'aria-label': `Послушать: ${text}`,
-      onclick: () => {
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'en-GB';
-        u.rate = 0.85;
-        speechSynthesis.speak(u);
-      },
-    },
-    '🔊',
-  );
+  if (!canSpeak()) return null;
+  return h('button', { type: 'button', class: 'btn btn--ghost btn--icon word-say', 'aria-label': `Послушать: ${text}`, onclick: () => speak(text) }, '🔊');
 }
 
 export function englishScreen() {
@@ -132,10 +132,14 @@ export function wordsUnitScreen(bookId, n) {
         'div',
         { class: 'stack' },
         pageHeader(unitName(book, unit), { back: href('words'), subtitle: `${book.title} · ${unit.ru} · ${wordsCount(words.length)}` }),
-        ...Object.entries(MODES).map(([mode, m]) => {
-          const r = results[resultKey(book.id, unit.n, mode)];
-          return linkCard(href('words-train', book.id, unit.n, mode), m.emoji, m.title, m.text, r ? h('span', { class: 'small' }, `Лучший результат: ${r.best}% · последний: ${r.last}%`) : null);
-        }),
+        ...Object.entries(MODES)
+          .filter(([mode, m]) => (!m.voice || canSpeak()) && wordsForMode(words, mode).length)
+          .map(([mode, m]) => {
+            const r = results[resultKey(book.id, unit.n, mode)];
+            const n = wordsForMode(words, mode).length;
+            const text = WRITE_MODES.has(mode) && n < words.length ? `${m.text}. Без слов «узнавать»: ${wordsCount(n)}` : m.text;
+            return linkCard(href('words-train', book.id, unit.n, mode), m.emoji, m.title, text, r ? h('span', { class: 'small' }, `Лучший результат: ${r.best}% · последний: ${r.last}%`) : null);
+          }),
         h(
           'details',
           { class: 'card' },
@@ -155,8 +159,9 @@ export function wordsUnitScreen(bookId, n) {
 export function wordsTrainScreen(bookId, n, mode) {
   return later((list) => {
     const found = findUnit(list, bookId, n);
-    if (!found || !MODES[mode]) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('words'), 'К юнитам') }));
-    const { book, unit, words } = found;
+    if (!found || !MODES[mode] || (MODES[mode].voice && !canSpeak())) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('words'), 'К юнитам') }));
+    const { book, unit } = found;
+    const words = wordsForMode(found.words, mode);
     const header = pageHeader(MODES[mode].title, { back: href('words-unit', book.id, unit.n), subtitle: `${book.title} · ${unitName(book, unit)}` });
     const body = h('div', { class: 'stack' });
     const view = themed(h('div', { class: 'stack words-page' }, header, body));
@@ -209,16 +214,18 @@ function cards(body, words, book, unit) {
   show();
 }
 
-/** «Выбери перевод» и «Напиши по-английски»: ошибка — слово ещё раз в конце, счёт по первой попытке. */
+/** «Выбери перевод», «Напиши по-английски» и «Диктант на слух»: ошибка — слово ещё раз в конце, счёт по первой попытке. */
 function quiz(body, words, bookAll, book, unit, mode) {
   let round = createRound(words);
   const byId = new Map(words.map((w) => [w.id, w]));
 
-  const next = () => {
+  // В диктанте слово звучит само со второго слова: «Дальше» — это нажатие, телефон разрешает говорить.
+  // Первое слово — по кнопке: без нажатия iPhone голос не включает.
+  const next = (autoplay = false) => {
     if (roundDone(round)) return finish();
     const w = byId.get(round.queue[round.pos]);
     const feedback = h('div', { class: 'stack', 'aria-live': 'polite' });
-    const nextBtn = button('Дальше', () => next(), { iconName: 'arrow', size: 'lg' });
+    const nextBtn = button('Дальше', () => next(true), { iconName: 'arrow', size: 'lg' });
     const answered = (ok, shownAnswer) => {
       round = answerRound(round, w.id, ok);
       feedback.replaceChildren(
@@ -226,7 +233,7 @@ function quiz(body, words, bookAll, book, unit, mode) {
           'div',
           { class: `feedback ${ok ? 'feedback--ok' : 'feedback--bad'}`, role: 'status' },
           h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно')),
-          ok ? null : h('p', {}, 'Правильно: ', h('strong', { lang: mode === 'write' ? 'en' : null }, shownAnswer), mode === 'write' ? sayButton(w.en) : null),
+          ok ? null : h('p', {}, 'Правильно: ', h('strong', { lang: WRITE_MODES.has(mode) ? 'en' : null }, shownAnswer), WRITE_MODES.has(mode) ? sayButton(w.en) : null),
           ok ? null : h('p', { class: 'small muted' }, 'Это слово будет ещё раз в конце.'),
         ),
         nextBtn,
@@ -279,11 +286,22 @@ function quiz(body, words, bookAll, book, unit, mode) {
             answered(checkSpelling(w, input.value), w.en);
           },
         },
-        h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'word-answer' }, 'Как это по-английски?'), input, error),
+        h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'word-answer' }, mode === 'listen' ? 'Напиши, что услышал' : 'Как это по-английски?'), input, error),
       );
       const check = button('Проверить', null, { type: 'submit', iconName: 'check', size: 'lg' });
       form.append(check);
-      task = h('div', { class: 'stack' }, h('div', { class: 'card word-card' }, h('p', { class: 'word-card__ru' }, w.ru)), form);
+      const prompt =
+        mode === 'listen'
+          ? h(
+              'div',
+              { class: 'card word-card' },
+              button(autoplay ? 'Послушать ещё раз' : 'Послушать слово', () => (speak(w.en), input.focus({ preventScroll: true })), { size: 'lg', variant: autoplay ? 'secondary' : 'primary' }),
+              // Перевод снимает путаницу одинаково звучащих слов (son — sun, hare — hair).
+              h('p', { class: 'small muted' }, `Подсказка: ${w.ru}`),
+            )
+          : h('div', { class: 'card word-card' }, h('p', { class: 'word-card__ru' }, w.ru));
+      task = h('div', { class: 'stack' }, prompt, form);
+      if (mode === 'listen' && autoplay) speak(w.en);
       setTimeout(() => input.focus({ preventScroll: true }), 0);
     }
     body.replaceChildren(progress(round.pos, round.queue.length), task, feedback);
@@ -306,7 +324,7 @@ function quiz(body, words, bookAll, book, unit, mode) {
       missed.length
         ? h('section', { class: 'card' }, h('h2', { class: 'card__title' }, 'Повтори'), h('ul', { class: 'word-list' }, missed.map((w) => h('li', {}, h('span', { class: 'word-list__en', lang: 'en' }, w.en), sayButton(w.en), h('span', { class: 'muted' }, w.ru)))))
         : null,
-      h('div', { class: 'row wrap' }, button('Ещё раз', () => ((round = createRound(words)), next()), { iconName: 'arrow', size: 'lg' }), linkButton(href('words-unit', book.id, unit.n), 'Назад к словам', { variant: 'secondary' })),
+      h('div', { class: 'row wrap' }, button('Ещё раз', () => ((round = createRound(words)), next(true)), { iconName: 'arrow', size: 'lg' }), linkButton(href('words-unit', book.id, unit.n), 'Назад к словам', { variant: 'secondary' })),
     );
   };
   next();

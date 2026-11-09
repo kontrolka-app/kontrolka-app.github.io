@@ -2,7 +2,10 @@
 // Список — data/english-words-4.json: books [{ id, title, groupName, units: [{ n, title, ru, label? }] }],
 // words [{ id, book, unit, en, ru, passive? }]. Учебников два: English World 3 (основной) и Spotlight 4.
 
-export const WORD_MODES = ['choose', 'write'];
+export const WORD_MODES = ['choose', 'write', 'listen'];
+/** В режимах, где слово пишут сами, — без слов «узнавать» (passive): их писать не обязательно. */
+export const WRITE_MODES = new Set(['write', 'listen']);
+export const wordsForMode = (words, mode) => (WRITE_MODES.has(mode) ? words.filter((w) => !w.passive) : words);
 
 /** Проверка списка слов. Возвращает массив ошибок. */
 export function validateWordList(list) {
@@ -129,7 +132,7 @@ export function sanitizeWords(raw) {
   if (!raw || typeof raw !== 'object' || !raw.results || typeof raw.results !== 'object') return out;
   const pct = (v) => Number.isInteger(v) && v >= 0 && v <= 100;
   for (const [key, r] of Object.entries(raw.results)) {
-    if (!/^[a-z0-9]{1,10}-\d{1,2}:(choose|write)$/.test(key) || !r || !pct(r.best) || !pct(r.last) || !Number.isFinite(r.at)) continue;
+    if (!/^[a-z0-9]{1,10}-\d{1,2}:(choose|write|listen)$/.test(key) || !r || !pct(r.best) || !pct(r.last) || !Number.isFinite(r.at)) continue;
     out.results[key] = { best: r.best, last: r.last, at: r.at };
   }
   return out;
