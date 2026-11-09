@@ -91,3 +91,16 @@ test('диктант и «напиши»: без слов «узнавать», 
   const d = recordResult(defaultWords(), 'ew3', 7, 'listen', { correct: 3, total: 4 }, 1);
   assert.deepEqual(sanitizeWords(d).results, { 'ew3-7:listen': { best: 75, last: 75, at: 1 } });
 });
+
+test('дополнительные группы Spotlight: месяцы, числа, дни недели, фразы', () => {
+  const sp4 = findBook(list, 'sp4');
+  const byTitle = (title) => sp4.units.find((u) => u.title === title) ?? assert.fail(title);
+  assert.equal(unitWords(list, 'sp4', byTitle('Months').n).length, 12);
+  assert.equal(unitWords(list, 'sp4', byTitle('Days of the week').n).length, 7);
+  assert.equal(unitName(sp4, byTitle('Months')), 'Months');
+  const phrases = unitWords(list, 'sp4', byTitle('Useful English').n);
+  assert.ok(phrases.every((w) => w.phrase));
+  assert.equal(wordsForMode(phrases, 'write').length, 0);
+  assert.equal(wordsForMode(phrases, 'choose').length, phrases.length);
+  assert.equal(validateWordList({ books: list.books, words: [{ id: 'x', book: 'sp4', unit: 1, en: 'Hi!', ru: 'Привет' }] }).length, 1);
+});

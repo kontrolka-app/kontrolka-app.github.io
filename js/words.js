@@ -3,9 +3,9 @@
 // words [{ id, book, unit, en, ru, passive? }]. Учебников два: English World 3 (основной) и Spotlight 4.
 
 export const WORD_MODES = ['choose', 'write', 'listen'];
-/** В режимах, где слово пишут сами, — без слов «узнавать» (passive): их писать не обязательно. */
+/** В режимах, где слово пишут сами, — без слов «узнавать» (passive) и без целых фраз (phrase): их на время не пишут. */
 export const WRITE_MODES = new Set(['write', 'listen']);
-export const wordsForMode = (words, mode) => (WRITE_MODES.has(mode) ? words.filter((w) => !w.passive) : words);
+export const wordsForMode = (words, mode) => (WRITE_MODES.has(mode) ? words.filter((w) => !w.passive && !w.phrase) : words);
 
 /** Проверка списка слов. Возвращает массив ошибок. */
 export function validateWordList(list) {
@@ -30,10 +30,11 @@ export function validateWordList(list) {
     if (typeof w?.id !== 'string' || !/^[a-z0-9-]+$/.test(w.id)) errors.push(`${where}: id — латиница, цифры и дефис`);
     else if (ids.has(w.id)) errors.push(`${where}: повторяется id`);
     ids.add(w?.id);
-    if (!/^[A-Za-zé' -]+$/.test(String(w?.en ?? ''))) errors.push(`${where}: en — английские буквы`);
+    if (!/^[A-Za-zé'& -]+$/.test(String(w?.en ?? '')) && !(w?.phrase === true && /^[A-Za-z][A-Za-z',.!?… -]*$/.test(w.en))) errors.push(`${where}: en — английские буквы (знаки препинания — только во фразах)`);
     if (!String(w?.ru ?? '').trim()) errors.push(`${where}: нет перевода`);
     if (!units.has(`${w?.book}:${w?.unit}`)) errors.push(`${where}: нет юнита ${w?.book} ${w?.unit}`);
     if (w?.passive !== undefined && w.passive !== true) errors.push(`${where}: passive — только true`);
+    if (w?.phrase !== undefined && w.phrase !== true) errors.push(`${where}: phrase — только true`);
   }
   return errors;
 }

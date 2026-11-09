@@ -85,6 +85,26 @@ function findUnit(list, bookId, n) {
   return unit ? { book, unit, words: unitWords(list, book.id, unit.n) } : null;
 }
 
+/** Плитки юнитов (модулей) учебника с лучшими результатами. */
+function unitGrid(list, book, units, results) {
+  return h(
+    'div',
+    { class: 'grid grid--2' },
+    units.map((u) => {
+      const r = (mode) => results[resultKey(book.id, u.n, mode)];
+      return h(
+        'a',
+        { class: `card poem-card${r('write')?.best === 100 ? ' poem-card--learned' : ''}`, href: href('words-unit', book.id, u.n) },
+        h('span', { class: 'poem-card__title' }, unitName(book, u)),
+        h('span', { class: 'small muted' }, `${u.ru} · ${wordsCount(unitWords(list, book.id, u.n).length)}`),
+        r('choose') || r('write') || r('listen')
+          ? h('span', { class: 'small muted' }, `Перевод: ${resultText(r('choose'))} · Написание: ${resultText(r('write'))}${r('listen') ? ` · На слух: ${resultText(r('listen'))}` : ''}`)
+          : null,
+      );
+    }),
+  );
+}
+
 export function wordsScreen() {
   return later((list) => {
     const results = getData().words.results;
@@ -98,20 +118,9 @@ export function wordsScreen() {
             'section',
             { class: 'stack' },
             h('h2', {}, book.title, BOOK_NOTES[book.id] ? h('span', { class: 'small muted' }, ` · ${BOOK_NOTES[book.id]}`) : null),
-            h(
-              'div',
-              { class: 'grid grid--2' },
-              book.units.map((u) => {
-                const r = (mode) => results[resultKey(book.id, u.n, mode)];
-                return h(
-                  'a',
-                  { class: `card poem-card${r('write')?.best === 100 ? ' poem-card--learned' : ''}`, href: href('words-unit', book.id, u.n) },
-                  h('span', { class: 'poem-card__title' }, unitName(book, u)),
-                  h('span', { class: 'small muted' }, `${u.ru} · ${wordsCount(unitWords(list, book.id, u.n).length)}`),
-                  r('choose') || r('write') ? h('span', { class: 'small muted' }, `Перевод: ${resultText(r('choose'))} · Написание: ${resultText(r('write'))}`) : null,
-                );
-              }),
-            ),
+            unitGrid(list, book, book.units.filter((u) => !u.extra), results),
+            book.units.some((u) => u.extra) ? h('h3', {}, 'Ещё слова из учебника') : null,
+            book.units.some((u) => u.extra) ? unitGrid(list, book, book.units.filter((u) => u.extra), results) : null,
           ),
         ),
         h('p', { class: 'small muted' }, 'Переводы составлены для «Контрольки» и ещё не проверены учителем. Нашёл ошибку — скажи взрослому.'),
