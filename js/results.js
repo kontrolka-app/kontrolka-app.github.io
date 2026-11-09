@@ -140,6 +140,7 @@ export function buildHistoryEntry(session) {
 export function sourceKey(source) {
   if (!source) return 'unknown';
   if (source.kind === 'custom') return `custom:${source.testId}`;
+  if (source.kind === 'drill') return `drill:${source.drillId}:${source.level}`;
   return `${source.kind}:${(source.topicIds || []).slice().sort().join(',')}`;
 }
 

@@ -201,7 +201,7 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
   );
 }
 
-function radioGroup(name, legend, options, value, onChange, extraClass = '') {
+export function radioGroup(name, legend, options, value, onChange, extraClass = '') {
   return h(
     'fieldset',
     { class: `field segmented ${extraClass}`.trim() },

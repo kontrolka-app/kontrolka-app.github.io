@@ -13,6 +13,7 @@ import { badgeGrid } from '../components.js';
 import { crossedWonder } from '../wonders.js';
 import { companionSay } from './companion-ui.js';
 import { dailyProgress } from '../results.js';
+import { drillQuestions, drillSource } from '../drills.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -85,7 +86,11 @@ export function resultScreen(entryId) {
 
   async function retry(onlyMistakes) {
     const ids = onlyMistakes ? mistakes.map((r) => r.questionId) : null;
-    const { questions, missing } = questionsForEntry(entry, ids);
+    // Тренажёр примеров: «Пройти ещё раз» — новые примеры того же уровня, а не те же самые.
+    // После «Работы над ошибками» — обычный набор из 10 примеров, а не столько, сколько было ошибок.
+    const fresh = entry.source.kind === 'drill' && !onlyMistakes;
+    const wasFixes = /^Работа над ошибками: /.test(entry.source.title);
+    const { questions, missing } = fresh ? { questions: drillQuestions(entry.source.drillId, entry.source.level, wasFixes ? 10 : entry.total), missing: false } : questionsForEntry(entry, ids);
     if (!questions.length) {
       toast(entry.source.kind === 'custom' ? 'Этот тест удалён — повторить нельзя.' : 'Эти задания больше не найдены.', 'error');
       return;
@@ -93,7 +98,7 @@ export function resultScreen(entryId) {
     if (missing) toast('Часть заданий больше не существует — они пропущены.');
     await startTraining({
       questions: selectQuestions(questions, { count: questions.length, order: onlyMistakes ? 'original' : 'random' }),
-      source: { ...entry.source, title: onlyMistakes ? `Работа над ошибками: ${entry.source.title.replace(/^Работа над ошибками: /, '')}` : entry.source.title },
+      source: fresh ? drillSource(entry.source.drillId, entry.source.level) : { ...entry.source, title: onlyMistakes ? `Работа над ошибками: ${entry.source.title.replace(/^Работа над ошибками: /, '')}` : entry.source.title },
       settings: { mode: onlyMistakes ? 'learning' : entry.mode, showExplanation: true },
     });
   }

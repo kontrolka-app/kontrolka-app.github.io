@@ -739,3 +739,9 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 .match-result__row.is-wrong .match-result__icon, .order-result__row.is-wrong .match-result__icon { color: var(--bad); }
 .order-result__row .order__num { background: var(--primary); }
 .pair-edit .input { flex: 1; min-width: 0; }
+
+/* ===== Тренажёр примеров ===== */
+.drill-card { display: flex; flex-direction: column; gap: 10px; }
+.drill-card__link { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+.drill-card__link:hover .subject-card__name { text-decoration: underline; }
+.drill-sample { margin: 8px 0 0; font-size: 1.15rem; font-weight: 700; overflow-wrap: anywhere; }

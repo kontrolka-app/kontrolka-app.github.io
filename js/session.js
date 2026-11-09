@@ -8,6 +8,7 @@ import { confirmDialog, toast } from './ui.js';
 import { navigate } from './router.js';
 import { MODE_LABELS } from './utils.js';
 import { countEvent } from './analytics.js';
+import { drillQuestionsByIds } from './drills.js';
 
 /** Запускает тренировку. Если есть незавершённая — спрашивает, можно ли её заменить. */
 export async function startTraining({ questions, source, settings }) {
@@ -86,6 +87,7 @@ export function abandonActive() {
 /** Подбирает исходные вопросы для истории: встроенные — по id, пользовательские — из сохранённого теста. */
 export function questionsForEntry(entry, onlyIds) {
   const ids = onlyIds || entry.review.map((r) => r.questionId);
+  if (entry.source.kind === 'drill') return drillQuestionsByIds(ids);
   if (entry.source.kind === 'custom') {
     const test = getData().customTests.find((t) => t.id === entry.source.testId);
     if (!test) return { questions: [], missing: true };

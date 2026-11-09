@@ -10,6 +10,7 @@ import { startTraining } from '../session.js';
 import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection, suggestNext } from '../catalog.js';
 import { plural } from '../utils.js';
 import { vocabLinkCard } from './vocab.js';
+import { drillsLinkCard } from './drills.js';
 
 function logo() {
   return h(
@@ -182,6 +183,7 @@ export function homeScreen() {
       icon('arrow'),
     ),
   );
+  root.appendChild(drillsLinkCard());
 
   // Избранное — только если есть: звёздочка «в избранное» есть на странице темы.
   const favTopics = data.favorites.map((id) => content.topicById.get(id)).filter(Boolean);
@@ -446,6 +448,7 @@ export function topicsScreen(subjectId) {
     pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href(subject.tool || 'subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
     reviewBlock,
     subject.id === 'russian' ? vocabLinkCard() : null,
+    subject.id === 'math' ? drillsLinkCard() : null,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
