@@ -55,12 +55,12 @@ test('проверка данных: ошибки в новых типах на�
   const has = (q, part) => assert.ok(validateQuestion(q).some((e) => e.includes(part)), `${q.id}: ждали «${part}», получили ${JSON.stringify(validateQuestion(q))}`);
   has({ ...MULTI, correctAnswers: ['a', 'x'] }, 'не найден');
   has({ ...MULTI, correctAnswers: ['a', 'b', 'c', 'd'] }, 'хотя бы один неверный');
-  has({ ...MULTI, correctAnswers: [] }, 'непустой список');
+  has({ ...MULTI, correctAnswers: [] }, 'хотя бы один верный');
   has({ ...MULTI, options: MULTI.options.slice(0, 2) }, 'минимум три');
   has({ ...MULTI, options: [...MULTI.options, { id: 'e', text: 'Ель' }] }, 'повторяется текст');
   has({ ...MATCH, pairs: MATCH.pairs.slice(0, 2) }, 'от 3 до 6');
   has({ ...MATCH, pairs: [...MATCH.pairs, { left: 'owl', right: 'Лиса' }] }, 'правом столбце');
-  has({ ...MATCH, pairs: [...MATCH.pairs, { left: 'owl' }] }, 'left и right');
+  has({ ...MATCH, pairs: [...MATCH.pairs, { left: 'owl' }] }, 'обе части');
   has({ ...ORDER, items: ['а', 'б'] }, 'от 3 до 8');
   has({ ...ORDER, items: ['а', 'б', 'А'] }, 'повторяются');
 });
@@ -110,4 +110,30 @@ test('итог сессии считает новые типы', () => {
   assert.equal(r.skipped, 1);
   assert.equal(r.review[1].given, 'cat — собака; dog — кошка; fox — лиса');
   assert.equal(r.review[2].given, 'нет ответа');
+});
+
+test('редактор «Мои тесты»: новые типы создаются, чистятся и проходят проверку', async () => {
+  const { newQuestion, cleanQuestion } = await import('../js/customTests.js');
+  const m = newQuestion('multi-choice');
+  m.question = ' Выбери все чётные числа ';
+  m.options = [{ id: 'a', text: ' 2 ' }, { id: 'b', text: '3' }, { id: 'c', text: '4' }];
+  m.correctAnswers = ['c', 'a'];
+  const mc = cleanQuestion(m);
+  assert.deepEqual(mc.correctAnswers, ['a', 'c']);
+  assert.equal(mc.options[0].text, '2');
+  assert.deepEqual(validateQuestion(mc, { custom: true }), []);
+
+  const p = newQuestion('match');
+  assert.equal(p.pairs.length, 3);
+  assert.ok(validateQuestion(cleanQuestion({ ...p, question: 'Пары' }), { custom: true }).some((e) => e.includes('обе части')), 'пустые пары не проходят');
+  p.question = 'Пары';
+  p.pairs = [{ left: 'a ', right: '1' }, { left: 'b', right: '2' }, { left: 'c', right: ' 3' }];
+  assert.deepEqual(validateQuestion(cleanQuestion(p), { custom: true }), []);
+
+  const o = newQuestion('order');
+  o.question = 'По порядку';
+  o.items = [' один', 'два', 'три '];
+  const oc = cleanQuestion(o);
+  assert.deepEqual(oc.items, ['один', 'два', 'три']);
+  assert.deepEqual(validateQuestion(oc, { custom: true }), []);
 });

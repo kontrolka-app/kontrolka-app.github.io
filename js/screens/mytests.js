@@ -4,6 +4,7 @@ import { href, navigate, setLeaveGuard } from '../router.js';
 import { content, getData, settings, update } from '../state.js';
 import { newTest, newQuestion, changeQuestionType, cleanTest, toShareFile, shareFileName, parseTestFile } from '../customTests.js';
 import { validateCustomTest, LIMITS } from '../validate.js';
+import { MATCH_MIN, MATCH_MAX, ORDER_MIN, ORDER_MAX } from '../tasktypes.js';
 import { selectQuestions } from '../quiz.js';
 import { startTraining } from '../session.js';
 import { setupForm } from '../components.js';
@@ -266,6 +267,104 @@ export function editorScreen(testId) {
           'Другие правильные варианты (через точку с запятой)',
           h('input', { class: 'input', id: id('acc'), value: (q.acceptedAnswers || []).join('; '), placeholder: 'например: тетрадь; тетрадка', oninput: (e) => ((q.acceptedAnswers = e.target.value.split(';').map((s) => s.trim()).filter(Boolean)), markDirty()) }),
         ),
+      );
+    } else if (q.type === 'multi-choice') {
+      answerPart = h(
+        'fieldset',
+        { class: 'field' },
+        h('legend', { class: 'field__label' }, 'Варианты ответа (отметь все правильные)'),
+        q.options.map((o, oi) =>
+          h(
+            'div',
+            { class: 'option-edit' },
+            h('input', {
+              type: 'checkbox',
+              checked: q.correctAnswers.includes(o.id),
+              'aria-label': `Вариант ${oi + 1} правильный`,
+              onchange: (e) => {
+                q.correctAnswers = e.target.checked ? [...q.correctAnswers, o.id] : q.correctAnswers.filter((x) => x !== o.id);
+                markDirty();
+              },
+            }),
+            h('input', { class: 'input', value: o.text, placeholder: `Вариант ${oi + 1}`, 'aria-label': `Текст варианта ${oi + 1}`, oninput: (e) => ((o.text = e.target.value), markDirty()) }),
+            q.options.length > 3
+              ? button('', () => {
+                  q.options.splice(oi, 1);
+                  q.correctAnswers = q.correctAnswers.filter((x) => x !== o.id);
+                  markDirty();
+                  renderList();
+                }, { variant: 'ghost btn--icon', iconName: 'close', ariaLabel: `Удалить вариант ${oi + 1}` })
+              : null,
+          ),
+        ),
+        h('p', { class: 'field__hint' }, 'Правильных может быть несколько, но хотя бы один вариант должен быть неправильным.'),
+        q.options.length < LIMITS.optionsPerQuestion
+          ? button('Добавить вариант', () => {
+              const used = new Set(q.options.map((o) => o.id));
+              let code = 97;
+              while (used.has(String.fromCharCode(code))) code++;
+              q.options.push({ id: String.fromCharCode(code), text: '' });
+              markDirty();
+              renderList();
+            }, { variant: 'ghost', iconName: 'plus' })
+          : null,
+      );
+    } else if (q.type === 'match') {
+      answerPart = h(
+        'fieldset',
+        { class: 'field' },
+        h('legend', { class: 'field__label' }, 'Пары (у ребят правый столбец перемешается)'),
+        q.pairs.map((p, pi) =>
+          h(
+            'div',
+            { class: 'option-edit pair-edit' },
+            h('input', { class: 'input', value: p.left, placeholder: pi === 0 ? 'cat' : `Слева ${pi + 1}`, 'aria-label': `Пара ${pi + 1}, левая часть`, oninput: (e) => ((p.left = e.target.value), markDirty()) }),
+            h('span', { 'aria-hidden': 'true' }, '—'),
+            h('input', { class: 'input', value: p.right, placeholder: pi === 0 ? 'кошка' : `Справа ${pi + 1}`, 'aria-label': `Пара ${pi + 1}, правая часть`, oninput: (e) => ((p.right = e.target.value), markDirty()) }),
+            q.pairs.length > MATCH_MIN
+              ? button('', () => {
+                  q.pairs.splice(pi, 1);
+                  markDirty();
+                  renderList();
+                }, { variant: 'ghost btn--icon', iconName: 'close', ariaLabel: `Удалить пару ${pi + 1}` })
+              : null,
+          ),
+        ),
+        q.pairs.length < MATCH_MAX
+          ? button('Добавить пару', () => {
+              q.pairs.push({ left: '', right: '' });
+              markDirty();
+              renderList();
+            }, { variant: 'ghost', iconName: 'plus' })
+          : null,
+      );
+    } else if (q.type === 'order') {
+      answerPart = h(
+        'fieldset',
+        { class: 'field' },
+        h('legend', { class: 'field__label' }, 'Пункты — пиши в правильном порядке (у ребят они перемешаются)'),
+        q.items.map((t, ti) =>
+          h(
+            'div',
+            { class: 'option-edit' },
+            h('span', { class: 'order__num', 'aria-hidden': 'true' }, String(ti + 1)),
+            h('input', { class: 'input', value: t, placeholder: `Пункт ${ti + 1}`, 'aria-label': `Пункт ${ti + 1}`, oninput: (e) => ((q.items[ti] = e.target.value), markDirty()) }),
+            q.items.length > ORDER_MIN
+              ? button('', () => {
+                  q.items.splice(ti, 1);
+                  markDirty();
+                  renderList();
+                }, { variant: 'ghost btn--icon', iconName: 'close', ariaLabel: `Удалить пункт ${ti + 1}` })
+              : null,
+          ),
+        ),
+        q.items.length < ORDER_MAX
+          ? button('Добавить пункт', () => {
+              q.items.push('');
+              markDirty();
+              renderList();
+            }, { variant: 'ghost', iconName: 'plus' })
+          : null,
       );
     } else {
       const numInput = h('input', { class: 'input', id: id('num'), inputMode: 'decimal', value: String(q.correctAnswer).replace('.', ',') });

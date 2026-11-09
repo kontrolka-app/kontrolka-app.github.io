@@ -105,4 +105,7 @@ export const TYPE_LABELS = {
   text: 'Ввод слова',
   number: 'Ввод числа',
   'true-false': 'Верно или неверно',
+  'multi-choice': 'Выбери все верные',
+  match: 'Соедини пары',
+  order: 'Расставь по порядку',
 };

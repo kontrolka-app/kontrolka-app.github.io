@@ -68,7 +68,7 @@ export function validateTaskType(q, where) {
       }
       const ca = q.correctAnswers;
       if (!Array.isArray(ca) || !ca.length || !ca.every(isStr)) {
-        errors.push(`${where}: correctAnswers — непустой список id верных вариантов`);
+        errors.push(`${where}: отметь хотя бы один верный вариант`);
         break;
       }
       if (new Set(ca).size !== ca.length) errors.push(`${where}: в correctAnswers повторяется вариант`);
@@ -85,7 +85,7 @@ export function validateTaskType(q, where) {
       const rights = new Set();
       for (const p of q.pairs) {
         if (!isObj(p) || !isNonEmptyStr(p.left) || !isNonEmptyStr(p.right)) {
-          errors.push(`${where}: у пары должны быть left и right`);
+          errors.push(`${where}: у каждой пары заполни обе части`);
           continue;
         }
         if (lefts.has(norm(p.left))) errors.push(`${where}: повторяется «${p.left}» в левом столбце`);
@@ -100,7 +100,7 @@ export function validateTaskType(q, where) {
         errors.push(`${where}: для «расставь по порядку» нужно от ${ORDER_MIN} до ${ORDER_MAX} пунктов`);
         break;
       }
-      if (!q.items.every(isNonEmptyStr)) errors.push(`${where}: пункты должны быть непустыми строками`);
+      if (!q.items.every(isNonEmptyStr)) errors.push(`${where}: заполни все пункты`);
       else if (new Set(q.items.map(norm)).size !== q.items.length) errors.push(`${where}: пункты повторяются`);
       break;
     }

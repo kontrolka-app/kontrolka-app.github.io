@@ -356,7 +356,7 @@ details.card > .review-list { margin-top: 12px; }
 .q-edit__head .icon { }
 .q-edit__head .btn--icon:first-child .icon { transform: rotate(90deg); }
 .option-edit { display: flex; align-items: center; gap: 8px; }
-.option-edit input[type='radio'] { width: 24px; height: 24px; flex-shrink: 0; accent-color: var(--ok); }
+.option-edit input[type='radio'], .option-edit input[type='checkbox'] { width: 24px; height: 24px; flex-shrink: 0; accent-color: var(--ok); }
 .editor__bar { position: sticky; bottom: calc(70px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent); padding: 10px 0; justify-content: flex-end; z-index: 5; }
 @media (min-width: 1024px) { .editor__bar { bottom: 0; } }
 .errors:empty { display: none; }
@@ -738,3 +738,4 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 .match-result__row.is-wrong, .order-result__row.is-wrong { border-color: var(--bad); background: var(--bad-bg); }
 .match-result__row.is-wrong .match-result__icon, .order-result__row.is-wrong .match-result__icon { color: var(--bad); }
 .order-result__row .order__num { background: var(--primary); }
+.pair-edit .input { flex: 1; min-width: 0; }

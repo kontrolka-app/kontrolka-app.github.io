@@ -13,6 +13,12 @@ export function newQuestion(type = 'single-choice') {
       return { ...base, correctAnswer: '', acceptedAnswers: [] };
     case 'number':
       return { ...base, correctAnswer: 0, unit: '' };
+    case 'multi-choice':
+      return { ...base, options: [{ id: 'a', text: '' }, { id: 'b', text: '' }, { id: 'c', text: '' }], correctAnswers: ['a'] };
+    case 'match':
+      return { ...base, pairs: [{ left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }] };
+    case 'order':
+      return { ...base, items: ['', '', ''] };
     default:
       return base;
   }
@@ -51,6 +57,16 @@ export function cleanQuestion(q) {
     case 'number':
       out.correctAnswer = q.correctAnswer;
       if (q.unit && q.unit.trim()) out.unit = q.unit.trim();
+      break;
+    case 'multi-choice':
+      out.options = q.options.map((o) => ({ id: o.id, text: (o.text || '').trim() }));
+      out.correctAnswers = q.options.map((o) => o.id).filter((oid) => q.correctAnswers.includes(oid));
+      break;
+    case 'match':
+      out.pairs = q.pairs.map((p) => ({ left: (p.left || '').trim(), right: (p.right || '').trim() }));
+      break;
+    case 'order':
+      out.items = q.items.map((s) => (s || '').trim());
       break;
     default:
       break;
