@@ -8,6 +8,7 @@ import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.j
 import { saveActive, completeActive } from '../session.js';
 import { reportControl } from './report.js';
 import { findErrorsControl } from './finderrors-ui.js';
+import { taskTypeControl } from './tasktypes-ui.js';
 import { companionSay } from './companion-ui.js';
 import { streakEvent, mistakeEvent } from '../companion.js';
 import { formatClock } from '../utils.js';
@@ -47,7 +48,7 @@ export function quizScreen() {
     }
     if (e.key !== 'Enter' || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
     const t = e.target;
-    if (t.closest('dialog, button, a, textarea, select') || (t.tagName === 'INPUT' && t.type !== 'radio')) return;
+    if (t.closest('dialog, button, a, textarea, select') || (t.tagName === 'INPUT' && t.type !== 'radio' && t.type !== 'checkbox')) return;
     e.preventDefault();
     currentForm.requestSubmit();
   });
@@ -244,6 +245,7 @@ function passageBlock(p, openState) {
 /** Поле ответа под тип задания. read() возвращает ответ в формате для checkAnswer. */
 function answerControl(q, given, locked, answerInfo) {
   if (q.type === 'find-errors') return findErrorsControl(q, given, locked, Boolean(answerInfo));
+  if (q.type === 'multi-choice' || q.type === 'match' || q.type === 'order') return taskTypeControl(q, given, locked, Boolean(answerInfo));
   if (q.type === 'compare') {
     // Три крупные кнопки вместо поля ввода: знак не нужно искать на клавиатуре.
     const givenValue = given ?? null;
@@ -345,8 +347,8 @@ function feedbackPanel(q, answer, showExplanation, streak = 0) {
     'div',
     { class: `feedback ${ok ? 'feedback--ok' : 'feedback--bad'}`, role: 'status' },
     h('p', { class: 'feedback__title' }, icon(ok ? 'check' : 'cross'), h('span', {}, ok ? 'Верно!' : 'Неверно'), ok && streak >= 3 ? h('span', { class: 'streak' }, icon('star', { size: 16 }), h('span', {}, `${streak} подряд!`)) : null),
-    // У «Найди ошибки» правильное написание и правила уже показаны в разборе над этой плашкой.
-    ok || q.type === 'find-errors' ? null : h('p', {}, h('strong', {}, 'Правильный ответ: '), correctAnswerText(q)),
+    // У «Найди ошибки» и «Соедини пары» правильный ответ уже показан в разборе над этой плашкой.
+    ok || q.type === 'find-errors' || q.type === 'match' ? null : h('p', {}, h('strong', {}, 'Правильный ответ: '), correctAnswerText(q)),
     fb ? h('p', {}, fb) : null,
     showExplanation && q.explanation ? h('p', { class: 'feedback__explanation' }, h('strong', {}, 'Почему: '), q.explanation) : null,
   );

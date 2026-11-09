@@ -691,3 +691,50 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 .verbs-table .word-say { min-height: 32px; min-width: 32px; padding: 0; }
 .verbs-table tr.is-learned td:last-child { color: var(--ok); font-weight: 800; }
 @media (max-width: 599px) { .verbs-table td:nth-child(3) { font-size: 0.9rem; } }
+
+/* ===== Новые типы заданий: «Выбери все верные», «Соедини пары», «Расставь по порядку» ===== */
+.option__key--box { border-radius: 6px; color: transparent; }
+.option--multi:has(input:checked) .option__key--box, .option--multi.is-chosen .option__key--box { color: var(--primary-text); background: var(--primary); }
+.option--multi.is-correct .option__key--box, .option--multi.is-wrong .option__key--box { color: #fff; }
+.option--multi.is-correct:not(:has(input:checked)) .option__key--box { background: transparent; color: var(--ok); border: 2px dashed var(--ok); }
+
+.match { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.match__col { display: flex; flex-direction: column; gap: 8px; }
+.match__item, .order__item {
+  display: flex; align-items: center; gap: 8px; width: 100%; min-height: 52px; padding: 8px 12px;
+  font: inherit; text-align: left; color: var(--text); background: var(--surface);
+  border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; overflow-wrap: anywhere;
+}
+.match__item:hover, .order__item:hover { border-color: color-mix(in srgb, var(--primary) 60%, var(--border)); }
+.match__item:focus-visible, .order__item:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.match__item.is-picked { border-color: var(--primary); background: var(--surface-2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 30%, transparent); }
+.match__num, .order__num {
+  flex-shrink: 0; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  font-weight: 800; font-size: 0.9rem; color: #fff; background: var(--pair, var(--primary));
+}
+.match__item.is-linked { border-color: var(--pair); background: color-mix(in srgb, var(--pair) 10%, var(--surface)); }
+.c1 { --pair: #2f6fde; } .c2 { --pair: #c23d8e; } .c3 { --pair: #1e8a5f; }
+.c4 { --pair: #b86e00; } .c5 { --pair: #7a52d1; } .c6 { --pair: #0d7f92; }
+
+.order { display: flex; flex-direction: column; gap: 8px; }
+.order__item .order__num { background: transparent; border: 2px dashed var(--border); color: var(--text); }
+.order__item.is-set { border-color: var(--primary); background: var(--surface-2); }
+.order__item.is-set .order__num { background: var(--primary); border-color: var(--primary); color: var(--primary-text); }
+.order__text { flex: 1; min-width: 0; }
+.order__reset { margin-top: 8px; }
+
+.match-result, .order-result { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.match-result__row, .order-result__row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; padding: 10px 12px;
+  border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);
+}
+.match-result__left { font-weight: 700; }
+.match-result__right { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.match-result__fix { font-size: 0.85rem; font-weight: 700; color: var(--ok); }
+.order-result__text { flex: 1; min-width: 0; }
+.match-result__icon { margin-left: auto; display: inline-flex; }
+.match-result__row.is-correct, .order-result__row.is-correct { border-color: var(--ok); background: var(--ok-bg); }
+.match-result__row.is-correct .match-result__icon, .order-result__row.is-correct .match-result__icon { color: var(--ok); }
+.match-result__row.is-wrong, .order-result__row.is-wrong { border-color: var(--bad); background: var(--bad-bg); }
+.match-result__row.is-wrong .match-result__icon, .order-result__row.is-wrong .match-result__icon { color: var(--bad); }
+.order-result__row .order__num { background: var(--primary); }
