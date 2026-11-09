@@ -14,6 +14,8 @@ import { crossedWonder } from '../wonders.js';
 import { companionSay } from './companion-ui.js';
 import { dailyProgress } from '../results.js';
 import { drillQuestions, drillSource } from '../drills.js';
+import { mapLinkCard, diagResultBlock } from './diagnostics.js';
+import { pickDiagnostic } from '../diagnostics.js';
 
 const STATUS_TEXT = { correct: 'Верно', wrong: 'Ошибка', skipped: 'Пропущено' };
 
@@ -90,6 +92,11 @@ export function resultScreen(entryId) {
     // После «Работы над ошибками» — обычный набор из 10 примеров, а не столько, сколько было ошибок.
     const fresh = entry.source.kind === 'drill' && !onlyMistakes;
     const wasFixes = /^Работа над ошибками: /.test(entry.source.title);
+    const diag = entry.source.kind === 'diagnostic';
+    if (diag && !onlyMistakes) {
+      await startTraining({ questions: pickDiagnostic(content.questionsByTopic, entry.source.topicIds || []), source: { ...entry.source }, settings: { mode: 'control', showExplanation: true } });
+      return;
+    }
     const { questions, missing } = fresh ? { questions: drillQuestions(entry.source.drillId, entry.source.level, wasFixes ? 10 : entry.total), missing: false } : questionsForEntry(entry, ids);
     if (!questions.length) {
       toast(entry.source.kind === 'custom' ? 'Этот тест удалён — повторить нельзя.' : 'Эти задания больше не найдены.', 'error');
@@ -98,7 +105,7 @@ export function resultScreen(entryId) {
     if (missing) toast('Часть заданий больше не существует — они пропущены.');
     await startTraining({
       questions: selectQuestions(questions, { count: questions.length, order: onlyMistakes ? 'original' : 'random' }),
-      source: fresh ? drillSource(entry.source.drillId, entry.source.level) : { ...entry.source, title: onlyMistakes ? `Работа над ошибками: ${entry.source.title.replace(/^Работа над ошибками: /, '')}` : entry.source.title },
+      source: fresh ? drillSource(entry.source.drillId, entry.source.level) : { ...entry.source, ...(diag ? { kind: 'exam' } : {}), title: onlyMistakes ? `Работа над ошибками: ${entry.source.title.replace(/^Работа над ошибками: /, '')}` : entry.source.title },
       settings: { mode: onlyMistakes ? 'learning' : entry.mode, showExplanation: true },
     });
   }
@@ -184,6 +191,12 @@ export function resultScreen(entryId) {
     ),
   );
 
+  // Диагностика: сначала карта по проверенным темам, разбор ошибок — ниже.
+  if (entry.source.kind === 'diagnostic') {
+    const block = diagResultBlock(entry);
+    if (block) root.appendChild(block);
+  }
+
   if (mistakes.length) {
     root.appendChild(
       h(
@@ -236,6 +249,7 @@ export function historyScreen() {
       'div',
       { class: 'stack' },
       pageHeader('Прогресс', { back: href('home') }),
+      mapLinkCard(),
       h('div', { class: 'card' }, emptyState({ emoji: '📈', title: 'Пока нет завершённых тренировок', text: 'Здесь будут результаты и то, как они меняются.', action: linkButton(href('subjects'), 'Начать тренировку') })),
     );
   }
@@ -257,6 +271,7 @@ export function historyScreen() {
         { variant: 'ghost', iconName: 'trash' },
       ),
     }),
+    mapLinkCard(),
     weak.length
       ? h(
           'section',

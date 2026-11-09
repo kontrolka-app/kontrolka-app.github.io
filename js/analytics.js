@@ -5,7 +5,7 @@ export const COUNT_URL = 'https://alexys.goatcounter.com/count';
 /** Считаем только на опубликованном сайте: локальные запуски в статистику не попадают. */
 export const SITE_HOST = 'kontrolka-app.github.io';
 
-const ROUTE_NAMES = new Set(['home', 'grade', 'subjects', 'topics', 'topic', 'exam', 'quiz', 'result', 'history', 'favorites', 'settings', 'mytests', 'mytest', 'editor', 'poems', 'poem', 'poem-edit', 'speed', 'english', 'verbs', 'words', 'words-unit', 'words-train', 'etopics', 'etopic', 'etopic-add', 'etopic-edit', 'drills', 'drill']);
+const ROUTE_NAMES = new Set(['home', 'grade', 'subjects', 'topics', 'topic', 'exam', 'quiz', 'result', 'history', 'favorites', 'settings', 'mytests', 'mytest', 'editor', 'poems', 'poem', 'poem-edit', 'speed', 'english', 'verbs', 'words', 'words-unit', 'words-train', 'etopics', 'etopic', 'etopic-add', 'etopic-edit', 'drills', 'drill', 'map', 'diag']);
 const EVENT_NAMES = new Set(['training-finished']);
 
 /** Адрес запроса для экрана; null — такого экрана нет в списке, ничего не отправляем. */

@@ -745,3 +745,20 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 .drill-card__link { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
 .drill-card__link:hover .subject-card__name { text-decoration: underline; }
 .drill-sample { margin: 8px 0 0; font-size: 1.15rem; font-weight: 700; overflow-wrap: anywhere; }
+
+/* ===== Карта знаний ===== */
+.map-summary { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.map-chip { font-size: 0.85rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); white-space: nowrap; }
+.map-chip--know { background: var(--ok-bg); color: var(--ok); }
+.map-chip--review { background: var(--bad-bg); color: var(--bad); }
+.map-chip--unsure { background: var(--skip-bg); color: var(--skip); }
+.map-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.map-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm); border: 2px solid var(--border); border-left-width: 6px; color: inherit; text-decoration: none; background: var(--surface); }
+.map-row:hover { border-color: color-mix(in srgb, var(--primary) 50%, var(--border)); }
+.map-row--know { border-left-color: var(--ok); }
+.map-row--unsure { border-left-color: var(--skip); }
+.map-row--review { border-left-color: var(--bad); }
+.map-row__dot { font-size: 1.1rem; line-height: 1; }
+.map-row__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.map-row__title { font-weight: 700; }
+a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inherit; text-decoration: none; }

@@ -21,6 +21,7 @@ import { englishScreen, wordsScreen, wordsUnitScreen, wordsTrainScreen } from '.
 import { verbsScreen, verbsTrainScreen } from './screens/verbs.js';
 import { vocabScreen, vocabGroupScreen, vocabTrainScreen } from './screens/vocab.js';
 import { drillsScreen, drillScreen } from './screens/drills.js';
+import { mapScreen, diagSetupScreen } from './screens/diagnostics.js';
 import { etopicsScreen, etopicScreen, etopicAddScreen, etopicEditScreen } from './screens/etopics.js';
 
 const ROUTES = {
@@ -56,11 +57,13 @@ const ROUTES = {
   'etopic-edit': ([id]) => etopicEditScreen(id),
   drills: () => drillsScreen(),
   drill: ([id]) => drillScreen(id),
+  map: ([id]) => mapScreen(id),
+  diag: ([id]) => diagSetupScreen(id),
 };
 
 // Пункт меню, который подсвечивается для каждого экрана. Результат — ни один: на него приходят и из тренировки, и из истории.
 // «Я» — это настройки и «Мои тесты» (тесты по-прежнему открываются и с главной).
-const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me', poems: 'subjects', poem: 'subjects', 'poem-edit': 'subjects', speed: 'subjects', english: 'subjects', verbs: 'subjects', words: 'subjects', 'words-unit': 'subjects', 'words-train': 'subjects', vocab: 'subjects', 'vocab-group': 'subjects', 'vocab-train': 'subjects', etopics: 'subjects', etopic: 'subjects', 'etopic-add': 'subjects', 'etopic-edit': 'subjects', drills: 'subjects', drill: 'subjects' };
+const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me', poems: 'subjects', poem: 'subjects', 'poem-edit': 'subjects', speed: 'subjects', english: 'subjects', verbs: 'subjects', words: 'subjects', 'words-unit': 'subjects', 'words-train': 'subjects', vocab: 'subjects', 'vocab-group': 'subjects', 'vocab-train': 'subjects', etopics: 'subjects', etopic: 'subjects', 'etopic-add': 'subjects', 'etopic-edit': 'subjects', drills: 'subjects', drill: 'subjects', map: 'progress', diag: 'progress' };
 
 const NAV = [
   { id: 'home', label: 'Главная', icon: 'home', to: href('home') },

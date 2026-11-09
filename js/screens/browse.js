@@ -11,6 +11,7 @@ import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcom
 import { plural } from '../utils.js';
 import { vocabLinkCard } from './vocab.js';
 import { drillsLinkCard } from './drills.js';
+import { mapLinkCard, quarterCard } from './diagnostics.js';
 
 function logo() {
   return h(
@@ -87,6 +88,10 @@ export function homeScreen() {
       h('div', { class: 'hero__actions' }, main.action, linkButton(grade ? href('exam') : href('grade'), 'Пробная контрольная', { variant: 'secondary', iconName: 'tests' })),
     ),
   );
+
+  // Начало четверти — предложить диагностику (карточку можно закрыть до следующей четверти).
+  const quarter = quarterCard();
+  if (quarter) root.appendChild(quarter);
 
   // Прогресс — только если уже что-то проходили; пустую заглушку не показываем.
   if (history.length) {
@@ -451,6 +456,7 @@ export function topicsScreen(subjectId) {
     subject.id === 'math' ? drillsLinkCard() : null,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
+    mapLinkCard(subject.id),
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('speed') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '⏱️'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Скорость чтения'), h('span', { class: 'small muted' }, 'Засеки время, прочитай текст и ответь на вопросы')), icon('arrow')) : null,
     linksBlock(subject),
