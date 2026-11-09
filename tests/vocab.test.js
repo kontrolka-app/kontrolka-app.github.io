@@ -23,6 +23,13 @@ test('список: 16 групп как в листе учителя, 143 сл�
   assert.equal(list.verified, false);
 });
 
+test('у каждого слова есть запись для диктанта', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const files = new Set(await readdir(new URL(`../${list.audio}/`, import.meta.url)));
+  for (const w of all) assert.ok(files.has(`${w.id}.mp3`), `нет записи ${w.id}`);
+  assert.equal(files.size, all.length, 'лишние записи');
+});
+
 test('проверка списка ловит ошибки', () => {
   const bad = { groups: [{ n: 1, words: [{ id: 'g1-1', w: 'коридор' }, { id: 'g1-1', w: 'к[о]мод', pos: 'x' }, { id: 'x', w: 'car[a]' }] }] };
   const errors = validateVocab(bad);

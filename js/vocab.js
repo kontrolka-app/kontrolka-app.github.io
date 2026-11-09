@@ -2,6 +2,7 @@
 // Список — data/vocab-4.json: groups [{ n, words: [{ id, w, pos? }] }].
 // В w трудные места в квадратных скобках: «к[о]р[и]дор», «а[кк]уратно», «потому[ ]что» (раздельно).
 // pos — часть речи (noun, adj, verb, num, adv); нет поля — слово не попадает в задание «Часть речи».
+// audio — папка с записями слов <id>.mp3 для диктанта (нет — голос браузера).
 
 import { shuffle } from './words.js';
 
@@ -22,6 +23,7 @@ const WORD_RE = /^[А-ЯЁа-яё[\] -]+$/;
 export function validateVocab(list) {
   const errors = [];
   if (!list || !Array.isArray(list.groups)) return ['Нет groups'];
+  if (list.audio !== undefined && !/^[a-z0-9/-]+$/.test(String(list.audio))) errors.push('audio — путь к папке с записями, латиница');
   const ids = new Set();
   list.groups.forEach((g, i) => {
     if (g?.n !== i + 1) errors.push(`Группа ${i + 1}: n должно быть ${i + 1}`);
