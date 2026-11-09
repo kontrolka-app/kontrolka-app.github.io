@@ -3,6 +3,7 @@ import { validateContent, validateQuestion, validateTopic, validatePassage } fro
 import { content } from './state.js';
 import { validatePoemCatalog } from './poem.js';
 import { validateWordList } from './words.js';
+import { validateVocab } from './vocab.js';
 
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-cache' });
@@ -111,4 +112,17 @@ export async function loadWordList() {
     wordList = { units: [], words: [], error: true };
   }
   return wordList;
+}
+
+let vocabList = null;
+/** Словарные слова (русский) по группам. Загружаются при первом заходе; с ошибками в данных — пустой список. */
+export async function loadVocab() {
+  if (vocabList) return vocabList;
+  try {
+    const list = await fetchJson('data/vocab-4.json');
+    vocabList = validateVocab(list).length ? { groups: [], error: true } : list;
+  } catch {
+    vocabList = { groups: [], error: true };
+  }
+  return vocabList;
 }

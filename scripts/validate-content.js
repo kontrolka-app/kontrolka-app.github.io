@@ -6,6 +6,7 @@ import path from 'node:path';
 import { validateContent } from '../js/validate.js';
 import { validatePoemCatalog } from '../js/poem.js';
 import { validateWordList } from '../js/words.js';
+import { validateVocab } from '../js/vocab.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -54,6 +55,13 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const words = JSON.parse(await readFile(path.join(root, 'data', 'english-words-4.json'), 'utf8'));
   console.log(`english-words-4.json: слов ${words.words.length}`, Object.fromEntries(words.books.map((b) => [b.title, words.words.filter((w) => w.book === b.id).length])));
   for (const e of validateWordList(words)) {
+    failed = true;
+    console.log('  ОШИБКА:', e);
+  }
+  // «Словарные слова» (русский) по группам.
+  const vocab = JSON.parse(await readFile(path.join(root, 'data', 'vocab-4.json'), 'utf8'));
+  console.log(`vocab-4.json: групп ${vocab.groups.length}, слов ${vocab.groups.reduce((n, g) => n + g.words.length, 0)}`);
+  for (const e of validateVocab(vocab)) {
     failed = true;
     console.log('  ОШИБКА:', e);
   }

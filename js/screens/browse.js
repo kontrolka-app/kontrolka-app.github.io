@@ -9,6 +9,7 @@ import { overallStats, dailyProgress, lastTopicResults, pendingMistakes, topicSt
 import { startTraining } from '../session.js';
 import { searchTopics, availableGrades, gradeRangesText, ALL_GRADES, needsWelcome, groupBySection, suggestNext } from '../catalog.js';
 import { plural } from '../utils.js';
+import { vocabLinkCard } from './vocab.js';
 
 function logo() {
   return h(
@@ -444,6 +445,7 @@ export function topicsScreen(subjectId) {
     { class: 'stack topics-page subject-themed', style: subjectVars(subject) },
     pageHeader(`${subject.icon || ''} ${subject.name}`, { back: href(subject.tool || 'subjects'), subtitle: `Освоено ${masteredIn(topics)} из ${topics.length} ${plural(topics.length, ['темы', 'тем', 'тем'])}` }),
     reviewBlock,
+    subject.id === 'russian' ? vocabLinkCard() : null,
     h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
     list,
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
@@ -503,6 +505,7 @@ export function topicScreen(topicId, part) {
       actions: favoriteButton(topic.id),
     }),
     topic.description ? h('p', { class: 'lead' }, topic.description) : null,
+    topic.id === 'ru4-vocabulary' ? vocabLinkCard() : null,
     h(
       'dl',
       { class: 'mini-stats' },

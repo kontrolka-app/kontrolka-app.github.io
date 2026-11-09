@@ -4,6 +4,7 @@ import { sanitizeReports } from './reports.js';
 import { defaultPoems, sanitizePoems } from './poem.js';
 import { sanitizeSpeed } from './speed.js';
 import { defaultWords, sanitizeWords } from './words.js';
+import { defaultVocab, sanitizeVocab } from './vocab.js';
 import { emptyStats, sanitizeStats } from './stats.js';
 import { sanitizeBadges } from './achievements.js';
 import { sanitizeCompanion } from './companion.js';
@@ -55,6 +56,7 @@ export function defaultData() {
     poems: defaultPoems(), // «Учим стихи»: свои тексты и отметки
     topics: defaultPoems(), // «Учим топики» (английский): тот же вид — свои тексты и отметки
     words: defaultWords(), // «Слова по юнитам» (английский): результаты по юнитам
+    vocab: defaultVocab(), // «Словарные слова» (русский): результаты по группам
     speed: [], // тренажёр скорости чтения: результаты, новые сначала
     stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
     badges: {}, // значки: id → дата получения
@@ -143,6 +145,7 @@ export function sanitizeData(raw) {
   data.poems = sanitizePoems(raw.poems);
   data.topics = sanitizePoems(raw.topics);
   data.words = sanitizeWords(raw.words);
+  data.vocab = sanitizeVocab(raw.vocab);
   data.speed = sanitizeSpeed(raw.speed);
   // Нет счётчиков (данные до этапа F) — считаем из истории, чтобы ничего не пропало.
   data.stats = sanitizeStats(raw.stats, data.history);
