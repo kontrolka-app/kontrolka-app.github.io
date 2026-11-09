@@ -17,7 +17,7 @@ const MODES = {
 const canSpeak = () => 'speechSynthesis' in window;
 
 /** Цвет предмета «Английский язык» — как у страниц других предметов. */
-function themed(el) {
+export function themed(el) {
   el.classList.add('subject-themed', 'etopics-page');
   for (const [k, v] of Object.entries(subjectVars(content.subjectById.get('english')) || {})) el.style.setProperty(k, v);
   return el;
@@ -44,7 +44,7 @@ function later(build) {
 }
 
 /** Произнести слово голосом браузера: британский голос, если есть, иначе любой английский. Вызывать из нажатия. */
-function speak(text) {
+export function speak(text) {
   if (!canSpeak()) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
@@ -56,7 +56,7 @@ function speak(text) {
 }
 
 /** Кнопка «послушать» рядом со словом (если браузер умеет говорить). */
-function sayButton(text) {
+export function sayButton(text) {
   if (!canSpeak()) return null;
   return h('button', { type: 'button', class: 'btn btn--ghost btn--icon word-say', 'aria-label': `Послушать: ${text}`, onclick: () => speak(text) }, '🔊');
 }
@@ -68,6 +68,7 @@ export function englishScreen() {
       { class: 'stack' },
       pageHeader('🔤 Английский язык', { back: href('subjects'), subtitle: 'English World 3 и Spotlight 4' }),
       linkCard(href('words'), '📒', 'Слова по юнитам', 'Слова из словарей учебников: карточки, перевод, написание'),
+      linkCard(href('verbs'), '🔁', 'Неправильные глаголы', 'go — went, buy — bought: таблица, карточки, тренировка'),
       linkCard(href('topics', 'english'), '🧩', 'Грамматика', 'Правила и задания: юниты English World 3 и модули Spotlight 4'),
       linkCard(href('etopics'), '📸', 'Учим топики', 'Загрузи свой топик и расскажи наизусть'),
     ),

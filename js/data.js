@@ -3,6 +3,7 @@ import { validateContent, validateQuestion, validateTopic, validatePassage } fro
 import { content } from './state.js';
 import { validatePoemCatalog } from './poem.js';
 import { validateWordList } from './words.js';
+import { validateVerbs } from './verbs.js';
 import { validateVocab } from './vocab.js';
 
 async function fetchJson(url) {
@@ -125,4 +126,17 @@ export async function loadVocab() {
     vocabList = { groups: [], error: true };
   }
   return vocabList;
+}
+
+let verbList = null;
+/** Неправильные глаголы (английский). С ошибками в данных — пустой список. */
+export async function loadVerbs() {
+  if (verbList) return verbList;
+  try {
+    const list = await fetchJson('data/english-verbs-4.json');
+    verbList = validateVerbs(list).length ? { verbs: [], error: true } : list;
+  } catch {
+    verbList = { verbs: [], error: true };
+  }
+  return verbList;
 }

@@ -6,6 +6,7 @@ import path from 'node:path';
 import { validateContent } from '../js/validate.js';
 import { validatePoemCatalog } from '../js/poem.js';
 import { validateWordList } from '../js/words.js';
+import { validateVerbs } from '../js/verbs.js';
 import { validateVocab } from '../js/vocab.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -62,6 +63,13 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const vocab = JSON.parse(await readFile(path.join(root, 'data', 'vocab-4.json'), 'utf8'));
   console.log(`vocab-4.json: групп ${vocab.groups.length}, слов ${vocab.groups.reduce((n, g) => n + g.words.length, 0)}`);
   for (const e of validateVocab(vocab)) {
+    failed = true;
+    console.log('  ОШИБКА:', e);
+  }
+  // Неправильные глаголы (английский).
+  const verbs = JSON.parse(await readFile(path.join(root, 'data', 'english-verbs-4.json'), 'utf8'));
+  console.log(`english-verbs-4.json: глаголов ${verbs.verbs.length}`);
+  for (const e of validateVerbs(verbs)) {
     failed = true;
     console.log('  ОШИБКА:', e);
   }

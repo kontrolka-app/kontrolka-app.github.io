@@ -684,3 +684,10 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .vocab-tile.is-wrong { animation: none; } }
 .vocab-placed { margin: 0; padding-left: 1.6em; display: grid; gap: 2px; font-size: 1.1rem; font-weight: 700; }
 .vocab-alpha-msg { color: var(--bad); }
+.verbs-table { width: 100%; border-collapse: collapse; }
+.verbs-table th { text-align: left; font-size: 0.9rem; color: var(--text-muted); padding: 6px 4px; border-bottom: 1px solid var(--border); }
+.verbs-table td { padding: 4px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.verbs-table td:nth-child(2) { white-space: nowrap; }
+.verbs-table .word-say { min-height: 32px; min-width: 32px; padding: 0; }
+.verbs-table tr.is-learned td:last-child { color: var(--ok); font-weight: 800; }
+@media (max-width: 599px) { .verbs-table td:nth-child(3) { font-size: 0.9rem; } }
