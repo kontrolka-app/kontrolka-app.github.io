@@ -1,5 +1,6 @@
 // Подсчёт результатов, разбор ошибок и статистика истории. Без DOM.
 import { givenFindErrorsText, correctFindErrorsText } from './finderrors.js';
+import { givenTaskText, correctTaskText } from './tasktypes.js';
 
 /** Тема освоена, если в последней попытке не меньше стольких процентов. */
 export const MASTERED_PERCENT = 80;
@@ -18,6 +19,10 @@ export function givenAnswerText(question, given) {
   switch (question.type) {
     case 'find-errors':
       return givenFindErrorsText(question, given);
+    case 'multi-choice':
+    case 'match':
+    case 'order':
+      return givenTaskText(question, given);
     case 'single-choice': {
       const opt = question.options.find((o) => o.id === given);
       return opt ? opt.text : String(given);
@@ -36,6 +41,10 @@ export function correctAnswerText(question) {
   switch (question.type) {
     case 'find-errors':
       return correctFindErrorsText(question);
+    case 'multi-choice':
+    case 'match':
+    case 'order':
+      return correctTaskText(question);
     case 'single-choice': {
       const opt = question.options.find((o) => o.id === question.correctAnswer);
       return opt ? opt.text : String(question.correctAnswer);

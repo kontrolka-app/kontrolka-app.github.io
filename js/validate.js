@@ -2,9 +2,10 @@
 // Модуль без обращений к DOM — используется и в браузере, и в тестах Node.
 
 import { validateFindErrors } from './finderrors.js';
+import { validateTaskType } from './tasktypes.js';
 
 export const DIFFICULTIES = ['easy', 'medium', 'hard'];
-export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare', 'digits', 'find-errors'];
+export const QUESTION_TYPES = ['single-choice', 'text', 'number', 'true-false', 'compare', 'digits', 'find-errors', 'multi-choice', 'match', 'order'];
 /** Знаки для заданий «поставь знак сравнения». */
 export const COMPARE_SIGNS = ['<', '=', '>'];
 export const MIN_GRADE = 1;
@@ -86,6 +87,11 @@ export function validateQuestion(q, ctx = {}) {
       break;
     case 'find-errors':
       errors.push(...validateFindErrors(q, where));
+      break;
+    case 'multi-choice':
+    case 'match':
+    case 'order':
+      errors.push(...validateTaskType(q, where));
       break;
     case 'compare':
       if (!COMPARE_SIGNS.includes(q.correctAnswer)) errors.push(`${where}: для сравнения правильный ответ — «<», «=» или «>»`);
