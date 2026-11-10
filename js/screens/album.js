@@ -16,14 +16,13 @@ export function stickerArt(s, { big = false } = {}) {
   return h('span', { class: `${cls} sticker-art--temp`, style: { background: page.color }, 'aria-hidden': 'true' }, h('span', { class: 'sticker-art__emoji' }, page.emoji), h('span', { class: 'sticker-art__n' }, String(s.n)));
 }
 
-/** Наклейка крупно: картинка, название, надпись и когда получена. */
+/** Наклейка крупно: картинка, название и когда получена. */
 function showSticker(s, at) {
   const dialog = h(
     'dialog',
     { class: 'dialog sticker-dialog', 'aria-labelledby': 'sticker-title' },
     stickerArt(s, { big: true }),
     h('h2', { class: 'dialog__title', id: 'sticker-title' }, stickerName(s)),
-    s.text ? h('p', { class: 'sticker-dialog__text' }, s.text) : null,
     h('p', { class: 'small muted' }, `${PAGE_BY_ID.get(s.page).title} · получена ${formatDate(at)}`),
     h('div', { class: 'dialog__actions' }, h('button', { class: 'btn btn--primary', type: 'button', onclick: () => dialog.close() }, 'Закрыть')),
   );

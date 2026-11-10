@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { PAGES, PAGE_SIZE, STICKERS, STARTER_MAX, defaultStickers, sanitizeStickers, awardForEntry, starterSet, stickerTopic, markSeen, stickersOfEntry, ownedCount, albumComplete } from '../js/stickers.js';
 import { sanitizeData, defaultData } from '../js/storage.js';
 import { seededRng } from './helpers.js';
+import { existsSync, statSync } from 'node:fs';
 
 const DAY = 86400000;
 const T0 = Date.parse('2026-11-10T12:00:00');
@@ -24,6 +25,17 @@ test('в альбоме 4 страницы по 12 наклеек, id не по�
   assert.equal(STICKERS.length, PAGES.length * PAGE_SIZE);
   assert.equal(new Set(STICKERS.map((s) => s.id)).size, STICKERS.length);
   for (const p of PAGES) assert.equal(STICKERS.filter((s) => s.page === p.id).length, PAGE_SIZE);
+});
+
+test('у каждой наклейки есть название и картинка не тяжелее 40 КБ', () => {
+  assert.equal(new Set(STICKERS.map((s) => s.title)).size, STICKERS.length, 'названия не повторяются');
+  for (const s of STICKERS) {
+    assert.ok(s.title.trim(), `${s.id}: нет названия`);
+    assert.equal(s.img, true, `${s.id}: нет картинки`);
+    const file = new URL(`../assets/stickers/${s.id}.webp`, import.meta.url);
+    assert.ok(existsSync(file), `${s.id}: нет файла картинки`);
+    assert.ok(statSync(file).size <= 40 * 1024, `${s.id}: картинка тяжелее 40 КБ`);
+  }
 });
 
 test('цель дня выполнена — одна наклейка, второй раз за тот же день не дают', () => {

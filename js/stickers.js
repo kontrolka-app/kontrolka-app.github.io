@@ -14,16 +14,65 @@ export const PAGES = [
 ];
 
 /**
- * Названия и подписи наклеек: id → { title, text? }. text — надпись на наклейках страницы «с надписями»
- * (её пишет приложение, а не картинка). Заполняется после согласования списка (docs/stickers-list.md).
- * img: true — картинка assets/stickers/<id>.webp готова.
+ * Названия наклеек: id → { title, img }. Список согласован 2026-11-10 (docs/stickers-list.md); менять только с согласования.
+ * На странице «с надписями» название — это сама надпись: её пишет приложение, на картинке текста нет.
+ * img: true — картинка assets/stickers/<id>.webp готова (384×384, сгенерированы в ChatGPT).
  */
-export const STICKER_INFO = {};
+export const STICKER_INFO = {
+  'animals-01': { title: 'Белый медведь', img: true },
+  'animals-02': { title: 'Морж', img: true },
+  'animals-03': { title: 'Тюлень', img: true },
+  'animals-04': { title: 'Северный олень', img: true },
+  'animals-05': { title: 'Песец', img: true },
+  'animals-06': { title: 'Лемминг', img: true },
+  'animals-07': { title: 'Бурый медведь', img: true },
+  'animals-08': { title: 'Лось', img: true },
+  'animals-09': { title: 'Рысь', img: true },
+  'animals-10': { title: 'Белка', img: true },
+  'animals-11': { title: 'Суслик', img: true },
+  'animals-12': { title: 'Тушканчик', img: true },
+  'space-01': { title: 'Ракета', img: true },
+  'space-02': { title: 'Солнце', img: true },
+  'space-03': { title: 'Земля', img: true },
+  'space-04': { title: 'Луна', img: true },
+  'space-05': { title: 'Марс', img: true },
+  'space-06': { title: 'Юпитер', img: true },
+  'space-07': { title: 'Сатурн', img: true },
+  'space-08': { title: 'Комета', img: true },
+  'space-09': { title: 'Спутник', img: true },
+  'space-10': { title: 'Космонавт', img: true },
+  'space-11': { title: 'Телескоп', img: true },
+  'space-12': { title: 'Луноход', img: true },
+  'dino-01': { title: 'Тираннозавр', img: true },
+  'dino-02': { title: 'Трицератопс', img: true },
+  'dino-03': { title: 'Стегозавр', img: true },
+  'dino-04': { title: 'Диплодок', img: true },
+  'dino-05': { title: 'Анкилозавр', img: true },
+  'dino-06': { title: 'Велоцираптор', img: true },
+  'dino-07': { title: 'Брахиозавр', img: true },
+  'dino-08': { title: 'Спинозавр', img: true },
+  'dino-09': { title: 'Птеранодон', img: true },
+  'dino-10': { title: 'Плезиозавр', img: true },
+  'dino-11': { title: 'Пахицефалозавр', img: true },
+  'dino-12': { title: 'Малыш из яйца', img: true },
+  'motto-01': { title: 'У тебя получится!', img: true },
+  'motto-02': { title: 'Ошибка — это шаг вперёд', img: true },
+  'motto-03': { title: 'Шаг за шагом', img: true },
+  'motto-04': { title: 'Сегодня лучше, чем вчера', img: true },
+  'motto-05': { title: 'Думай, пробуй, проверяй', img: true },
+  'motto-06': { title: 'Не сдавайся!', img: true },
+  'motto-07': { title: 'Знания — это сила', img: true },
+  'motto-08': { title: 'Молодец, что стараешься!', img: true },
+  'motto-09': { title: 'Трудно — значит, растёшь', img: true },
+  'motto-10': { title: 'Спроси — и узнаешь', img: true },
+  'motto-11': { title: 'Каждый день понемногу', img: true },
+  'motto-12': { title: 'Ты можешь больше, чем думаешь', img: true },
+};
 
 export const STICKERS = PAGES.flatMap((p) =>
   Array.from({ length: PAGE_SIZE }, (_, i) => {
     const id = `${p.id}-${String(i + 1).padStart(2, '0')}`;
-    return { id, page: p.id, n: i + 1, title: '', text: '', img: false, ...STICKER_INFO[id] };
+    return { id, page: p.id, n: i + 1, title: '', img: false, ...STICKER_INFO[id] };
   }),
 );
 export const STICKER_IDS = new Set(STICKERS.map((s) => s.id));

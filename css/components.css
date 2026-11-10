@@ -792,7 +792,6 @@ a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inh
 .sticker-art--big .sticker-art__emoji { font-size: 5rem; }
 .sticker-art__n { position: absolute; right: 6%; bottom: 6%; min-width: 1.6em; padding: 0 4px; border-radius: 999px; background: #fff; color: #1b1f3b; font-size: 0.8rem; font-weight: 800; text-align: center; }
 .sticker-dialog { text-align: center; }
-.sticker-dialog__text { font-size: 1.2rem; font-weight: 800; }
 .sticker-dialog .dialog__actions { justify-content: center; }
 .sticker-row { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
 .sticker-row__item { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 104px; text-align: center; }
