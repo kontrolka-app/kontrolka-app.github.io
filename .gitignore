@@ -6,3 +6,5 @@ uchebniki/
 учебники/
 *.pdf
 *.djvu
+# Снимки экранов от npm run check-site
+.check-site/
