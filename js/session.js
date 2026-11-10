@@ -9,6 +9,7 @@ import { navigate } from './router.js';
 import { MODE_LABELS } from './utils.js';
 import { countEvent } from './analytics.js';
 import { drillQuestionsByIds } from './drills.js';
+import { awardForEntry } from './stickers.js';
 
 /** Запускает тренировку. Если есть незавершённая — спрашивает, можно ли её заменить. */
 export async function startTraining({ questions, source, settings }) {
@@ -64,6 +65,7 @@ export function completeActive(session) {
       const cat = catalogInfo(gradeTopics(d));
       const ids = [...badgesForEntry(entry, prevTopicLast, cat), ...badgesForTotals(d.stats, d.customTests, cat)];
       d.badges = award(d.badges, ids, entry.finishedAt).badges;
+      d.stickers = awardForEntry(d.stickers, { entry, history: d.history, goal: d.settings.dailyGoal }).state;
     }
     return d;
   });

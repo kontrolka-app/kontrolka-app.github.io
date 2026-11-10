@@ -9,6 +9,7 @@ import { defaultVocab, sanitizeVocab } from './vocab.js';
 import { emptyStats, sanitizeStats } from './stats.js';
 import { sanitizeBadges } from './achievements.js';
 import { sanitizeCompanion } from './companion.js';
+import { defaultStickers, sanitizeStickers } from './stickers.js';
 
 export const STORAGE_KEY = 'kontrolka.data';
 export const BACKUP_KEY = 'kontrolka.data.corrupt-backup';
@@ -64,6 +65,7 @@ export function defaultData() {
     stats: emptyStats(), // счётчики за всё время — не обрезаются вместе с историей
     badges: {}, // значки: id → дата получения
     companion: { lastDay: '', lastPhrase: '' }, // когда компаньон здоровался и что сказал последним
+    stickers: defaultStickers(), // альбом наклеек: какие открыты и за что уже выданы
   };
 }
 
@@ -156,6 +158,7 @@ export function sanitizeData(raw) {
   data.stats = sanitizeStats(raw.stats, data.history);
   data.badges = sanitizeBadges(raw.badges);
   data.companion = sanitizeCompanion(raw.companion);
+  data.stickers = sanitizeStickers(raw.stickers);
   return { data, dropped };
 }
 

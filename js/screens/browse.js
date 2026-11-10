@@ -1,5 +1,6 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
 import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar, nameFieldDetails } from '../ui.js';
+import { albumLink } from './album.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarSvg } from '../components.js';
@@ -107,6 +108,8 @@ export function homeScreen() {
           day.streak >= 2 ? h('span', { class: 'streak-badge' }, icon('star', { size: 16 }), h('span', {}, `${day.streak} ${plural(day.streak, ['день', 'дня', 'дней'])} подряд`)) : null,
         ),
         progressBar(day.today, day.goal, `Сегодня отвечено ${day.today} из ${day.goal}`),
+        // Альбом наклеек: за цель дня дают наклейку — здесь видно, сколько уже собрано.
+        albumLink(),
       ),
     );
     const stats = overallStats(history);

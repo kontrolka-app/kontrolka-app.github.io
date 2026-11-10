@@ -1,5 +1,7 @@
 // Экран результата и история тренировок.
 import { h, icon, button, linkButton, pageHeader, emptyState, copyText, toast, confirmDialog } from '../ui.js';
+import { stickersOfEntry } from '../stickers.js';
+import { stickerRow } from './album.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, topicsFor } from '../state.js';
 import { verdict, deltaFromPrevious, weakTopics, shareText, percentOf, lastTopicResults, topicStatus, REVIEW_PERCENT, MASTERED_PERCENT } from '../results.js';
@@ -80,6 +82,9 @@ export function resultScreen(entryId) {
   // Значки, полученные именно в этой тренировке (дата получения = время её окончания).
   const newBadges = Object.entries(data.badges).filter(([, at]) => at === entry.finishedAt).map(([id]) => id);
 
+  // Наклейки за эту тренировку — так же, по дате.
+  const newStickers = stickersOfEntry(data.stickers, entry.finishedAt);
+
   // Следующая тема того же предмета — для обычной тренировки по одной теме.
   const topic = entry.source.kind === 'topic' && entry.source.topicIds?.length === 1 ? content.topicById.get(entry.source.topicIds[0]) : null;
   const last = lastTopicResults(data.history);
@@ -155,6 +160,15 @@ export function resultScreen(entryId) {
       : null,
     newBadges.length
       ? h('section', { class: 'card new-badges' }, h('h2', { class: 'card__title' }, newBadges.length > 1 ? '🎉 Новые значки!' : '🎉 Новый значок!'), badgeGrid(data.badges, { only: newBadges }), h('a', { href: href('settings') + '', class: 'small' }, 'Все значки — в разделе «Я»'))
+      : null,
+    newStickers.length
+      ? h(
+          'section',
+          { class: 'card new-stickers' },
+          h('h2', { class: 'card__title' }, newStickers.length > 1 ? '🎉 Новые наклейки!' : '🎉 Новая наклейка!'),
+          stickerRow(newStickers),
+          h('a', { href: href('album', newStickers[0].page), class: 'small' }, 'Открыть альбом'),
+        )
       : null,
     h(
       'dl',

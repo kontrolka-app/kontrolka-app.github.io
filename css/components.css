@@ -762,3 +762,49 @@ button.word-option:disabled { cursor: default; opacity: 1; }
 .map-row__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .map-row__title { font-weight: 700; }
 a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inherit; text-decoration: none; }
+
+/* ---------- Альбом наклеек ---------- */
+.album-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; min-height: 56px; border-radius: var(--radius-sm); background: var(--surface-soft); color: var(--text); text-decoration: none; }
+.album-link:hover { background: var(--surface-2); }
+.album-link__emoji { font-size: 1.8rem; line-height: 1; }
+.album-link__text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.album-new { align-self: center; padding: 2px 10px; border-radius: 999px; background: var(--orange); color: #fff; font-size: 0.8rem; font-weight: 800; white-space: nowrap; }
+.album-how, .album-done { margin: 0; }
+.album-done { background: var(--ok-bg); font-weight: 800; }
+.album-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.album-tab { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: 10px 6px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; }
+.album-tab[aria-current='page'] { border-color: var(--primary); background: var(--surface-2); }
+.album-tab__emoji { font-size: 1.6rem; line-height: 1.1; }
+.album-tab__title { font-weight: 800; overflow-wrap: anywhere; }
+.album-tab .album-new { position: absolute; top: -8px; right: -4px; }
+.album-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.album-slot { position: relative; min-width: 0; }
+.album-slot--empty { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: var(--radius-sm); border: 2px dashed var(--border); background: var(--surface-soft); }
+.album-slot__n { font-size: 1.6rem; font-weight: 800; color: var(--text-muted); opacity: 0.55; }
+.album-sticker { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; padding: 6px 2px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--text); font: inherit; cursor: pointer; }
+.album-sticker:hover .sticker-art { transform: rotate(-4deg) scale(1.04); }
+.album-sticker__title { font-size: 0.85rem; font-weight: 700; text-align: center; overflow-wrap: anywhere; }
+.album-sticker .album-new { position: absolute; top: 0; right: 0; }
+.sticker-art { display: block; width: 100%; max-width: 132px; height: auto; aspect-ratio: 1; object-fit: contain; transition: transform 0.15s ease-out; filter: drop-shadow(0 2px 3px rgba(24, 32, 53, 0.25)); }
+.sticker-art--big { max-width: 240px; margin: 0 auto; }
+.sticker-art--temp { position: relative; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 5px solid #fff; }
+.sticker-art__emoji { font-size: 2.2rem; line-height: 1; }
+.sticker-art--big .sticker-art__emoji { font-size: 5rem; }
+.sticker-art__n { position: absolute; right: 6%; bottom: 6%; min-width: 1.6em; padding: 0 4px; border-radius: 999px; background: #fff; color: #1b1f3b; font-size: 0.8rem; font-weight: 800; text-align: center; }
+.sticker-dialog { text-align: center; }
+.sticker-dialog__text { font-size: 1.2rem; font-weight: 800; }
+.sticker-dialog .dialog__actions { justify-content: center; }
+.sticker-row { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.sticker-row__item { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 104px; text-align: center; }
+.new-stickers .sticker-art { animation: celebrate 0.9s ease-out 1; }
+@media (min-width: 600px) {
+  .album-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .album-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .album-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker-art { transition: none; }
+  .new-stickers .sticker-art { animation: none; }
+}

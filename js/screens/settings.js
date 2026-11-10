@@ -10,6 +10,7 @@ import { companionHide } from './companion-ui.js';
 import { badgeGrid, avatarSvg, unlockHint, unlockShort } from '../components.js';
 import { AVATARS, ACCESSORIES, resolveAvatar, resolveCompanion, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
+import { albumLink } from './album.js';
 
 export const APP_VERSION = '1.0.0';
 
@@ -93,6 +94,7 @@ function achievementsBlock(data) {
       const w = pickWonder(st, Object.keys(data.poems.learned).length);
       return w ? h('p', { class: 'wonder' }, '✨ ', w.text) : null;
     })(),
+    albumLink(),
     h('h3', {}, `Значки: ${Object.keys(data.badges).length} из ${BADGES.length}`),
     badgeGrid(data.badges),
     h(
