@@ -863,3 +863,5 @@ a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inh
 .btn .art-icon--solo { width: 1.4em; height: 1.4em; }
 .empty__emoji .art-icon--solo, .sticker-art__emoji .art-icon--solo { margin-inline: auto; }
 .badge-tile__emoji .art-icon--solo { margin-inline: auto; width: 1.5em; height: 1.5em; }
+.art-icon--tail { margin-right: 0; margin-left: 0.3em; }
+.map-row__dot .art-icon--solo { width: 1.3em; height: 1.3em; }

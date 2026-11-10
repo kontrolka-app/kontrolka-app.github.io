@@ -66,20 +66,27 @@ const EMOJI_ART = {
   '🔡': 'alphabet', '📗': 'dictionary', '📔': 'album', '📄': 'document', '📭': 'mailbox', '🧭': 'compass', '🔍': 'magnifier', '⭐': 'star', '🎉': 'party',
   '📈': 'chart', '👣': 'steps', '📅': 'week', '🗓': 'month', '💯': 'hundred', '🚀': 'rocket', '👑': 'crown', '🔧': 'wrench', '🧠': 'brain',
   '💡': 'bulb', '🔊': 'speaker', '🦊': 'fox', '🦕': 'dino', '💬': 'bubble', '🔒': 'lock', '✨': 'sparkle', '📃': 'testpaper', '⚠': 'warning',
+  '🟢': 'know', '🟡': 'unsure', '🔴': 'review', '⚪': 'none', '🔕': 'belloff', '🤪': 'silly',
 };
 const EMOJI_LEAD = new RegExp(`^(${Object.keys(EMOJI_ART).sort((a, b) => b.length - a.length).join('|')})\\s*`, 'u');
+const EMOJI_TAIL = new RegExp(`\\s*(${Object.keys(EMOJI_ART).sort((a, b) => b.length - a.length).join('|')})$`, 'u');
 const PLAIN_TEXT_TAGS = new Set(['OPTION', 'TEXTAREA', 'TITLE', 'INPUT', 'CODE']);
 
 function appendText(el, text) {
   const clean = text.replace(/️/g, ''); // вариационный селектор эмодзи мешает сравнению
-  const m = PLAIN_TEXT_TAGS.has(el.tagName) ? null : EMOJI_LEAD.exec(clean);
-  if (!m) {
+  const plain = PLAIN_TEXT_TAGS.has(el.tagName);
+  const lead = plain ? null : EMOJI_LEAD.exec(clean);
+  const body = lead ? clean.slice(lead[0].length) : clean;
+  const tail = plain || !body ? null : EMOJI_TAIL.exec(body);
+  if (!lead && !tail) {
     el.appendChild(document.createTextNode(text));
     return;
   }
-  const rest = clean.slice(m[0].length);
-  el.appendChild(h('img', { class: rest ? 'art-icon art-icon--inline' : 'art-icon art-icon--solo', src: `assets/icons/${EMOJI_ART[m[1]]}.webp`, alt: '', width: 48, height: 48, decoding: 'async' }));
-  if (rest) el.appendChild(document.createTextNode(rest));
+  const middle = tail ? body.slice(0, tail.index) : body;
+  const art = (emoji, cls) => h('img', { class: `art-icon ${cls}`, src: `assets/icons/${EMOJI_ART[emoji]}.webp`, alt: '', width: 48, height: 48, decoding: 'async' });
+  if (lead) el.appendChild(art(lead[1], middle || tail ? 'art-icon--inline' : 'art-icon--solo'));
+  if (middle) el.appendChild(document.createTextNode(middle));
+  if (tail) el.appendChild(art(tail[1], 'art-icon--inline art-icon--tail'));
 }
 
 /** SVG-иконки (только константы из кода, не пользовательские данные). */
@@ -151,7 +158,7 @@ export function toast(message, kind = 'info') {
   if (!region) return;
   region.textContent = '';
   region.className = `toast toast--${kind} is-visible`;
-  region.appendChild(document.createTextNode(message));
+  appendText(region, String(message));
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => region.classList.remove('is-visible'), kind === 'error' ? 6000 : 3000);
 }
