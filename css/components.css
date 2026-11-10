@@ -857,3 +857,8 @@ a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inh
 /* ---------- Нарисованные иконки разделов (assets/icons) ---------- */
 .art-icon { display: block; width: 46px; height: 46px; object-fit: contain; }
 .card__title--icon .art-icon { width: 34px; height: 34px; flex-shrink: 0; }
+.art-icon--inline { display: inline-block; width: 1.3em; height: 1.3em; vertical-align: -0.28em; margin-right: 0.3em; }
+.art-icon--solo { width: 1.6em; height: 1.6em; }
+.btn .art-icon--solo { width: 1.4em; height: 1.4em; }
+.empty__emoji .art-icon--solo, .sticker-art__emoji .art-icon--solo { margin-inline: auto; }
+.badge-tile__emoji .art-icon--solo { margin-inline: auto; width: 1.5em; height: 1.5em; }

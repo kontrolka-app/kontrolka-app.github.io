@@ -44,7 +44,7 @@ export function albumLink() {
   return h(
     'a',
     { class: 'album-link', href: href('album') },
-    h('span', { class: 'album-link__emoji', 'aria-hidden': 'true' }, '📒'),
+    h('span', { class: 'album-link__emoji', 'aria-hidden': 'true' }, '📔'),
     h('span', { class: 'album-link__text' }, h('strong', {}, 'Альбом наклеек'), h('span', { class: 'small muted' }, `Собрано ${ownedCount(state)} из ${STICKERS.length}`)),
     state.fresh.length ? h('span', { class: 'album-new' }, `новых: ${state.fresh.length}`) : null,
   );

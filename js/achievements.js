@@ -17,7 +17,7 @@ export const BADGES = [
   { id: 'expert', emoji: '🧠', title: 'Знаток раздела', how: 'Освой все темы одного раздела (в нём хотя бы две темы).' },
   { id: 'traveler', emoji: '🧭', title: 'Путешественник', how: 'Позанимайся по всем предметам.' },
   { id: 'olympiad', emoji: '🏅', title: 'Олимпиадник', how: 'Реши верно олимпиадную задачу.' },
-  { id: 'vpr', emoji: '📝', title: 'Готов к ВПР', how: 'Пройди тренировку по ВПР от 10 вопросов.' },
+  { id: 'vpr', emoji: '📃', title: 'Готов к ВПР', how: 'Пройди тренировку по ВПР от 10 вопросов.' },
   { id: 'teacher', emoji: '✏️', title: 'Учитель', how: 'Составь свой тест для класса.' },
 ];
 export const BADGE_IDS = new Set(BADGES.map((b) => b.id));

@@ -18,7 +18,7 @@ export const DRILLS = [
   { id: 'zeros', title: 'Умножение и деление на числа с нулями', ruleTopicId: 'm4-zeros', icon: '0️⃣', sample: '320 × 20' },
   { id: 'mul2', title: 'Умножение на двузначное и трёхзначное число', ruleTopicId: 'm4-mul-div-two', icon: '🧮', sample: '243 × 36' },
   { id: 'div2', title: 'Деление на двузначное и трёхзначное число', ruleTopicId: 'm4-mul-div-two', icon: '➗', sample: '3 096 : 43' },
-  { id: 'order', title: 'Порядок действий', ruleTopicId: 'm4-repeat-order', icon: '🔢', sample: '1000 − (325 + 175) : 5 × 8' },
+  { id: 'order', title: 'Порядок действий', ruleTopicId: 'm4-repeat-order', icon: '🔣', sample: '1000 − (325 + 175) : 5 × 8' },
   { id: 'eq', title: 'Уравнения', ruleTopicId: 'm4-equations-mul-div', icon: '❓', sample: 'x × 7 = 3 500' },
   { id: 'units', title: 'Перевод величин', ruleTopicId: 'm4-length-area', icon: '📏', sample: '3 км 250 м = … м' },
 ];

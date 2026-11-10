@@ -50,8 +50,36 @@ function appendChildren(el, children) {
     if (c === null || c === undefined || c === false) continue;
     if (Array.isArray(c)) appendChildren(el, c);
     else if (c instanceof Node) el.appendChild(c);
-    else el.appendChild(document.createTextNode(String(c)));
+    else appendText(el, String(c));
   }
+}
+
+/**
+ * Эмодзи в начале строки → нарисованная иконка (assets/icons/<имя>.webp).
+ * Так значки выглядят одинаково на всех устройствах; эмодзи в коде остаётся запасным текстом.
+ */
+const EMOJI_ART = {
+  '📝': 'russian', '🔢': 'math', '🌍': 'world', '📚': 'reading', '🔤': 'english', '🎯': 'vpr', '🏅': 'olymp', '📜': 'poems', '🧮': 'drills',
+  '🗺': 'map', '⏱': 'speed', '📖': 'rule', '📘': 'rule', '📋': 'list',
+  '➕': 'plus', '✖': 'times', '0⃣': 'zeros', '➗': 'divide', '🔣': 'brackets', '❓': 'equation', '📏': 'ruler', '🏆': 'trophy', '💪': 'muscle',
+  '📒': 'words', '🔁': 'verbs', '🧩': 'puzzle', '📸': 'camera', '📷': 'camera', '🃏': 'cards', '👆': 'tap', '✍': 'pencil', '✏': 'pencil', '🎧': 'headphones', '🏷': 'tag',
+  '🔡': 'alphabet', '📗': 'dictionary', '📔': 'album', '📄': 'document', '📭': 'mailbox', '🧭': 'compass', '🔍': 'magnifier', '⭐': 'star', '🎉': 'party',
+  '📈': 'chart', '👣': 'steps', '📅': 'week', '🗓': 'month', '💯': 'hundred', '🚀': 'rocket', '👑': 'crown', '🔧': 'wrench', '🧠': 'brain',
+  '💡': 'bulb', '🔊': 'speaker', '🦊': 'fox', '🦕': 'dino', '💬': 'bubble', '🔒': 'lock', '✨': 'sparkle', '📃': 'testpaper', '⚠': 'warning',
+};
+const EMOJI_LEAD = new RegExp(`^(${Object.keys(EMOJI_ART).sort((a, b) => b.length - a.length).join('|')})\\s*`, 'u');
+const PLAIN_TEXT_TAGS = new Set(['OPTION', 'TEXTAREA', 'TITLE', 'INPUT', 'CODE']);
+
+function appendText(el, text) {
+  const clean = text.replace(/️/g, ''); // вариационный селектор эмодзи мешает сравнению
+  const m = PLAIN_TEXT_TAGS.has(el.tagName) ? null : EMOJI_LEAD.exec(clean);
+  if (!m) {
+    el.appendChild(document.createTextNode(text));
+    return;
+  }
+  const rest = clean.slice(m[0].length);
+  el.appendChild(h('img', { class: rest ? 'art-icon art-icon--inline' : 'art-icon art-icon--solo', src: `assets/icons/${EMOJI_ART[m[1]]}.webp`, alt: '', width: 48, height: 48, decoding: 'async' }));
+  if (rest) el.appendChild(document.createTextNode(rest));
 }
 
 /** SVG-иконки (только константы из кода, не пользовательские данные). */
