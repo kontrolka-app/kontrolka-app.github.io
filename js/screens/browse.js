@@ -1,5 +1,5 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
-import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar, nameFieldDetails } from '../ui.js';
+import { h, icon, artIcon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar, nameFieldDetails } from '../ui.js';
 import { albumLink } from './album.js';
 import { pathView } from './path-ui.js';
 import { TOPIC_VIEWS } from '../path.js';
@@ -163,8 +163,8 @@ export function homeScreen() {
 
     // ВПР — сразу под предметами, олимпиада — скромнее.
     const special = [
-      { section: 'ВПР и МЦКО', emoji: '🎯', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.', cls: 'card card--accent stack' },
-      { section: 'Олимпиада', emoji: '🏅', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.', cls: 'card stack' },
+      { section: 'ВПР и МЦКО', art: 'vpr', emoji: '🎯', title: 'Подготовка к ВПР и МЦКО', text: 'Задания в формате проверочных работ 4 класса.', cls: 'card card--accent stack' },
+      { section: 'Олимпиада', art: 'olymp', emoji: '🏅', title: 'Олимпиадные задачи', text: 'Задачи на смекалку для тех, кто хочет посложнее.', cls: 'card stack' },
     ]
       .map((x) => ({ ...x, topics: gradeTopics.filter((t) => t.section === x.section) }))
       .filter((x) => x.topics.length);
@@ -173,7 +173,7 @@ export function homeScreen() {
         h(
           'section',
           { class: x.cls },
-          h('div', {}, h('h2', { class: 'card__title' }, `${x.emoji} ${x.title}`), h('p', { class: 'muted' }, x.text)),
+          h('div', {}, h('h2', { class: 'card__title card__title--icon' }, artIcon(x.art, x.emoji), h('span', {}, x.title)), h('p', { class: 'muted' }, x.text)),
           h(
             'div',
             { class: 'row wrap' },
@@ -188,7 +188,7 @@ export function homeScreen() {
     h(
       'a',
       { class: 'card poems-link', href: href('poems') },
-      h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'),
+      h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('poems', '📜')),
       h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Стихи из учебника: закрывай слова по одному и расскажи наизусть')),
       icon('arrow'),
     ),
@@ -474,8 +474,8 @@ export function topicsScreen(subjectId, viewParam) {
       ? pathView(subject, topics, lastResults)
       : [h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status), list],
     mapLinkCard(subject.id),
-    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
-    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('speed') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '⏱️'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Скорость чтения'), h('span', { class: 'small muted' }, 'Засеки время, прочитай текст и ответь на вопросы')), icon('arrow')) : null,
+    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('poems', '📜')), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
+    subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('speed') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('speed', '⏱️')), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Скорость чтения'), h('span', { class: 'small muted' }, 'Засеки время, прочитай текст и ответь на вопросы')), icon('arrow')) : null,
     linksBlock(subject),
   );
 }

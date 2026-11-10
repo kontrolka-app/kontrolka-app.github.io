@@ -85,6 +85,15 @@ const ICONS = {
   user: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0',
 };
 
+/** Нарисованные иконки разделов: assets/icons/<имя>.webp. */
+const ART_ICONS = new Set(['russian', 'math', 'world', 'reading', 'english', 'vpr', 'olymp', 'poems', 'drills', 'map', 'speed', 'rule']);
+
+/** Картинка-иконка раздела; если такой нет — запасной значок (эмодзи) текстом. */
+export function artIcon(name, fallback = '') {
+  if (!ART_ICONS.has(name)) return fallback;
+  return h('img', { class: 'art-icon', src: `assets/icons/${name}.webp`, alt: '', width: 48, height: 48, loading: 'lazy', decoding: 'async' });
+}
+
 export function icon(name, { size = 20, label } = {}) {
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
