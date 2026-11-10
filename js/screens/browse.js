@@ -1,6 +1,8 @@
 // Экраны выбора: главная, класс, предметы, темы, тема (правило + настройка), пробная контрольная, избранное.
 import { h, icon, emptyState, linkButton, button, pageHeader, externalLink, toast, progressBar, nameFieldDetails } from '../ui.js';
 import { albumLink } from './album.js';
+import { pathView } from './path-ui.js';
+import { TOPIC_VIEWS } from '../path.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
 import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarSvg } from '../components.js';
@@ -370,7 +372,7 @@ export function subjectsScreen() {
   );
 }
 
-export function topicsScreen(subjectId) {
+export function topicsScreen(subjectId, viewParam) {
   const subject = content.subjectById.get(subjectId);
   const grade = settings().grade;
   if (!subject) return notFound('Такого предмета нет');
@@ -383,6 +385,9 @@ export function topicsScreen(subjectId) {
     return h('div');
   }
   const topics = topicsFor(subjectId, grade);
+  // «Путь» или «Список»: вкладка из адреса запоминается, без неё — как выбирали в прошлый раз.
+  const view = TOPIC_VIEWS.includes(viewParam) ? viewParam : settings().topicsView;
+  if (view !== settings().topicsView) update((d) => ((d.settings.topicsView = view), d));
   const lastResults = lastTopicResults(getData().history);
   const masteredIn = (list) => list.filter((t) => topicStatus(lastResults.get(t.id)) === 'mastered').length;
   // Раскрыт раздел с последней пройденной темой; если ничего не проходили — первый.
@@ -457,8 +462,17 @@ export function topicsScreen(subjectId) {
     reviewBlock,
     subject.id === 'russian' ? vocabLinkCard() : null,
     subject.id === 'math' ? drillsLinkCard() : null,
-    h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status),
-    list,
+    topics.length
+      ? h(
+          'nav',
+          { class: 'view-tabs', 'aria-label': 'Как показать темы' },
+          h('a', { class: 'view-tabs__tab', href: href('topics', subject.id, 'path'), 'aria-current': view === 'path' ? 'page' : null }, '🗺️ Путь'),
+          h('a', { class: 'view-tabs__tab', href: href('topics', subject.id, 'list'), 'aria-current': view === 'list' ? 'page' : null }, '📋 Список'),
+        )
+      : null,
+    view === 'path' && topics.length
+      ? pathView(subject, topics, lastResults)
+      : [h('div', { class: 'field search' }, h('label', { class: 'field__label', for: 'topic-search' }, 'Поиск темы'), h('div', { class: 'search__box' }, icon('search'), input), status), list],
     mapLinkCard(subject.id),
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('poems') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📜'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Учим стихи'), h('span', { class: 'small muted' }, 'Тренажёр для заучивания стихов из учебника')), icon('arrow')) : null,
     subject.id === 'reading' ? h('a', { class: 'card poems-link', href: href('speed') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '⏱️'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Скорость чтения'), h('span', { class: 'small muted' }, 'Засеки время, прочитай текст и ответь на вопросы')), icon('arrow')) : null,

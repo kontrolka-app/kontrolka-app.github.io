@@ -24,6 +24,7 @@ export const SETTINGS_SCHEMA = {
   defaultOrder: ['random', 'original'],
   defaultDifficulty: ['all', 'easy', 'medium', 'hard'],
   dailyGoal: [5, 10, 20],
+  topicsView: ['path', 'list'],
 };
 
 export function defaultSettings() {
@@ -43,6 +44,7 @@ export function defaultSettings() {
     accessory: '',
     companion: true, // персонаж в углу экрана с короткими фразами; выключается в «Я»
     companionId: '', // свой персонаж-компаньон; пусто — как аватарка
+    topicsView: 'path', // темы предмета: дорожкой («Путь») или списком по разделам
     quarterCardClosed: '', // «2026-11» — карточку «Новая четверть» на главной закрыли в эту четверть
   };
 }
