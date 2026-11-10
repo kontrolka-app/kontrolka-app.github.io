@@ -5,7 +5,7 @@ import { pathView } from './path-ui.js';
 import { TOPIC_VIEWS } from '../path.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, subjectsForGrade, topicsFor, questionsForTopics } from '../state.js';
-import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarSvg } from '../components.js';
+import { topicCard, topicRow, subjectCard, setupForm, favoriteButton, subjectVars, avatarPic } from '../components.js';
 import { resolveAvatar } from '../avatars.js';
 import { selectQuestions } from '../quiz.js';
 import { overallStats, dailyProgress, lastTopicResults, pendingMistakes, topicStatus, REVIEW_PERCENT } from '../results.js';
@@ -79,7 +79,7 @@ export function homeScreen() {
       // Выбранный персонаж вместо логотипа — его можно сменить в «Я».
       (() => {
         const me = resolveAvatar(s, data.badges);
-        return me.chosen ? h('a', { class: 'hero__logo', href: href('settings'), 'aria-label': `${me.avatar.name} — сменить в разделе «Я»` }, avatarSvg(me.avatar, me.accessory, { size: 72 })) : logo();
+        return me.chosen ? h('a', { class: 'hero__logo', href: href('settings'), 'aria-label': `${me.avatar.name} — сменить в разделе «Я»` }, avatarPic(me.avatar, me.accessory, { size: 72 })) : logo();
       })(),
       h(
         'div',

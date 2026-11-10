@@ -2,7 +2,7 @@
 // В углу экрана (сворачивается сам) или строкой под заданием в тренировке — чтобы ничего не закрывать.
 import { h } from '../ui.js';
 import { getData, update } from '../state.js';
-import { avatarSvg } from '../components.js';
+import { avatarPic } from '../components.js';
 import { resolveCompanion } from '../avatars.js';
 import { pickPhrase } from '../companion.js';
 
@@ -18,7 +18,7 @@ export function companionSay(event, { inline = false } = {}) {
   update((x) => ((x.companion.lastPhrase = phrase.key), x));
   const me = resolveCompanion(d.settings, d.badges);
   if (inline) {
-    return h('div', { class: `companion-inline companion--${phrase.mood}`, role: 'status' }, avatarSvg(me.avatar, me.accessory, { size: 56 }), h('p', { class: 'companion__bubble' }, phrase.text));
+    return h('div', { class: `companion-inline companion--${phrase.mood}`, role: 'status' }, avatarPic(me.avatar, me.accessory, { size: 56, mood: phrase.mood }), h('p', { class: 'companion__bubble' }, phrase.text));
   }
   showCorner(me, phrase);
   return null;
@@ -36,7 +36,7 @@ function showCorner(me, phrase) {
   const toggle = h(
     'button',
     { type: 'button', class: 'companion__avatar', 'aria-label': `${me.avatar.name}: показать, что он сказал`, 'aria-expanded': 'true', onclick: () => (box.classList.contains('is-collapsed') ? expand() : collapse(true)) },
-    avatarSvg(me.avatar, me.accessory, { size: 76 }),
+    avatarPic(me.avatar, me.accessory, { size: 76, mood: phrase.mood }),
   );
   const box = h('aside', { id: 'companion', class: `companion companion--${phrase.mood}`, 'aria-label': 'Компаньон' }, bubble, toggle);
   const collapse = () => {

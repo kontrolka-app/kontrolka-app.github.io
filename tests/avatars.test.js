@@ -35,3 +35,21 @@ test('компаньон: свой персонаж или как аватарк
   assert.equal(sanitizeData({ schemaVersion: 1, settings: { companionId: 'dino' } }).data.settings.companionId, 'dino');
   assert.equal(sanitizeData({ schemaVersion: 1 }).data.settings.companionId, '');
 });
+
+test('картинки: наряд важнее настроения, неизвестное настроение — спокойное, все 91 файл на месте', async () => {
+  const { avatarImage, MOODS } = await import('../js/avatars.js');
+  const { existsSync } = await import('node:fs');
+  const cat = AVATARS.find((a) => a.id === 'cat');
+  const hat = ACCESSORIES.find((x) => x.id === 'hat');
+  assert.equal(avatarImage(cat, null), 'assets/avatars/cat-normal.webp');
+  assert.equal(avatarImage(cat, null, 'happy'), 'assets/avatars/cat-happy.webp');
+  assert.equal(avatarImage(cat, null, 'нет такого'), 'assets/avatars/cat-normal.webp');
+  assert.equal(avatarImage(cat, hat, 'happy'), 'assets/avatars/cat-hat.webp', 'в наряде лицо спокойное');
+  const root = new URL('../', import.meta.url);
+  let count = 0;
+  for (const a of AVATARS) {
+    for (const mood of MOODS) assert.ok(existsSync(new URL(avatarImage(a, null, mood), root)), `${a.id}: ${mood}`), count++;
+    for (const x of ACCESSORIES) assert.ok(existsSync(new URL(avatarImage(a, x), root)), `${a.id}: ${x.id}`), count++;
+  }
+  assert.equal(count, 91);
+});
