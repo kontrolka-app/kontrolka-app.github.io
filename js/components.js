@@ -5,6 +5,7 @@ import { content, isFavorite, toggleFavorite, topicDifficulty, settings, getData
 import { countAvailable } from './quiz.js';
 import { topicStatus, lastTopicResults } from './results.js';
 import { BADGES } from './achievements.js';
+import { avatarImage } from './avatars.js';
 import { formatDate } from './utils.js';
 import { DIFFICULTY_LABELS, plural } from './utils.js';
 
@@ -40,33 +41,18 @@ export function favoriteButton(topicId, { onChange } = {}) {
   return btn;
 }
 
-/** Аватарка: фон-круг, персонаж и аксессуар — из данных js/avatars.js, через DOM (без innerHTML). */
-export function avatarSvg(avatar, accessory, { size = 64, label } = {}) {
-  const ns = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(ns, 'svg');
-  svg.setAttribute('viewBox', '0 0 100 100');
-  svg.setAttribute('width', size);
-  svg.setAttribute('height', size);
-  svg.setAttribute('class', 'avatar');
+/**
+ * Аватарка: цветной кружок и картинка персонажа (в наряде или с настроением) — см. js/avatars.js.
+ * Размер задаётся переменной --avatar-size, чтобы CSS мог его менять (компаньон на ПК крупнее).
+ */
+export function avatarPic(avatar, accessory, { size = 64, label, mood } = {}) {
+  const img = h('img', { src: avatarImage(avatar, accessory, mood), alt: '', width: 256, height: 256, decoding: 'async', draggable: 'false' });
+  const box = h('span', { class: 'avatar', style: `--avatar-size:${size}px;background:${avatar.bg}` }, img);
   if (label) {
-    svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', label);
-  } else svg.setAttribute('aria-hidden', 'true');
-  const add = ([tag, attrs, text], parent = svg) => {
-    const el = document.createElementNS(ns, tag);
-    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-    if (text) el.textContent = text;
-    parent.appendChild(el);
-    return el;
-  };
-  add(['circle', { cx: 50, cy: 50, r: 50, fill: avatar.bg }]);
-  avatar.shapes.forEach((shape) => add(shape));
-  if (accessory) {
-    // У некоторых персонажей голова в другом месте — аксессуар сдвигается целиком
-    const g = add(['g', avatar.accessoryTransform ? { transform: avatar.accessoryTransform } : {}]);
-    accessory.shapes.forEach((shape) => add(shape, g));
-  }
-  return svg;
+    box.setAttribute('role', 'img');
+    box.setAttribute('aria-label', label);
+  } else box.setAttribute('aria-hidden', 'true');
+  return box;
 }
 
 /** Короткая подпись на закрытой плитке: «значок «Неделя»» — полная подсказка уходит во всплывашку. */

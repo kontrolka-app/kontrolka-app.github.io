@@ -2,7 +2,7 @@
 import { h, icon } from '../ui.js';
 import { href } from '../router.js';
 import { getData } from '../state.js';
-import { avatarSvg } from '../components.js';
+import { avatarPic } from '../components.js';
 import { resolveCompanion } from '../avatars.js';
 import { pathStops, pathHeight, pathLine, PATH_MAPS } from '../path.js';
 
@@ -55,7 +55,7 @@ function stopNode(s, buddy) {
         h('span', { class: 'sr-only' }, `, ${STATUS_TEXT[s.status]}${s.here ? ', ты здесь' : ''}`),
       ),
     ),
-    s.here && buddy ? h('span', { class: 'path-stop__buddy', 'aria-hidden': 'true' }, avatarSvg(buddy.avatar, buddy.accessory, { size: 46 })) : null,
+    s.here && buddy ? h('span', { class: 'path-stop__buddy', 'aria-hidden': 'true' }, avatarPic(buddy.avatar, buddy.accessory, { size: 46 })) : null,
   );
 }
 

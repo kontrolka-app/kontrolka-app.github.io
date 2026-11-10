@@ -7,7 +7,7 @@ import { availableGrades } from '../catalog.js';
 import { masteredCount } from '../stats.js';
 import { pickWonder } from '../wonders.js';
 import { companionHide } from './companion-ui.js';
-import { badgeGrid, avatarSvg, unlockHint, unlockShort } from '../components.js';
+import { badgeGrid, avatarPic, unlockHint, unlockShort } from '../components.js';
 import { AVATARS, ACCESSORIES, resolveAvatar, resolveCompanion, isUnlocked } from '../avatars.js';
 import { BADGES, shareAchievementsText } from '../achievements.js';
 import { albumLink } from './album.js';
@@ -41,18 +41,18 @@ function avatarPicker(data) {
   return h(
     'div',
     { class: 'stack-sm' },
-    h('div', { class: 'avatar-me' }, avatarSvg(me.avatar, me.accessory, { size: 88, label: me.avatar.name }), h('p', { class: 'avatar-me__name' }, me.chosen ? me.avatar.name : 'Выбери себе персонажа')),
+    h('div', { class: 'avatar-me' }, avatarPic(me.avatar, me.accessory, { size: 88, label: me.avatar.name }), h('p', { class: 'avatar-me__name' }, me.chosen ? me.avatar.name : 'Выбери себе персонажа')),
     h(
         'details',
         { class: 'avatar-picker' },
         h('summary', {}, 'Сменить персонажа'),
-        h('div', { class: 'avatar-grid' }, AVATARS.map((a) => tile(a, me.chosen && a.id === me.avatar.id, () => choose('avatar', a.id), avatarSvg(a, null, { size: 56 })))),
+        h('div', { class: 'avatar-grid' }, AVATARS.map((a) => tile(a, me.chosen && a.id === me.avatar.id, () => choose('avatar', a.id), avatarPic(a, null, { size: 56 })))),
         h('p', { class: 'field__label' }, 'Аксессуар'),
         h(
           'div',
           { class: 'avatar-grid' },
-          tile({ id: '', name: 'без аксессуара' }, !me.accessory, () => choose('accessory', ''), avatarSvg(me.avatar, null, { size: 56 })),
-          ACCESSORIES.map((x) => tile(x, me.accessory?.id === x.id, () => choose('accessory', x.id), avatarSvg(me.avatar, x, { size: 56 }))),
+          tile({ id: '', name: 'без аксессуара' }, !me.accessory, () => choose('accessory', ''), avatarPic(me.avatar, null, { size: 56 })),
+          ACCESSORIES.map((x) => tile(x, me.accessory?.id === x.id, () => choose('accessory', x.id), avatarPic(me.avatar, x, { size: 56 }))),
         ),
       ),
     h(
@@ -63,9 +63,9 @@ function avatarPicker(data) {
       h(
         'div',
         { class: 'avatar-grid' },
-        tile({ name: 'как моя аватарка' }, buddyOn && buddy.sameAsAvatar, () => chooseBuddy(''), avatarSvg(me.avatar, me.accessory, { size: 56 })),
+        tile({ name: 'как моя аватарка' }, buddyOn && buddy.sameAsAvatar, () => chooseBuddy(''), avatarPic(me.avatar, me.accessory, { size: 56 })),
         tile({ name: 'без компаньона' }, !buddyOn, () => chooseBuddy(data.settings.companionId, false), h('span', { class: 'avatar-tile__off', 'aria-hidden': 'true' }, '🔕')),
-        AVATARS.map((a) => tile(a, buddyOn && !buddy.sameAsAvatar && a.id === buddy.avatar.id, () => chooseBuddy(a.id), avatarSvg(a, null, { size: 56 }))),
+        AVATARS.map((a) => tile(a, buddyOn && !buddy.sameAsAvatar && a.id === buddy.avatar.id, () => chooseBuddy(a.id), avatarPic(a, null, { size: 56 }))),
       ),
     ),
   );
