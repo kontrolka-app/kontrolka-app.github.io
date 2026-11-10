@@ -33,7 +33,7 @@ function background(subjectId) {
   return h(
     'div',
     { class: 'path__bg', 'aria-hidden': 'true', style: { '--parts': String(parts) } },
-    Array.from({ length: parts }, (_, i) => h('img', { class: 'path__tile', src: `assets/path/${subjectId}-${i + 1}.webp`, alt: '', loading: i ? 'lazy' : 'eager', decoding: 'async', style: { '--i': String(i) } })),
+    Array.from({ length: parts }, (_, i) => h('img', { class: 'path__tile', src: `assets/path/${subjectId}-${i + 1}.webp`, alt: '', decoding: 'async', style: { '--i': String(i) } })),
   );
 }
 
