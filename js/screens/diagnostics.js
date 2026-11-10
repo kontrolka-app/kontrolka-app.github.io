@@ -1,5 +1,5 @@
 // Диагностика и карта знаний: список предметов, карта предмета, запуск проверки, карта на экране результата.
-import { h, icon, button, linkButton, pageHeader, emptyState } from '../ui.js';
+import { h, icon, artIcon, button, linkButton, pageHeader, emptyState } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { content, getData, settings, update, topicsFor, subjectsForGrade, questionsForTopics } from '../state.js';
 import { subjectVars } from '../components.js';
@@ -58,7 +58,7 @@ export function mapLinkCard(subjectId) {
   return h(
     'a',
     { class: 'card poems-link', href: subjectId ? href('map', subjectId) : href('map') },
-    h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '🗺️'),
+    h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('map', '🗺️')),
     h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Карта знаний'), h('span', { class: 'small muted' }, 'Короткая проверка по всем темам: что знаешь, где не уверен, что повторить')),
     icon('arrow'),
   );
@@ -71,7 +71,7 @@ export function quarterCard() {
   const card = h(
     'section',
     { class: 'card card--soft quarter-card' },
-    h('h2', { class: 'card__title' }, '🗺️ Новая четверть — проверь, что помнишь'),
+    h('h2', { class: 'card__title card__title--icon' }, artIcon('map', '🗺️'), h('span', {}, 'Новая четверть — проверь, что помнишь')),
     h('p', { class: 'muted' }, 'Короткая проверка по пройденным темам покажет, что повторить в первую очередь.'),
     h(
       'div',
@@ -246,7 +246,7 @@ export function diagResultBlock(entry) {
   return h(
     'section',
     { class: 'card stack-sm' },
-    h('h2', { class: 'card__title' }, '🗺️ Карта по этой проверке'),
+    h('h2', { class: 'card__title card__title--icon' }, artIcon('map', '🗺️'), h('span', {}, 'Карта по этой проверке')),
     summaryLine(sum),
     h('ul', { class: 'map-list' }, rows),
     linkButton(href('map', entry.source.subjectId), 'Вся карта знаний', { variant: 'secondary', iconName: 'arrow' }),

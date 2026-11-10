@@ -1,5 +1,5 @@
 // Повторно используемые части экранов.
-import { h, icon } from './ui.js';
+import { h, icon, artIcon } from './ui.js';
 import { href } from './router.js';
 import { content, isFavorite, toggleFavorite, topicDifficulty, settings, getData } from './state.js';
 import { countAvailable } from './quiz.js';
@@ -179,7 +179,7 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
     return h(
       'a',
       { class: 'card subject-card subject-themed', style: subjectVars(subject), href: href(subject.tool) },
-      h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, subject.icon || '📘'),
+      h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, artIcon(subject.id, subject.icon || '📘')),
       h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, subject.name), h('span', { class: 'small muted' }, TOOL_SUBTITLES[subject.tool] || '')),
       icon('arrow'),
     );
@@ -190,7 +190,7 @@ export function subjectCard(subject, grade, { hrefTo } = {}) {
   return h(
     'a',
     { class: 'card subject-card subject-themed', style: subjectVars(subject), href: hrefTo || href('topics', subject.id) },
-    h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, subject.icon || '📘'),
+    h('span', { class: 'subject-card__icon', 'aria-hidden': 'true' }, artIcon(subject.id, subject.icon || '📘')),
     h(
       'span',
       { class: 'subject-card__text' },

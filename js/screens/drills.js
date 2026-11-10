@@ -1,5 +1,5 @@
 // «Тренажёр примеров» по математике: список тренажёров и запуск тренировки.
-import { h, icon, button, pageHeader } from '../ui.js';
+import { h, icon, artIcon, button, pageHeader } from '../ui.js';
 import { href } from '../router.js';
 import { content, getData, settings } from '../state.js';
 import { subjectVars, radioGroup } from '../components.js';
@@ -16,7 +16,7 @@ export function drillsLinkCard() {
   return h(
     'a',
     { class: 'card poems-link', href: href('drills') },
-    h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '🧮'),
+    h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('drills', '🧮')),
     h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Тренажёр примеров'), h('span', { class: 'small muted' }, 'Столбики, порядок действий, уравнения, величины — примеры не кончаются')),
     icon('arrow'),
   );
@@ -139,7 +139,7 @@ export function drillScreen(drillId) {
               button(`Повторить ошибки (${mistakes.length})`, () => startMistakes(drillId, mistakes), { variant: 'secondary', iconName: 'history' }),
             )
           : null,
-        content.topicById.get(d.ruleTopicId) ? h('a', { class: 'card poems-link', href: href('topic', d.ruleTopicId, 'rule') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, '📖'), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Вспомнить правило'), h('span', { class: 'small muted' }, content.topicById.get(d.ruleTopicId).title)), icon('arrow')) : null,
+        content.topicById.get(d.ruleTopicId) ? h('a', { class: 'card poems-link', href: href('topic', d.ruleTopicId, 'rule') }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, artIcon('rule', '📖')), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, 'Вспомнить правило'), h('span', { class: 'small muted' }, content.topicById.get(d.ruleTopicId).title)), icon('arrow')) : null,
       ),
     ),
   );

@@ -853,3 +853,7 @@ a.card.map-subject { display: flex; flex-direction: column; gap: 8px; color: inh
   .path-stop__buddy { animation: none; }
   .path-stop__dot { transition: none; }
 }
+
+/* ---------- Нарисованные иконки разделов (assets/icons) ---------- */
+.art-icon { display: block; width: 46px; height: 46px; object-fit: contain; }
+.card__title--icon .art-icon { width: 34px; height: 34px; flex-shrink: 0; }
