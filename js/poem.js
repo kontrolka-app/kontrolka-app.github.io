@@ -73,7 +73,8 @@ export function defaultPoems() {
 
 /**
  * Проверка сохранённых данных: повреждённое отбрасывается, остальное остаётся.
- * custom: [{ id, title, author?, text, sourceId?, createdAt }] — sourceId, если текст вставлен к стиху из списка учебника.
+ * custom: [{ id, title, author?, text, sourceId?, kind?, createdAt }] — sourceId, если текст вставлен к стиху из списка учебника;
+ * kind: 'prose' — свой текст в прозе (учится по абзацам), иначе стихотворение.
  */
 export function sanitizePoems(raw) {
   const out = defaultPoems();
@@ -91,6 +92,7 @@ export function sanitizePoems(raw) {
         author: str(p.author, 120).trim(),
         text: p.text,
         sourceId: str(p.sourceId, 100),
+        ...(p.kind === 'prose' ? { kind: 'prose' } : {}),
         createdAt: Number.isFinite(p.createdAt) ? p.createdAt : 0,
       });
       if (out.custom.length >= CUSTOM_POEMS_LIMIT) break;

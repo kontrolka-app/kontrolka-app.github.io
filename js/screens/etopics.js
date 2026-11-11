@@ -1,10 +1,10 @@
 // «Учим топики» (английский): список, добавление (фото, файл или вставка → сверка) и тренажёр как у стихов.
-import { h, button, linkButton, pageHeader, emptyState, toast, confirmDialog, readFileText } from '../ui.js';
+import { h, button, linkButton, pageHeader, emptyState, toast, confirmDialog } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { getData, update, content } from '../state.js';
 import { CUSTOM_POEMS_LIMIT } from '../poem.js';
-import { toSentenceLines, guessTitle, validateTopicInput, fileKind, TOPIC_TEXT_MAX } from '../topic.js';
-import { docxToText } from '../docx.js';
+import { toSentenceLines, guessTitle, validateTopicInput, TOPIC_TEXT_MAX } from '../topic.js';
+import { sourcePicker, originalImage } from './textsource.js';
 import { subjectVars } from '../components.js';
 import { uid, formatDate } from '../utils.js';
 import { trainer } from './poems.js';
@@ -67,70 +67,14 @@ export function etopicScreen(id) {
 
 /** Новый топик: сначала откуда взять текст, потом сверка. */
 export function etopicAddScreen() {
-  const slot = h('div', { class: 'stack' });
-  const status = h('div', { class: 'stack', 'aria-live': 'polite' });
-  const photoInput = h('input', { type: 'file', accept: 'image/*', hidden: true, onchange: (e) => pick(e.target) });
-  const fileInput = h('input', { type: 'file', accept: '.docx,.txt,text/plain', hidden: true, onchange: (e) => pick(e.target) });
-
-  const fail = (text) => status.replaceChildren(h('p', { class: 'field__error', role: 'alert' }, text));
-  let busy = false;
-
-  async function pick(input) {
-    const file = input.files?.[0];
-    input.value = ''; // тот же файл можно выбрать ещё раз
-    if (!file || busy) return;
-    const kind = fileKind(file);
-    if (kind === 'doc') return fail('Старый формат Word (.doc) не открывается. Сохрани файл как .docx или скопируй текст и выбери «Вставить текст».');
-    if (kind === 'pdf') return fail('PDF пока не открывается. Сделай снимок экрана страницы и выбери «Фото или картинка».');
-    if (kind === 'other') return fail('Такой файл не подходит. Нужны фото, картинка, файл Word (.docx) или .txt.');
-    busy = true;
-    try {
-      if (kind === 'image') {
-        const bar = h('div', { class: 'progress' }, h('div', { class: 'progress__bar', style: { width: '0%' } }));
-        const label = h('p', { class: 'small muted' }, 'Загружаем распознавание…');
-        status.replaceChildren(h('div', { class: 'card stack' }, label, bar, h('p', { class: 'small muted' }, 'В первый раз загрузка дольше: скачивается словарь английского языка.')));
-        const { recognizeImage } = await import('../ocr.js');
-        const text = await recognizeImage(file, (share, what) => {
-          bar.firstChild.style.width = `${Math.round(share * 100)}%`;
-          label.textContent = what;
-        });
-        if (!text.trim()) return fail('На картинке не нашлось текста. Сфотографируй ровнее и при хорошем свете или вставь текст вручную.');
-        showCheck({ text, image: file });
-      } else if (kind === 'docx') {
-        showCheck({ text: await docxToText(await file.arrayBuffer()) });
-      } else {
-        showCheck({ text: await readFileText(file, 200_000) });
-      }
-    } catch (e) {
-      fail(e.message || 'Не получилось прочитать файл.');
-    } finally {
-      busy = false;
-    }
-  }
-
-  const choice = (emoji, title, text, onClick) =>
-    h('button', { type: 'button', class: 'card poems-link etopic-source', onclick: onClick }, h('span', { class: 'poems-link__emoji', 'aria-hidden': 'true' }, emoji), h('span', { class: 'subject-card__text' }, h('span', { class: 'subject-card__name' }, title), h('span', { class: 'small muted' }, text)));
-
-  function showCheck(src) {
-    slot.replaceChildren(themed(checkForm({ ...src, onAgain: showChoice })));
-    slot.querySelector('.page-title')?.focus({ preventScroll: true });
-    scrollTo(0, 0);
-  }
-  function showChoice() {
-    status.textContent = '';
-    slot.replaceChildren(
-      pageHeader('Новый топик', { back: href('etopics'), subtitle: 'Откуда взять текст?' }),
-      choice('📷', 'Фото или картинка', 'Сфотографируй страницу или выбери картинку — текст распознается сам', () => photoInput.click()),
-      choice('📄', 'Файл Word или .txt', 'Если топик прислали файлом', () => fileInput.click()),
-      choice('⌨️', 'Вставить текст', 'Скопируй текст и вставь его сам', () => showCheck({ text: '' })),
-      status,
-      h('p', { class: 'small muted' }, 'Печатный текст распознаётся хорошо, написанный от руки — с ошибками: их нужно будет поправить. На iPhone можно выделить текст прямо на фото, скопировать и выбрать «Вставить текст».'),
-      photoInput,
-      fileInput,
-    );
-  }
-  showChoice();
-  return themed(slot);
+  return themed(sourcePicker({
+    header: () => pageHeader('Новый топик', { back: href('etopics'), subtitle: 'Откуда взять текст?' }),
+    lang: 'eng',
+    langNote: 'В первый раз загрузка дольше: скачивается словарь английского языка.',
+    fileHint: 'Если топик прислали файлом',
+    hint: 'Печатный текст распознаётся хорошо, написанный от руки — с ошибками: их нужно будет поправить. На iPhone можно выделить текст прямо на фото, скопировать и выбрать «Вставить текст».',
+    check: (src, onAgain) => themed(checkForm({ ...src, onAgain })),
+  }));
 }
 
 export function etopicEditScreen(id) {
@@ -185,9 +129,7 @@ function checkForm({ text: raw, image, existing, onAgain }) {
       back: href('etopics'),
       subtitle: raw ? 'Сравни с оригиналом. Если где-то ошибка — исправь прямо в тексте.' : 'Текст сохранится только в этом браузере.',
     }),
-    imageUrl
-      ? h('details', { class: 'card etopic-image', open: true }, h('summary', {}, 'Оригинал (фото)'), h('img', { src: imageUrl, alt: 'Фото топика' }))
-      : null,
+    imageUrl ? originalImage(imageUrl, 'Фото топика') : null,
     h(
       'form',
       { class: 'card stack', onsubmit: (e) => (e.preventDefault(), save()) },

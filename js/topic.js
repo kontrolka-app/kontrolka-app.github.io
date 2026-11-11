@@ -21,7 +21,7 @@ export function splitSentences(paragraph) {
     const dotOnly = /^\.+$/.test(m[0].replace(/["'”’»)\]]/g, ''));
     if (dotOnly && (TITLES.has(word) || /^\p{Lu}$/u.test(before))) continue; // Mr. Smith, J. K. Rowling
     if (dotOnly && (word === 'no' || word === 'p') && /^\d/.test(next)) continue; // school No. 5, p. 34
-    if (/^\p{Ll}/u.test(next)) continue; // дальше маленькая буква — это не конец предложения
+    if (/^(?:[—–-]\s*)?\p{Ll}/u.test(next)) continue; // дальше маленькая буква (в том числе «— сказал он») — это не конец предложения
     out.push(text.slice(start, end).trim());
     start = end;
   }
@@ -45,6 +45,20 @@ export function toSentenceLines(raw) {
     .filter((s) => s.length)
     .map((s) => s.join('\n'))
     .join('\n\n');
+}
+
+/**
+ * Стихотворение из распознавания, файла или вставки: строки остаются как есть,
+ * убираются лишние пробелы и повторы пустых строк (строфы — через одну пустую строку).
+ */
+export function toPoemLines(raw) {
+  return String(raw ?? '')
+    .replace(/\r\n?/g, '\n')
+    .split('\n')
+    .map((l) => l.replace(/\s+/g, ' ').trim())
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 /** Название по умолчанию: первое предложение, коротко. */

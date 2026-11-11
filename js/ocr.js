@@ -1,4 +1,4 @@
-// Распознавание английского текста на фото (Tesseract.js из vendor/tesseract). Только в браузере.
+// Распознавание текста на фото: английский — для топиков, русский — для своих стихов и текстов (Tesseract.js из vendor/tesseract). Только в браузере.
 // Библиотека и словарь загружаются при первом вызове; фото никуда не отправляется.
 
 const BASE = 'vendor/tesseract/';
@@ -38,16 +38,16 @@ async function prepare(file) {
 }
 
 /**
- * Распознать текст на картинке. onProgress(доля 0…1, что сейчас делается).
+ * Распознать текст на картинке. onProgress(доля 0…1, что сейчас делается); lang — 'eng' или 'rus' (словарь из vendor/tesseract/lang).
  * Возвращает текст как есть — разбивку на предложения делает topic.js.
  */
-export async function recognizeImage(file, onProgress = () => {}) {
+export async function recognizeImage(file, onProgress = () => {}, lang = 'eng') {
   onProgress(0, 'Загружаем распознавание…');
   const [Tesseract, canvas] = await Promise.all([loadLibrary(), prepare(file)]);
   const abs = (p) => new URL(BASE + p, location.href).href;
   let worker;
   try {
-    worker = await Tesseract.createWorker('eng', Tesseract.OEM.LSTM_ONLY, {
+    worker = await Tesseract.createWorker(lang === 'rus' ? 'rus' : 'eng', Tesseract.OEM.LSTM_ONLY, {
       workerPath: abs('worker.min.js'),
       corePath: abs('core'),
       langPath: abs('lang'),

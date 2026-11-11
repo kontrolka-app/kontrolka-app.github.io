@@ -102,3 +102,17 @@ test('хранение: топики лежат отдельно от стихо
   assert.deepEqual(data.topics.learned, { t1: 2 });
   assert.deepEqual(data.poems.custom, []);
 });
+
+test('русский текст: прямая речь не рвётся на словах автора, стих остаётся построчно', async () => {
+  const { toPoemLines } = await import('../js/topic.js');
+  assert.deepEqual(splitSentences('— Привет! — сказал он. — Как дела? Хорошо.'), ['— Привет! — сказал он.', '— Как дела?', 'Хорошо.']);
+  assert.equal(toSentenceLines('Наступила осень. Листья\nпожелтели.\n\nПтицы улетели на юг.'), 'Наступила осень.\nЛистья пожелтели.\n\nПтицы улетели на юг.');
+  assert.equal(toPoemLines('  Белая берёза \r\nПод  моим окном\n\n\n\nПринакрылась снегом,\n'), 'Белая берёза\nПод моим окном\n\nПринакрылась снегом,');
+});
+
+test('хранение: у своего текста в прозе сохраняется вид, у стихов и топиков поля нет', async () => {
+  const { sanitizePoems } = await import('../js/poem.js');
+  const r = sanitizePoems({ custom: [{ id: 'a', title: 'Осень', text: 'Раз.\nДва.', kind: 'prose' }, { id: 'b', title: 'Стих', text: 'Раз', kind: 'мусор' }] });
+  assert.equal(r.custom[0].kind, 'prose');
+  assert.equal('kind' in r.custom[1], false);
+});

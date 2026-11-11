@@ -1,9 +1,12 @@
-// «Учим стихи»: список стихов из учебника и своих, тренажёр с закрыванием слов, своё стихотворение.
+// «Учим стихи и тексты»: список стихов из учебника и своих, тренажёр с закрыванием слов,
+// свой текст (стихотворение или проза) — по фото, из файла или вставкой.
 import { h, button, linkButton, pageHeader, emptyState, toast, confirmDialog } from '../ui.js';
 import { href, navigate } from '../router.js';
 import { getData, update } from '../state.js';
 import { loadPoemCatalog } from '../data.js';
 import { parsePoem, stepCount, lineAt, validatePoemInput, POEM_TEXT_MAX, CUSTOM_POEMS_LIMIT } from '../poem.js';
+import { toSentenceLines, toPoemLines, guessTitle } from '../topic.js';
+import { sourcePicker, originalImage } from './textsource.js';
 import { uid, formatDate } from '../utils.js';
 
 const PEEK_MS = 2000;
@@ -35,7 +38,7 @@ function findPoem(cat, id) {
 }
 
 function poemRow(p, learned) {
-  const where = p.page ? `часть ${p.part}, с. ${p.page}` : 'своё';
+  const where = p.page ? `часть ${p.part}, с. ${p.page}` : p.kind === 'prose' ? 'свой текст' : 'своё';
   return h(
     'a',
     { class: `card poem-card${learned ? ' poem-card--learned' : ''}`, href: href('poem', p.id) },
@@ -55,8 +58,8 @@ export function poemsScreen() {
     return h(
       'div',
       { class: 'stack poems-page' },
-      pageHeader('📜 Учим стихи', { back: href('home'), subtitle: 'Прочитай целиком, потом закрывай слова по одному — и расскажи без подсказок.' }),
-      cat.error ? h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Список стихов не загрузился', text: 'Обнови страницу. Свои стихи ниже работают.' })) : null,
+      pageHeader('📜 Учим стихи и тексты', { back: href('home'), subtitle: 'Прочитай целиком, потом закрывай слова по одному — и расскажи без подсказок.' }),
+      cat.error ? h('div', { class: 'card' }, emptyState({ emoji: '📭', title: 'Список стихов не загрузился', text: 'Обнови страницу. Свои тексты ниже работают.' })) : null,
       book.length
         ? h(
             'section',
@@ -68,10 +71,10 @@ export function poemsScreen() {
       h(
         'section',
         { class: 'stack' },
-        h('div', { class: 'section-head' }, h('h2', {}, 'Свои стихи'), own.length < CUSTOM_POEMS_LIMIT ? linkButton(href('poem-edit', 'new'), 'Добавить', { variant: 'secondary' }) : null),
+        h('div', { class: 'section-head' }, h('h2', {}, 'Свои стихи и тексты'), own.length < CUSTOM_POEMS_LIMIT ? linkButton(href('poem-edit', 'new'), 'Добавить', { variant: 'secondary' }) : null),
         own.length
           ? h('div', { class: 'grid grid--2' }, own.map((p) => poemRow(p, learned[p.id])))
-          : h('p', { class: 'muted' }, 'Задали стихотворение, которого нет в списке? Вставь его текст — он сохранится только в этом браузере.'),
+          : h('p', { class: 'muted' }, 'Задали стихотворение или текст, которого нет в списке? Сфотографируй его, загрузи файл или вставь текст — он сохранится только в этом браузере.'),
       ),
     );
   });
@@ -80,7 +83,7 @@ export function poemsScreen() {
 export function poemScreen(id) {
   return later((cat) => {
     const poem = findPoem(cat, id);
-    if (!poem) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Такого стихотворения нет', action: linkButton(href('poems'), 'К стихам') }));
+    if (!poem) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Такого текста нет', action: linkButton(href('poems'), 'К стихам') }));
     const header = pageHeader(poem.title, {
       back: href('poems'),
       subtitle: [poem.author, poem.page ? `«Литературное чтение», часть ${poem.part}, с. ${poem.page}` : ''].filter(Boolean).join(' · '),
@@ -97,13 +100,13 @@ export function poemScreen(id) {
           emptyState({
             emoji: '📖',
             title: 'Текст вставишь сам',
-            text: `Открой учебник: часть ${poem.part}, страница ${poem.page}. Перепиши или вставь текст — он сохранится только в этом браузере.`,
+            text: `Открой учебник: часть ${poem.part}, страница ${poem.page}. Сфотографируй страницу, перепиши или вставь текст — он сохранится только в этом браузере.`,
             action: linkButton(href('poem-edit', `for-${poem.id}`), 'Вставить текст'),
           }),
         ),
       );
     }
-    return trainer(poem, header);
+    return trainer(poem, header, poem.kind === 'prose' ? { whole: 'Весь текст', partLabel: (n) => `${n}-й абзац` } : {});
   });
 }
 
@@ -232,7 +235,10 @@ function gap(w) {
   return el;
 }
 
-/** Своё стихотворение или текст к стиху из списка (id = 'new', 'for-<id из списка>' или id своего). */
+/**
+ * Свой текст или текст к стиху из списка (id = 'new', 'for-<id из списка>' или id своего).
+ * Новый — сначала «откуда взять текст» (фото, файл, вставка), потом сверка; свой уже сохранённый — сразу правка.
+ */
 export function poemEditScreen(id) {
   return later((cat) => {
     const custom = getData().poems.custom;
@@ -240,58 +246,125 @@ export function poemEditScreen(id) {
     const forBook = id.startsWith('for-') ? cat.poems.find((p) => p.id === id.slice(4) && p.pasteOnly) : null;
     const source = existing?.sourceId ? cat.poems.find((p) => p.id === existing.sourceId) : forBook;
     if (id !== 'new' && !existing && !forBook) return h('div', { class: 'card' }, emptyState({ emoji: '🧭', title: 'Не найдено', action: linkButton(href('poems'), 'К стихам') }));
+    if (existing) return poemForm({ existing, source });
+    return sourcePicker({
+      header: () =>
+        pageHeader(source ? source.title : 'Свой текст', {
+          back: source ? href('poem', source.id) : href('poems'),
+          subtitle: source ? `Учебник: часть ${source.part}, с. ${source.page}. Откуда взять текст?` : 'Стихотворение или рассказ. Откуда взять текст?',
+        }),
+      lang: 'rus',
+      langNote: 'В первый раз загрузка дольше: скачивается словарь русского языка.',
+      fileHint: 'Если текст прислали файлом',
+      hint: 'Печатный текст распознаётся хорошо, написанный от руки — с ошибками: их нужно будет поправить. На iPhone можно выделить текст прямо на фото, скопировать и выбрать «Вставить текст».',
+      check: (src, onAgain) => poemForm({ source, raw: src.text, image: src.image, onAgain }),
+    });
+  });
+}
 
-    const title = h('input', { class: 'input', id: 'poem-title', maxLength: 120, value: existing?.title || source?.title || '', readOnly: Boolean(source) });
-    const author = h('input', { class: 'input', id: 'poem-author', maxLength: 120, value: existing?.author || source?.author || '', readOnly: Boolean(source) });
-    const text = h('textarea', { class: 'input poem-input', id: 'poem-text', rows: 12, maxLength: POEM_TEXT_MAX, value: existing?.text || '' });
-    const errors = h('p', { class: 'field__error', role: 'alert' });
+/**
+ * Сверка и правка: картинка (если была), название, автор, вид текста и сам текст.
+ * Стихотворение — строки как есть; рассказ — по предложению на строку, учится по абзацам.
+ * Картинка не сохраняется — живёт только пока открыт экран.
+ */
+function poemForm({ existing, source, raw = '', image, onAgain }) {
+  const fresh = !existing;
+  let kind = existing?.kind === 'prose' ? 'prose' : 'poem';
+  const format = (k) => (k === 'prose' ? toSentenceLines(raw) : toPoemLines(raw));
+  let auto = fresh ? format(kind) : null; // что подставили сами: пока ребёнок не правил, при смене вида раскладываем заново
+  const title = h('input', { class: 'input', id: 'poem-title', maxLength: 120, value: existing?.title || source?.title || (raw ? guessTitle(auto) : ''), readOnly: Boolean(source) });
+  const author = h('input', { class: 'input', id: 'poem-author', maxLength: 120, value: existing?.author || source?.author || '', readOnly: Boolean(source) });
+  const text = h('textarea', { class: 'input poem-input', id: 'poem-text', rows: 14, maxLength: POEM_TEXT_MAX, value: existing?.text ?? auto, lang: 'ru' });
+  const hint = h('p', { class: 'field__hint' });
+  const splitBtn = button('Разложить по предложениям', () => (text.value = toSentenceLines(text.value)), { variant: 'ghost' });
+  const errors = h('p', { class: 'field__error', role: 'alert' });
+  let imageUrl = image ? URL.createObjectURL(image) : null;
+  const dropImage = () => {
+    if (imageUrl) URL.revokeObjectURL(imageUrl);
+    imageUrl = null;
+  };
 
-    const save = () => {
-      const data = { title: title.value.trim(), author: author.value.trim(), text: text.value.replace(/\r\n?/g, '\n').trim() };
-      const errs = validatePoemInput(data);
-      if (errs.length) {
-        errors.textContent = errs.join(' ');
-        return;
-      }
-      const poemId = existing?.id || uid('poem');
-      update((d) => {
-        const rec = { id: poemId, ...data, sourceId: source?.id || '', createdAt: existing?.createdAt || Date.now() };
-        d.poems.custom = existing ? d.poems.custom.map((p) => (p.id === poemId ? rec : p)) : [rec, ...d.poems.custom];
-        return d;
-      });
-      toast('Сохранено');
-      navigate('poem', source?.id || poemId);
-    };
-    const remove = async () => {
-      const ok = await confirmDialog('Удалить этот текст из браузера? Вернуть его будет нельзя.', { title: 'Удалить стихотворение?', okText: 'Удалить', danger: true });
-      if (!ok) return;
-      update((d) => {
-        d.poems.custom = d.poems.custom.filter((p) => p.id !== existing.id);
-        delete d.poems.learned[existing.id];
-        return d;
-      });
-      navigate('poems');
-    };
-
-    return h(
-      'div',
-      { class: 'stack' },
-      pageHeader(existing ? 'Изменить стихотворение' : source ? 'Вставить текст' : 'Своё стихотворение', { back: href('poems'), subtitle: source ? `Учебник: часть ${source.part}, с. ${source.page}` : 'Текст сохранится только в этом браузере.' }),
-      h(
-        'form',
-        { class: 'card stack', onsubmit: (e) => (e.preventDefault(), save()) },
-        h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'poem-title' }, 'Название'), title),
-        h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'poem-author' }, 'Автор (можно не писать)'), author),
+  const showKind = () => {
+    hint.textContent = kind === 'prose' ? 'Каждое предложение — с новой строки, между абзацами — пустая строка.' : 'Каждая строка — с новой строки, между строфами — пустая строка.';
+    splitBtn.style.display = kind === 'prose' ? '' : 'none'; // hidden не годится: у .btn свой display
+  };
+  let undo = null;
+  const setKind = (k) => {
+    kind = k;
+    if (auto !== null && text.value === auto) text.value = auto = format(k);
+    else if (k === 'prose') {
+      // Текст вставлен или уже поправлен: раскладываем по предложениям то, что есть, и помним, как было.
+      undo = { before: text.value, after: toSentenceLines(text.value) };
+      text.value = undo.after;
+    } else if (undo && text.value === undo.after) text.value = undo.before; // передумал — возвращаем строки как были
+    showKind();
+  };
+  showKind();
+  // У стиха из списка учебника вид не спрашиваем — это стихотворение.
+  const kindField = source
+    ? null
+    : h(
+        'div',
+        { class: 'segmented segmented--chips' },
         h(
           'div',
-          { class: 'field' },
-          h('label', { class: 'field__label', for: 'poem-text' }, 'Текст'),
-          text,
-          h('p', { class: 'field__hint' }, 'Каждая строка — с новой строки, между строфами — пустая строка.'),
+          { class: 'segmented__options', role: 'radiogroup', 'aria-label': 'Что это за текст' },
+          [['poem', 'Стихотворение'], ['prose', 'Рассказ (проза)']].map(([v, label]) =>
+            h('label', { class: 'segmented__option' }, h('input', { type: 'radio', name: 'poem-kind', checked: v === kind, onchange: () => setKind(v) }), h('span', {}, label)),
+          ),
         ),
-        errors,
-        h('div', { class: 'row wrap' }, button('Сохранить', null, { type: 'submit', iconName: 'check', size: 'lg' }), existing ? button('Удалить', remove, { variant: 'danger', iconName: 'trash' }) : null),
+      );
+
+  const save = () => {
+    const data = { title: title.value.trim(), author: author.value.trim(), text: text.value.replace(/\r\n?/g, '\n').trim() };
+    const errs = validatePoemInput(data);
+    if (errs.length) {
+      errors.textContent = errs.join(' ');
+      return;
+    }
+    const poemId = existing?.id || uid('poem');
+    update((d) => {
+      const rec = { id: poemId, ...data, sourceId: source?.id || '', ...(kind === 'prose' && !source ? { kind: 'prose' } : {}), createdAt: existing?.createdAt || Date.now() };
+      d.poems.custom = existing ? d.poems.custom.map((p) => (p.id === poemId ? rec : p)) : [rec, ...d.poems.custom];
+      return d;
+    });
+    dropImage();
+    toast('Сохранено');
+    navigate('poem', source?.id || poemId);
+  };
+  const remove = async () => {
+    const ok = await confirmDialog('Удалить этот текст из браузера? Вернуть его будет нельзя.', { title: 'Удалить текст?', okText: 'Удалить', danger: true });
+    if (!ok) return;
+    update((d) => {
+      d.poems.custom = d.poems.custom.filter((p) => p.id !== existing.id);
+      delete d.poems.learned[existing.id];
+      return d;
+    });
+    navigate('poems');
+  };
+
+  const heading = existing ? 'Изменить текст' : raw ? 'Проверь текст' : 'Вставь текст';
+  const subtitle = raw ? 'Сравни с оригиналом. Если где-то ошибка — исправь прямо в тексте.' : source ? `Учебник: часть ${source.part}, с. ${source.page}` : 'Текст сохранится только в этом браузере.';
+  return h(
+    'div',
+    { class: 'stack' },
+    pageHeader(heading, { back: source ? href('poem', source.id) : existing ? href('poem', existing.id) : href('poems'), subtitle }),
+    imageUrl ? originalImage(imageUrl, 'Фото текста') : null,
+    h(
+      'form',
+      { class: 'card stack', onsubmit: (e) => (e.preventDefault(), save()) },
+      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'poem-title' }, 'Название'), title),
+      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'poem-author' }, 'Автор (можно не писать)'), author),
+      kindField,
+      h('div', { class: 'field' }, h('label', { class: 'field__label', for: 'poem-text' }, 'Текст'), text, hint, splitBtn),
+      errors,
+      h(
+        'div',
+        { class: 'row wrap' },
+        button(fresh ? 'Всё верно, учить' : 'Сохранить', null, { type: 'submit', iconName: 'check', size: 'lg' }),
+        onAgain ? button('Выбрать другой', () => (dropImage(), onAgain()), { variant: 'secondary' }) : null,
+        existing ? button('Удалить', remove, { variant: 'danger', iconName: 'trash' }) : null,
       ),
-    );
-  });
+    ),
+  );
 }
