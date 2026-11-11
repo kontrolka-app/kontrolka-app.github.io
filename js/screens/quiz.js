@@ -3,7 +3,7 @@ import { h, icon, button, confirmDialog, progressBar, emptyState, linkButton } f
 import { href, navigate, setLeaveGuard } from '../router.js';
 import { getData, content } from '../state.js';
 import { subjectVars } from '../components.js';
-import { currentQuestion, submitAnswer, skipQuestion, goNext, isLastQuestion, correctStreak } from '../quiz.js';
+import { currentQuestion, submitAnswer, skipQuestion, goNext, goBack, goTo, isLastQuestion, correctStreak, firstUnanswered, unansweredCount } from '../quiz.js';
 import { correctAnswerText, givenAnswerText, optionFeedback } from '../results.js';
 import { saveActive, completeActive } from '../session.js';
 import { reportControl } from './report.js';
@@ -62,7 +62,23 @@ export function quizScreen() {
     }),
   );
 
-  function finish() {
+  async function finish() {
+    // На контрольной к пропущенным можно вернуться — перед завершением напоминаем о них.
+    const left = unansweredCount(session);
+    if (session.settings.mode === 'control' && left > 0) {
+      const ok = await confirmDialog(`${left === 1 ? 'Без ответа остался 1 вопрос' : `Вопросов без ответа: ${left}`}. Можно вернуться и ответить.`, {
+        title: 'Завершить контрольную?',
+        okText: 'Завершить',
+        cancelText: 'Вернуться к вопросам',
+      });
+      if (!ok) {
+        // «Вернуться к вопросам» открывает первый вопрос без ответа; Escape просто закрывает окно.
+        if (ok === false) session = goTo(session, firstUnanswered(session));
+        saveActive(session);
+        render(true);
+        return;
+      }
+    }
     setLeaveGuard(null);
     const id = completeActive(session);
     navigate('result', id);
@@ -72,6 +88,14 @@ export function quizScreen() {
     companionLine = null;
     if (isLastQuestion(session)) return finish();
     session = goNext(session);
+    hintShown = false;
+    saveActive(session);
+    render(true);
+  }
+
+  function back() {
+    companionLine = null;
+    session = goBack(session);
     hintShown = false;
     saveActive(session);
     render(true);
@@ -128,8 +152,18 @@ export function quizScreen() {
     if (passage) card.appendChild(passageBlock(passage, passageOpen));
 
     const answered = Boolean(answer);
-    const showFeedback = answered && learning;
-    const { control, read } = answerControl(q, answered ? answer.given : undefined, answered, showFeedback ? answer : null);
+    // С подсказками ответ после проверки закрыт (правильный уже показан) — назад можно только посмотреть.
+    // На контрольной ответ остаётся открытым: можно вернуться и поменять, пока она не завершена.
+    const locked = answered && learning;
+    const showFeedback = locked;
+    const { control, read } = answerControl(q, answered ? answer.given ?? undefined : undefined, locked, showFeedback ? answer : null);
+    // На контрольной запоминает то, что сейчас выбрано или вписано (если это годится как ответ), — чтобы «Назад»
+    // ничего не теряло. С подсказками так нельзя: там ответ сразу проверяется, это должно быть нажатие «Ответить».
+    const keepInput = () => {
+      if (learning) return;
+      const res = submitAnswer(session, read());
+      if (res.accepted) session = res.session;
+    };
 
     const form = h(
       'form',
@@ -138,8 +172,10 @@ export function quizScreen() {
         novalidate: true,
         onsubmit: (e) => {
           e.preventDefault();
-          if (answered) return next();
+          if (locked) return next();
           const res = submitAnswer(session, read());
+          // Контрольная, к вопросу вернулись и ничего годного не вписали — прежний ответ (или пропуск) остаётся.
+          if (!res.accepted && answered) return next();
           if (!res.accepted) {
             errorBox.textContent = res.outcome.message || 'Проверь ответ.';
             control.querySelector('input')?.focus();
@@ -185,6 +221,8 @@ export function quizScreen() {
           { variant: 'ghost', iconName: 'skip' },
         ),
       );
+    }
+    if (!locked) {
       if (learning && q.hint) {
         const hb = button(
           hintShown ? 'Скрыть подсказку' : 'Подсказка',
@@ -202,6 +240,11 @@ export function quizScreen() {
         actions.appendChild(hb);
       }
     }
+    if (session.currentIndex > 0) {
+      const bb = button('Назад', () => (keepInput(), back()), { variant: 'ghost', iconName: 'back' });
+      bb.classList.add('quiz__back');
+      actions.appendChild(bb);
+    }
     form.appendChild(actions);
     // «Нашёл ошибку?» — после ответа, под кнопкой «Дальше»; для своих тестов одноклассников не нужно.
     if (showFeedback && session.source.kind !== 'custom') {
@@ -211,8 +254,8 @@ export function quizScreen() {
     root.appendChild(card);
     if (showFeedback && companionLine) root.appendChild(companionLine);
 
-    if (!learning && !answered) {
-      root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце. Подсказок на контрольной нет 🤪'));
+    if (!learning) {
+      root.appendChild(h('p', { class: 'small muted center' }, 'Ответы проверятся в конце — до этого можно вернуться и поменять ответ. Подсказок на контрольной нет 🤪'));
     }
 
     // Фокус: после ответа — на кнопку «Дальше», при новом вопросе — в поле ответа (его фокусирует answerControl),

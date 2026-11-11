@@ -399,6 +399,12 @@ async function runTopicStart(page, base, topic, width) {
   const total = Number((await page.locator('.quiz__counter').textContent()).match(/из (\d+)/)[1]);
   for (let i = 0; i < total; i++) {
     await page.getByRole('button', { name: 'Пропустить' }).click();
+    // На контрольной перед завершением с пропусками спрашивают «Завершить контрольную?».
+    if (i === total - 1) {
+      await page.waitForFunction(() => document.body.dataset.route === 'result' || document.querySelector('dialog[open]'), null, { timeout: 8000 });
+      const confirm = page.locator('dialog[open] button:not([data-cancel])');
+      if (await confirm.count()) await confirm.click();
+    }
     await waitStep(page, i, total);
   }
   if ((await page.evaluate(() => document.body.dataset.route)) !== 'result') return problem('тренировка', 'после пропуска всех вопросов не открылся результат', page);

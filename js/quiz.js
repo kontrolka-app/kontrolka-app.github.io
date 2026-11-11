@@ -123,14 +123,22 @@ export function isAnswered(session, questionId) {
 }
 
 /**
+ * Можно ли заменить уже данный ответ. На контрольной — да, пока она не завершена: ответы проверяются
+ * в конце. В режиме «С подсказками» — нет: после ответа уже показан правильный.
+ */
+export function canChangeAnswer(session) {
+  return session.status === 'active' && session.settings?.mode === 'control';
+}
+
+/**
  * Отправка ответа на текущий вопрос.
- * Возвращает { session, accepted, outcome }. Повторная отправка, ответ в завершённой сессии
- * и невалидный ответ не меняют сессию (accepted: false).
+ * Возвращает { session, accepted, outcome }. Ответ в завершённой сессии и невалидный ответ
+ * не меняют сессию (accepted: false); повторная отправка — тоже, кроме контрольной (canChangeAnswer).
  */
 export function submitAnswer(session, given, now = Date.now()) {
   const q = currentQuestion(session);
   if (session.status !== 'active' || !q) return { session, accepted: false, outcome: { status: 'invalid', message: 'Тренировка уже завершена.' } };
-  if (isAnswered(session, q.id)) return { session, accepted: false, outcome: { status: 'invalid', message: 'На этот вопрос уже есть ответ.' } };
+  if (isAnswered(session, q.id) && !canChangeAnswer(session)) return { session, accepted: false, outcome: { status: 'invalid', message: 'На этот вопрос уже есть ответ.' } };
   const outcome = checkAnswer(q, given);
   if (outcome.status === 'invalid') return { session, accepted: false, outcome };
   const next = {
@@ -156,6 +164,31 @@ export function goNext(session) {
   if (session.status !== 'active' || !q || !isAnswered(session, q.id)) return session;
   if (session.currentIndex >= session.questions.length - 1) return session;
   return { ...session, currentIndex: session.currentIndex + 1 };
+}
+
+/**
+ * Переход к вопросу с номером index (с нуля). Можно только туда, где уже были:
+ * к первому вопросу или к тому, перед которым на вопрос ответили либо его пропустили.
+ */
+export function goTo(session, index) {
+  if (session.status !== 'active' || !Number.isInteger(index) || index < 0 || index >= session.questions.length) return session;
+  if (index > 0 && !isAnswered(session, session.questions[index - 1].id)) return session;
+  return index === session.currentIndex ? session : { ...session, currentIndex: index };
+}
+
+/** Назад, к предыдущему вопросу. */
+export function goBack(session) {
+  return goTo(session, session.currentIndex - 1);
+}
+
+/** Номер первого вопроса без ответа (не отвечен или пропущен), либо -1. */
+export function firstUnanswered(session) {
+  return session.questions.findIndex((q) => !session.answers[q.id] || session.answers[q.id].status === 'skipped');
+}
+
+/** Сколько вопросов осталось без ответа (не отвечены или пропущены). */
+export function unansweredCount(session) {
+  return session.questions.filter((q) => !session.answers[q.id] || session.answers[q.id].status === 'skipped').length;
 }
 
 /** Сколько верных ответов подряд, считая назад от текущего вопроса (пропуск и ошибка обрывают серию). */

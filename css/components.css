@@ -229,6 +229,8 @@ select.input { cursor: pointer; }
 @media (min-width: 600px) {
   .quiz__actions { flex-direction: row; flex-wrap: wrap; }
   .quiz__actions .btn:first-child { flex: 1 1 220px; }
+  /* «Назад» — слева от остальных кнопок; на телефоне она последняя в столбике. */
+  .quiz__actions .quiz__back { order: -1; }
 }
 
 .options { display: flex; flex-direction: column; gap: 10px; border: none; margin: 0; padding: 0; min-width: 0; }

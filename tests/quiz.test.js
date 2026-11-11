@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { checkAnswer, selectQuestions, countAvailable, createSession, submitAnswer, skipQuestion, goNext, finishSession, correctStreak } from '../js/quiz.js';
+import { checkAnswer, selectQuestions, countAvailable, createSession, submitAnswer, skipQuestion, goNext, finishSession, correctStreak, goBack, goTo, canChangeAnswer, firstUnanswered, unansweredCount } from '../js/quiz.js';
 import { normalizeText, parseNumber } from '../js/utils.js';
 import { validateQuestion } from '../js/validate.js';
 import { Q, ALL, seededRng } from './helpers.js';
@@ -199,4 +199,49 @@ test('ответ цифрами: порядок важен или нет', () =>
   assert.deepEqual(validateQuestion(anyOrder, { custom: true }), []);
   assert.equal(validateQuestion({ ...ordered, correctAnswer: 3142 }, { custom: true }).length, 1);
   assert.equal(validateQuestion({ ...anyOrder, correctAnswer: '113' }, { custom: true }).length, 1);
+});
+
+test('сессия: назад и вперёд по вопросам, где уже были', () => {
+  let s = createSession({ questions: [Q.choice, Q.tf, Q.num], source: {}, settings: { mode: 'learning' } });
+  assert.equal(goBack(s).currentIndex, 0, 'с первого вопроса назад некуда');
+  assert.equal(goTo(s, 1).currentIndex, 0, 'вперёд без ответа не перескочить');
+  s = goNext(submitAnswer(s, 'b').session);
+  s = goNext(skipQuestion(s).session);
+  assert.equal(s.currentIndex, 2);
+  s = goBack(s);
+  assert.equal(s.currentIndex, 1);
+  s = goBack(s);
+  assert.equal(s.currentIndex, 0);
+  assert.equal(submitAnswer(s, 'a').accepted, false, 'с подсказками ответ не меняется: правильный уже показан');
+  assert.equal(canChangeAnswer(s), false);
+  s = goNext(goNext(s));
+  assert.equal(s.currentIndex, 2, 'вернулись к вопросу, на котором остановились');
+  assert.equal(goTo(s, 3).currentIndex, 2);
+  assert.equal(goTo(s, -1).currentIndex, 2);
+  assert.equal(goTo(s, 0).currentIndex, 0);
+});
+
+test('сессия: на контрольной ответ можно поменять до завершения', () => {
+  let s = createSession({ questions: [Q.choice, Q.tf, Q.num], source: {}, settings: { mode: 'control' } });
+  assert.equal(canChangeAnswer(s), true);
+  s = goNext(submitAnswer(s, 'a').session);
+  s = goNext(skipQuestion(s).session);
+  assert.equal(firstUnanswered(s), 1);
+  assert.equal(unansweredCount(s), 2);
+  s = goBack(goBack(s));
+  const r = submitAnswer(s, 'b');
+  assert.equal(r.accepted, true);
+  s = goNext(r.session);
+  assert.equal(s.answers[Q.choice.id].given, 'b');
+  assert.equal(skipQuestion(goBack(s)).accepted, false, 'пропуск не стирает данный ответ');
+  // Пропущенный вопрос: неверный формат не принимается и пропуск остаётся, а настоящий ответ его заменяет.
+  assert.equal(submitAnswer(s, null).accepted, false);
+  s = goNext(submitAnswer(s, true).session);
+  assert.equal(s.answers[Q.tf.id].status, 'correct');
+  assert.equal(firstUnanswered(s), 2);
+  const done = finishSession(submitAnswer(s, '16').session);
+  assert.equal(unansweredCount(done), 0);
+  assert.equal(done.result.correct, 3);
+  assert.equal(canChangeAnswer(done), false);
+  assert.equal(submitAnswer(done, '15').accepted, false, 'после завершения ничего не меняется');
 });
