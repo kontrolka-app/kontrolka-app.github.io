@@ -1,7 +1,7 @@
 // Точка входа: загрузка данных, навигация и отрисовка экранов.
 import { h, toast, icon } from './ui.js';
 import { startRouter, href, setLeaveGuard, parseHash } from './router.js';
-import { initStorage, applyAppearance, content, settings, update, getData } from './state.js';
+import { initStorage, applyAppearance, content, settings, update, getData, onExternalChange } from './state.js';
 import { loadContent } from './data.js';
 import { availableGrades, resolveGrade, needsWelcome } from './catalog.js';
 import { catalogInfo, badgesFromHistory, badgesForTotals, award } from './achievements.js';
@@ -68,6 +68,9 @@ const ROUTES = {
 // «Я» — это настройки и «Мои тесты» (тесты по-прежнему открываются и с главной).
 const NAV_SECTION = { home: 'home', favorites: 'home', grade: 'subjects', subjects: 'subjects', topics: 'subjects', topic: 'subjects', exam: 'subjects', mytests: 'me', mytest: 'me', editor: 'me', history: 'progress', settings: 'me', poems: 'subjects', poem: 'subjects', 'poem-edit': 'subjects', speed: 'subjects', english: 'subjects', verbs: 'subjects', words: 'subjects', 'words-unit': 'subjects', 'words-train': 'subjects', vocab: 'subjects', 'vocab-group': 'subjects', 'vocab-train': 'subjects', etopics: 'subjects', etopic: 'subjects', 'etopic-add': 'subjects', 'etopic-edit': 'subjects', drills: 'subjects', drill: 'subjects', map: 'progress', diag: 'progress', album: 'me' };
 
+// Экраны без ввода и без своего состояния — их можно перерисовать, когда данные изменились в другой вкладке.
+const LIVE_SCREENS = new Set(['home', 'subjects', 'topics', 'favorites', 'history', 'map', 'album', 'mytests']);
+
 const NAV = [
   { id: 'home', label: 'Главная', icon: 'home', to: href('home') },
   { id: 'subjects', label: 'Темы', icon: 'book', to: href('subjects') },
@@ -124,7 +127,7 @@ function render(route) {
   greet(route);
   // Перемещаем фокус к заголовку, чтобы клавиатура и экранные дикторы начинали с нового экрана.
   if (route.name !== 'quiz') main.querySelector('.page-title')?.focus({ preventScroll: true });
-  document.title = route.name === 'home' ? 'Контролька' : route.name === 'quiz' ? 'Тренировка — Контролька' : `${main.querySelector('h1')?.textContent || ''} — Контролька`;
+  document.title = route.name === 'home' ? 'Контролька' : route.name === 'quiz' ? 'Тренировка — Контролька' : main.querySelector('h1') ? `${main.querySelector('h1').textContent} — Контролька` : 'Контролька';
 }
 
 /**
@@ -166,6 +169,11 @@ async function boot() {
   backfillBadges();
   starterStickers();
   startRouter(render);
+  // Данные поменяла другая вкладка: обзорные экраны перерисовываем сразу, тренировки и формы не трогаем.
+  onExternalChange(() => {
+    const route = parseHash(location.hash);
+    if (LIVE_SCREENS.has(route.name)) render(route);
+  });
   // На экране знакомства класс и так написан — сообщение там лишнее.
   const welcome = parseHash(location.hash).name === 'home' && needsWelcome(getData());
   if (resolved && resolved !== grade && !welcome) toast(`Выбран ${resolved} класс — сменить можно в настройках`);

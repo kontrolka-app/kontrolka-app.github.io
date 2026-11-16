@@ -93,7 +93,15 @@ test('данные не того типа целиком', () => {
 
 test('данные из более новой версии не затираются молча', () => {
   const backend = createMemoryBackend({ [STORAGE_KEY]: JSON.stringify({ schemaVersion: SCHEMA_VERSION + 1 }) });
-  assert.equal(createStorage(backend).load().status, 'newer-version');
+  const storage = createStorage(backend);
+  const res = storage.load();
+  assert.equal(res.status, 'newer-version');
+  // Запись из старой вкладки не проходит, и новые данные остаются как были.
+  assert.deepEqual(storage.save(res.data), { ok: false, reason: 'newer-version' });
+  assert.equal(JSON.parse(backend.getItem(STORAGE_KEY)).schemaVersion, SCHEMA_VERSION + 1);
+  // После осознанного сброса записывать снова можно.
+  storage.clear();
+  assert.equal(storage.save(res.data).ok, true);
 });
 
 test('ошибка записи (переполнение) возвращается, а не бросается', () => {

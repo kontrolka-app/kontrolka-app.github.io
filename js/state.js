@@ -1,10 +1,30 @@
 // Состояние приложения: данные пользователя (localStorage) и учебное содержимое.
-import { createStorage, createMemoryBackend, defaultData, HISTORY_LIMIT } from './storage.js';
+import { createStorage, createMemoryBackend, defaultData, HISTORY_LIMIT, STORAGE_KEY } from './storage.js';
 import { toast } from './ui.js';
 
 let storage;
 let data = defaultData();
 let storageWarning = null;
+let externalChange = null;
+let newerToastShown = false;
+
+/** fn вызывается, когда данные изменила другая вкладка (эта вкладка уже взяла новые данные). */
+export function onExternalChange(fn) {
+  externalChange = fn;
+}
+
+// Другая вкладка сохранила данные: берём их, иначе следующее сохранение отсюда затрёт её работу.
+function listenOtherTabs() {
+  window.addEventListener('storage', (e) => {
+    if (e.storageArea !== window.localStorage || (e.key !== null && e.key !== STORAGE_KEY)) return;
+    const res = storage.load();
+    // Непонятные данные (новая версия, повреждены) не берём: остаёмся со своими, новую версию не трогаем.
+    if (!['ok', 'repaired', 'empty'].includes(res.status)) return;
+    data = res.data;
+    applyAppearance();
+    externalChange?.();
+  });
+}
 
 export const content = {
   subjects: [],
@@ -29,6 +49,7 @@ export function initStorage() {
     storageWarning = 'Браузер не разрешает сохранять данные (например, в приватном режиме). Прогресс пропадёт после закрытия страницы.';
   }
   storage = createStorage(backend);
+  if (!storageWarning) listenOtherTabs();
   const res = storage.load();
   data = res.data;
   if (res.status === 'corrupted') {
@@ -36,7 +57,7 @@ export function initStorage() {
   } else if (res.status === 'repaired') {
     storageWarning = `Часть сохранённых данных была повреждена и пропущена (записей: ${res.dropped}). Остальное восстановлено.`;
   } else if (res.status === 'newer-version') {
-    storageWarning = 'Данные сохранены более новой версией приложения. Обновите страницу или приложение.';
+    storageWarning = 'Данные сохранены более новой версией приложения. Обнови страницу — до этого прогресс здесь не сохраняется.';
   } else if (res.status === 'unavailable') {
     storageWarning = 'Не удалось прочитать сохранённые данные.';
   }
@@ -57,7 +78,11 @@ export function update(fn) {
   if (next.history.length > HISTORY_LIMIT) next.history = next.history.slice(0, HISTORY_LIMIT);
   data = next;
   const res = storage.save(data);
-  if (!res.ok) {
+  if (!res.ok && res.reason === 'newer-version') {
+    // Предупреждение уже показано при запуске; повторяем один раз, чтобы не мигало на каждом действии.
+    if (!newerToastShown) toast('Данные сохранены более новой версией приложения — здесь они не меняются. Обнови страницу.', 'error');
+    newerToastShown = true;
+  } else if (!res.ok) {
     toast(
       res.reason === 'quota'
         ? 'Не хватает места для сохранения. Удалите старые тесты или очистите историю в настройках.'

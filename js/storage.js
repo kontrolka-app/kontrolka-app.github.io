@@ -169,6 +169,9 @@ export function sanitizeData(raw) {
  * Все ошибки перехватываются и возвращаются как результат, а не бросаются.
  */
 export function createStorage(backend) {
+  // Данные сохранены более новой версией приложения: эта вкладка их не понимает и записывать поверх не должна.
+  let newer = false;
+
   function load() {
     let text = null;
     try {
@@ -189,13 +192,16 @@ export function createStorage(backend) {
       return { data: defaultData(), status: 'corrupted', error: e };
     }
     if (isObj(parsed) && Number.isInteger(parsed.schemaVersion) && parsed.schemaVersion > SCHEMA_VERSION) {
+      newer = true;
       return { data: defaultData(), status: 'newer-version' };
     }
+    newer = false;
     const { data, dropped } = sanitizeData(parsed);
     return { data, status: dropped > 0 ? 'repaired' : 'ok', dropped };
   }
 
   function save(data) {
+    if (newer) return { ok: false, reason: 'newer-version' };
     try {
       backend.setItem(STORAGE_KEY, JSON.stringify(data));
       return { ok: true };
@@ -209,6 +215,7 @@ export function createStorage(backend) {
     try {
       backend.removeItem(STORAGE_KEY);
       backend.removeItem(BACKUP_KEY);
+      newer = false; // сброс — осознанное действие, после него записывать можно
       return { ok: true };
     } catch (e) {
       return { ok: false, error: e };
